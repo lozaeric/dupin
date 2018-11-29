@@ -1,0 +1,21 @@
+version: '3'
+services:
+  web:
+    image: golang:1.9.2
+    working_dir: /go/src/github.com/lozaeric/dupin
+    command: go run main.go
+    ports:
+     - "8080:8080"
+    volumes:
+     - .:/go/src/github.com/lozaeric/dupin
+    depends_on:
+     - mongo
+  #  - redis
+  #redis:
+  #  image: "redis:4.0.11-alpine"
+  mongo:
+    image: "mongo:3.6.9-stretch"
+    ports:
+     - "27017:27017"
+    volumes:
+     - ./data/db:/data/db
