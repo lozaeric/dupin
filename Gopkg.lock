@@ -61,6 +61,12 @@
   version = "1.0.1"
 
 [[projects]]
+  name = "github.com/rs/xid"
+  packages = ["."]
+  revision = "15d26544def341f036c5f8dca987a4cbe575032c"
+  version = "v1.2.1"
+
+[[projects]]
   name = "github.com/ugorji/go"
   packages = ["codec"]
   revision = "b4c50a2b199d93b13dc15e78929cfb23bfdf21ab"
@@ -87,6 +93,6 @@
 [solve-meta]
   analyzer-name = "dep"
   analyzer-version = 1
-  inputs-digest = "e5fcfac873126c403dde65513f494861c7e2922c036cf5038d0aa3c4d13bb719"
+  inputs-digest = "0ecef160eeb4130a275b71448e61ad749970a0e9998040612794226bb70e0e87"
   solver-name = "gps-cdcl"
   solver-version = 1

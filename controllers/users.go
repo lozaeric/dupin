@@ -2,24 +2,18 @@ package controllers
 
 import (
 	"net/http"
-	"strconv"
 
 	"github.com/gin-gonic/gin"
 	"github.com/lozaeric/dupin/domain"
 	"github.com/lozaeric/dupin/mongo"
 )
 
-var store domain.UserStore
+var userStore domain.UserStore
 
 func User(c *gin.Context) {
-	ID, err := strconv.Atoi(c.Param("id"))
-	if err != nil {
-		c.JSON(http.StatusBadRequest, gin.H{
-			"message": "bad request",
-		})
-		return
-	}
-	if user, err := store.User(ID); err != nil {
+	ID := c.Param("id")
+	// todo: validate id
+	if user, err := userStore.User(ID); err != nil {
 		c.JSON(http.StatusNotFound, "id not found")
 	} else {
 		c.JSON(http.StatusOK, user)
@@ -34,7 +28,13 @@ func CreateUser(c *gin.Context) {
 		})
 		return
 	}
-	if err := store.CreateUser(user); err != nil {
+	if err := userStore.Validate(user); err != nil {
+		c.JSON(http.StatusBadRequest, gin.H{
+			"message": err.Error(),
+		})
+		return
+	}
+	if err := userStore.CreateUser(user); err != nil {
 		c.JSON(http.StatusNotFound, "id not found")
 	} else {
 		c.JSON(http.StatusOK, user)
@@ -43,7 +43,7 @@ func CreateUser(c *gin.Context) {
 
 func init() {
 	var err error
-	store, err = mongo.NewStore()
+	userStore, err = mongo.NewUserStore()
 	if err != nil {
 		panic(err)
 	}

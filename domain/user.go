@@ -1,14 +1,15 @@
 package domain
 
 type User struct {
-	ID       int    `json:"id"`
+	ID       string `json:"id,omitempty"`
 	Name     string `json:"name"`
 	LastName string `json:"last_name"`
 	Email    string `json:"email"`
 }
 
 type UserStore interface {
-	User(int) (*User, error)
+	User(string) (*User, error)
 	CreateUser(*User) error
-	DeleteUser(int) error
+	DeleteUser(string) error
+	Validate(*User) error
 }
