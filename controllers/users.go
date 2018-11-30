@@ -31,7 +31,7 @@ func CreateUser(c *gin.Context) {
 		})
 		return
 	}
-	if err := userStore.CreateUser(user); err != nil {
+	if err := userStore.Create(user); err != nil {
 		c.JSON(http.StatusNotFound, "id not found")
 	} else {
 		c.JSON(http.StatusOK, user)

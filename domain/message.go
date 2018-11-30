@@ -10,7 +10,7 @@ type Message struct {
 
 type MessageStore interface {
 	Message(string) (*Message, error)
-	CreateMessage(*Message) error
-	DeleteMessage(string) error
-	SearchMessages(...[2]string) ([]*Message, error)
+	Create(*Message) error
+	Delete(string) error
+	Search(...[2]string) ([]*Message, error)
 }

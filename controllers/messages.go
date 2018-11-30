@@ -31,7 +31,7 @@ func CreateMessage(c *gin.Context) {
 		})
 		return
 	}
-	if err := messageStore.CreateMessage(message); err != nil {
+	if err := messageStore.Create(message); err != nil {
 		c.JSON(http.StatusNotFound, "id not found")
 	} else {
 		c.JSON(http.StatusOK, message)

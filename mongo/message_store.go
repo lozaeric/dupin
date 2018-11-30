@@ -1,8 +1,6 @@
 package mongo
 
 import (
-	"errors"
-
 	"github.com/globalsign/mgo"
 	"github.com/globalsign/mgo/bson"
 	"github.com/lozaeric/dupin/domain"
@@ -22,7 +20,7 @@ func (s *MessageStore) Message(ID string) (*domain.Message, error) {
 	return message, err
 }
 
-func (s *MessageStore) CreateMessage(message *domain.Message) error {
+func (s *MessageStore) Create(message *domain.Message) error {
 	conn := s.session.Copy()
 	defer conn.Close()
 
@@ -30,27 +28,14 @@ func (s *MessageStore) CreateMessage(message *domain.Message) error {
 	return conn.DB(database).C(messagesCollection).Insert(message)
 }
 
-func (s *MessageStore) DeleteMessage(ID string) error {
+func (s *MessageStore) Delete(ID string) error {
 	conn := s.session.Copy()
 	defer conn.Close()
 
 	return conn.DB(database).C(messagesCollection).Remove(bson.M{"id": ID})
 }
 
-func (s *MessageStore) Validate(message *domain.Message) error {
-	if message.Text == "" {
-		return errors.New("text is empty")
-	}
-	if message.SenderID == "" {
-		return errors.New("sender id is empty")
-	}
-	if message.ReceiverID == "" {
-		return errors.New("receiver id is empty")
-	}
-	return nil
-}
-
-func (s *MessageStore) SearchMessages(kv ...[2]string) ([]*domain.Message, error) {
+func (s *MessageStore) Search(kv ...[2]string) ([]*domain.Message, error) {
 	return nil, nil
 }
 

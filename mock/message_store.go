@@ -20,14 +20,14 @@ func (s *MessageStore) Message(ID string) (*domain.Message, error) {
 	return message, nil
 }
 
-func (s *MessageStore) CreateMessage(message *domain.Message) error {
+func (s *MessageStore) Create(message *domain.Message) error {
 	message.ID = strconv.Itoa(s.counter)
 	s.storage[message.ID] = message
 	s.counter++
 	return nil
 }
 
-func (s *MessageStore) DeleteMessage(ID string) error {
+func (s *MessageStore) Delete(ID string) error {
 	_, found := s.storage[ID]
 	if !found {
 		return errors.New("not found")
@@ -36,7 +36,7 @@ func (s *MessageStore) DeleteMessage(ID string) error {
 	return nil
 }
 
-func (s *MessageStore) SearchMessages(kv ...[2]string) ([]*domain.Message, error) {
+func (s *MessageStore) Search(kv ...[2]string) ([]*domain.Message, error) {
 	return nil, nil
 }
 

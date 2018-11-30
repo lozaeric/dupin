@@ -22,7 +22,7 @@ func (s *UserStore) User(ID string) (*domain.User, error) {
 	return user, json.Unmarshal(b, user)
 }
 
-func (s *UserStore) CreateUser(user *domain.User) error {
+func (s *UserStore) Create(user *domain.User) error {
 	user.ID = xid.New().String()
 	key := usersPrefix + user.ID
 	b, err := json.Marshal(user)
@@ -32,7 +32,7 @@ func (s *UserStore) CreateUser(user *domain.User) error {
 	return s.client.Set(key, b, 0).Err()
 }
 
-func (s *UserStore) DeleteUser(ID string) error {
+func (s *UserStore) Delete(ID string) error {
 	key := usersPrefix + ID
 	return s.client.Del(key).Err()
 }

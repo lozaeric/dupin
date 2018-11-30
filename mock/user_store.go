@@ -20,14 +20,14 @@ func (s *UserStore) User(ID string) (*domain.User, error) {
 	return user, nil
 }
 
-func (s *UserStore) CreateUser(user *domain.User) error {
+func (s *UserStore) Create(user *domain.User) error {
 	user.ID = strconv.Itoa(s.counter)
 	s.storage[user.ID] = user
 	s.counter++
 	return nil
 }
 
-func (s *UserStore) DeleteUser(ID string) error {
+func (s *UserStore) Delete(ID string) error {
 	_, found := s.storage[ID]
 	if !found {
 		return errors.New("not found")
