@@ -4,4 +4,4 @@ run: docker-compose.yml
 test:
 	go test -v apitest/*
 
-default: run
+default: test
