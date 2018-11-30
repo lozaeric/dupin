@@ -1,0 +1,32 @@
+version: '3'
+services:
+  web:
+    image: golang:1.9.2
+    working_dir: /go/src/github.com/lozaeric/dupin/apitest
+    command: go test -v
+    ports:
+     - "8080:8080"
+    volumes:
+     - .:/go/src/github.com/lozaeric/dupin
+    environment:
+     - ENV=production
+    depends_on:
+     - mongo
+     - redis
+  redis:
+    image: "redis:4.0.11-alpine"
+    command: redis-server --appendonly yes
+    ports:
+     - "6379:6379"
+    volumes:
+     - ./data/redis:/data
+    logging:
+      driver: none
+  mongo:
+    image: "mongo:3.6.9-stretch"
+    ports:
+     - "27017:27017"
+    volumes:
+     - ./data/db:/data/db
+    logging:
+      driver: none

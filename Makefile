@@ -4,4 +4,7 @@ run: docker-compose.yml
 test:
 	go test -v apitest/*
 
+test-integration:
+	docker-compose -f docker-compose-test.yml up
+
 default: run

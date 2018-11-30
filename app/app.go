@@ -9,7 +9,7 @@ import (
 var router *gin.Engine
 
 func Run() {
-	if os.Getenv("ENVIRONMENT") == "production" {
+	if os.Getenv("ENV") == "production" {
 		gin.SetMode(gin.ReleaseMode)
 	} else {
 		gin.SetMode(gin.DebugMode)
