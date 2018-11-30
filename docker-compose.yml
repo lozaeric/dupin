@@ -12,9 +12,14 @@ services:
      - ENV=production
     depends_on:
      - mongo
-  #  - redis
-  #redis:
-  #  image: "redis:4.0.11-alpine"
+     - redis
+  redis:
+    image: "redis:4.0.11-alpine"
+    command: redis-server --appendonly yes
+    ports:
+     - "6379:6379"
+    volumes:
+     - ./data/redis:/data
   mongo:
     image: "mongo:3.6.9-stretch"
     ports:
