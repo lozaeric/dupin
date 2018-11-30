@@ -16,5 +16,10 @@ $ make run
 $ make test
 ```
 
+### Integration test
+```bash
+$ make test-integration
+```
+
 ### Endpoints
 TODO
