@@ -2,14 +2,12 @@ package mock
 
 import (
 	"errors"
-	"strconv"
 
 	"github.com/lozaeric/dupin/domain"
 )
 
 type MessageStore struct {
 	storage map[string]*domain.Message
-	counter int
 }
 
 func (s *MessageStore) Message(ID string) (*domain.Message, error) {
@@ -21,9 +19,8 @@ func (s *MessageStore) Message(ID string) (*domain.Message, error) {
 }
 
 func (s *MessageStore) Create(message *domain.Message) error {
-	message.ID = strconv.Itoa(s.counter)
+	message.ID = GenerateValidID()
 	s.storage[message.ID] = message
-	s.counter++
 	return nil
 }
 
@@ -43,6 +40,5 @@ func (s *MessageStore) Search(kv ...[2]string) ([]*domain.Message, error) {
 func NewMessageStore() (*MessageStore, error) {
 	return &MessageStore{
 		storage: make(map[string]*domain.Message),
-		counter: 1,
 	}, nil
 }

@@ -6,6 +6,7 @@ import (
 	"testing"
 
 	"github.com/lozaeric/dupin/domain"
+	"github.com/lozaeric/dupin/mock"
 	"github.com/stretchr/testify/assert"
 )
 
@@ -46,7 +47,7 @@ func TestCreateMessage(t *testing.T) {
 func TestMessage(t *testing.T) {
 	assert := assert.New(t)
 
-	r, err := cli.R().Get("/messages/0")
+	r, err := cli.R().Get("/messages/" + mock.GenerateValidID())
 	assert.Nil(err)
 	assert.Equal(http.StatusNotFound, r.StatusCode())
 

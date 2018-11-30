@@ -6,6 +6,7 @@ import (
 	"testing"
 
 	"github.com/lozaeric/dupin/domain"
+	"github.com/lozaeric/dupin/mock"
 	"github.com/stretchr/testify/assert"
 )
 
@@ -46,7 +47,7 @@ func TestCreateUser(t *testing.T) {
 func TestUser(t *testing.T) {
 	assert := assert.New(t)
 
-	r, err := cli.R().Get("/users/0")
+	r, err := cli.R().Get("/users/" + mock.GenerateValidID())
 	assert.Nil(err)
 	assert.Equal(http.StatusNotFound, r.StatusCode())
 

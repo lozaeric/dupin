@@ -1,4 +1,4 @@
-package domain
+package utils
 
 import (
 	"errors"
@@ -20,4 +20,8 @@ func Validate(o interface{}) error {
 		return errors.New(desc)
 	}
 	return nil
+}
+
+func IsValidID(ID string) bool {
+	return validate.Var(ID, "required,len=20,alphanum") == nil
 }

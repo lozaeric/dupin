@@ -2,14 +2,12 @@ package mock
 
 import (
 	"errors"
-	"strconv"
 
 	"github.com/lozaeric/dupin/domain"
 )
 
 type UserStore struct {
 	storage map[string]*domain.User
-	counter int
 }
 
 func (s *UserStore) User(ID string) (*domain.User, error) {
@@ -21,9 +19,8 @@ func (s *UserStore) User(ID string) (*domain.User, error) {
 }
 
 func (s *UserStore) Create(user *domain.User) error {
-	user.ID = strconv.Itoa(s.counter)
+	user.ID = GenerateValidID()
 	s.storage[user.ID] = user
-	s.counter++
 	return nil
 }
 
@@ -39,6 +36,5 @@ func (s *UserStore) Delete(ID string) error {
 func NewUserStore() (*UserStore, error) {
 	return &UserStore{
 		storage: make(map[string]*domain.User),
-		counter: 1,
 	}, nil
 }
