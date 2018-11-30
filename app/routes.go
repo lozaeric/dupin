@@ -13,4 +13,6 @@ func setRoutes() {
 	})
 	router.GET("/users/:id", controllers.User)
 	router.POST("/users", controllers.CreateUser)
+	router.GET("/messages/:id", controllers.Message)
+	router.POST("/messages", controllers.CreateMessage)
 }

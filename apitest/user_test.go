@@ -16,7 +16,7 @@ var (
 
 func TestCreateUser(t *testing.T) {
 	assert := assert.New(t)
-	invalidUserDTo := &domain.User{
+	invalidUserDTO := &domain.User{
 		Name:     "",
 		LastName: "a",
 		Email:    "b",
@@ -27,7 +27,7 @@ func TestCreateUser(t *testing.T) {
 		Email:    "eric@loza",
 	}
 
-	r, err := cli.R().SetBody(invalidUserDTo).Post("/users")
+	r, err := cli.R().SetBody(invalidUserDTO).Post("/users")
 	assert.Nil(err)
 	assert.Equal(r.StatusCode(), http.StatusBadRequest)
 
@@ -35,7 +35,7 @@ func TestCreateUser(t *testing.T) {
 	assert.Nil(err)
 	assert.Equal(r.StatusCode(), http.StatusOK)
 
-	err = json.Unmarshal(r.Body(), &user)
+	err = json.Unmarshal(r.Body(), user)
 	assert.Nil(err)
 	assert.Equal(validUserDTO.Name, user.Name)
 	assert.Equal(validUserDTO.LastName, user.LastName)

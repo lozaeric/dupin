@@ -1,40 +1,41 @@
-package mongo
+package redis
 
 import (
+	"encoding/json"
 	"errors"
 
-	"github.com/globalsign/mgo"
-	"github.com/globalsign/mgo/bson"
+	"github.com/go-redis/redis"
 	"github.com/lozaeric/dupin/domain"
 	"github.com/rs/xid"
 )
 
 type UserStore struct {
-	session *mgo.Session
+	client *redis.Client
 }
 
 func (s *UserStore) User(ID string) (*domain.User, error) {
-	conn := s.session.Copy()
-	defer conn.Close()
-
+	key := usersPrefix + ID
 	user := new(domain.User)
-	err := conn.DB(database).C(usersCollection).Find(bson.M{"id": ID}).One(user)
-	return user, err
+	b, err := s.client.Get(key).Bytes()
+	if err != nil {
+		return nil, err
+	}
+	return user, json.Unmarshal(b, user)
 }
 
 func (s *UserStore) CreateUser(user *domain.User) error {
-	conn := s.session.Copy()
-	defer conn.Close()
-
 	user.ID = xid.New().String()
-	return conn.DB(database).C(usersCollection).Insert(user)
+	key := usersPrefix + user.ID
+	b, err := json.Marshal(user)
+	if err != nil {
+		return err
+	}
+	return s.client.Set(key, b, 0).Err()
 }
 
 func (s *UserStore) DeleteUser(ID string) error {
-	conn := s.session.Copy()
-	defer conn.Close()
-
-	return conn.DB(database).C(usersCollection).Remove(bson.M{"id": ID})
+	key := usersPrefix + ID
+	return s.client.Del(key).Err()
 }
 
 func (s *UserStore) Validate(user *domain.User) error {
@@ -51,12 +52,12 @@ func (s *UserStore) Validate(user *domain.User) error {
 }
 
 func NewUserStore() (*UserStore, error) {
-	session, err := mgo.Dial(connectionString)
-	if err != nil {
-		return nil, err
-	}
-	// session config
+	client := redis.NewClient(&redis.Options{
+		Addr: "redis:6379",
+		// client config
+	})
+
 	return &UserStore{
-		session: session,
+		client: client,
 	}, nil
 }

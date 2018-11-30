@@ -7,33 +7,33 @@ import (
 	"github.com/lozaeric/dupin/domain"
 )
 
-func User(c *gin.Context) {
+func Message(c *gin.Context) {
 	ID := c.Param("id")
 	// todo: validate id
-	if user, err := userStore.User(ID); err != nil {
+	if message, err := messageStore.Message(ID); err != nil {
 		c.JSON(http.StatusNotFound, "id not found")
 	} else {
-		c.JSON(http.StatusOK, user)
+		c.JSON(http.StatusOK, message)
 	}
 }
 
-func CreateUser(c *gin.Context) {
-	user := new(domain.User)
-	if err := c.BindJSON(user); err != nil {
+func CreateMessage(c *gin.Context) {
+	message := new(domain.Message)
+	if err := c.BindJSON(message); err != nil {
 		c.JSON(http.StatusBadRequest, gin.H{
 			"message": "bad request",
 		})
 		return
 	}
-	if err := userStore.Validate(user); err != nil {
+	if err := messageStore.Validate(message); err != nil {
 		c.JSON(http.StatusBadRequest, gin.H{
 			"message": err.Error(),
 		})
 		return
 	}
-	if err := userStore.CreateUser(user); err != nil {
+	if err := messageStore.CreateMessage(message); err != nil {
 		c.JSON(http.StatusNotFound, "id not found")
 	} else {
-		c.JSON(http.StatusOK, user)
+		c.JSON(http.StatusOK, message)
 	}
 }
