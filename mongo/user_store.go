@@ -18,7 +18,7 @@ func (s *UserStore) User(ID string) (*domain.User, error) {
 	defer conn.Close()
 
 	user := new(domain.User)
-	err := conn.DB(usersCollection).C(usersCollection).Find(bson.M{"id": ID}).One(user)
+	err := conn.DB(database).C(usersCollection).Find(bson.M{"id": ID}).One(user)
 	return user, err
 }
 
@@ -27,14 +27,14 @@ func (s *UserStore) CreateUser(user *domain.User) error {
 	defer conn.Close()
 
 	user.ID = xid.New().String()
-	return conn.DB(usersCollection).C(usersCollection).Insert(user)
+	return conn.DB(database).C(usersCollection).Insert(user)
 }
 
 func (s *UserStore) DeleteUser(ID string) error {
 	conn := s.session.Copy()
 	defer conn.Close()
 
-	return conn.DB(usersCollection).C(usersCollection).Remove(bson.M{"id": ID})
+	return conn.DB(database).C(usersCollection).Remove(bson.M{"id": ID})
 }
 
 func (s *UserStore) Validate(user *domain.User) error {
