@@ -1,17 +1,16 @@
 package domain
 
 type Message struct {
-	ID         string `json:"id,omitempty"`
-	Text       string `json:"text"`
-	SenderID   string `json:"sender_id"`
-	ReceiverID string `json:"receiver_id"`
-	Timestamp  string `json:"timestamp"`
+	ID          string `json:"id"`
+	Text        string `json:"text" validate:"required"`
+	SenderID    string `json:"sender_id" validate:"required,len=20"`
+	ReceiverID  string `json:"receiver_id" validate:"required,len=20"`
+	DateCreated string `json:"date_created"`
 }
 
 type MessageStore interface {
 	Message(string) (*Message, error)
 	CreateMessage(*Message) error
 	DeleteMessage(string) error
-	Validate(*Message) error
 	SearchMessages(...[2]string) ([]*Message, error)
 }

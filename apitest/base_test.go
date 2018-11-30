@@ -17,7 +17,7 @@ var cli = resty.New().
 
 func TestMain(m *testing.M) {
 	go app.Run()
-	time.Sleep(2 * time.Second)
+	time.Sleep(3 * time.Second)
 	os.Exit(m.Run())
 }
 
@@ -25,5 +25,5 @@ func TestPing(t *testing.T) {
 	assert := assert.New(t)
 	r, err := cli.R().Get("/ping")
 	assert.Nil(err)
-	assert.Equal(r.StatusCode(), http.StatusOK)
+	assert.Equal(http.StatusOK, r.StatusCode())
 }

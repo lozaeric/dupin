@@ -25,7 +25,7 @@ func CreateMessage(c *gin.Context) {
 		})
 		return
 	}
-	if err := messageStore.Validate(message); err != nil {
+	if err := domain.Validate(message); err != nil {
 		c.JSON(http.StatusBadRequest, gin.H{
 			"message": err.Error(),
 		})

@@ -2,7 +2,6 @@ package redis
 
 import (
 	"encoding/json"
-	"errors"
 
 	"github.com/go-redis/redis"
 	"github.com/lozaeric/dupin/domain"
@@ -36,19 +35,6 @@ func (s *UserStore) CreateUser(user *domain.User) error {
 func (s *UserStore) DeleteUser(ID string) error {
 	key := usersPrefix + ID
 	return s.client.Del(key).Err()
-}
-
-func (s *UserStore) Validate(user *domain.User) error {
-	if user.Name == "" {
-		return errors.New("name is empty")
-	}
-	if user.LastName == "" {
-		return errors.New("last name is empty")
-	}
-	if user.Email == "" {
-		return errors.New("email is empty")
-	}
-	return nil
 }
 
 func NewUserStore() (*UserStore, error) {

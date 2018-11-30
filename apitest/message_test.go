@@ -23,17 +23,17 @@ func TestCreateMessage(t *testing.T) {
 	}
 	validMessageDTO := &domain.Message{
 		Text:       "holaaa",
-		SenderID:   "1",
-		ReceiverID: "2",
+		SenderID:   "12345678901234567890",
+		ReceiverID: "12345678901234567890",
 	}
 
 	r, err := cli.R().SetBody(invalidMessageDTO).Post("/messages")
 	assert.Nil(err)
-	assert.Equal(r.StatusCode(), http.StatusBadRequest)
+	assert.Equal(http.StatusBadRequest, r.StatusCode())
 
 	r, err = cli.R().SetBody(validMessageDTO).Post("/messages")
 	assert.Nil(err)
-	assert.Equal(r.StatusCode(), http.StatusOK)
+	assert.Equal(http.StatusOK, r.StatusCode())
 
 	err = json.Unmarshal(r.Body(), &message)
 	assert.Nil(err)
@@ -48,10 +48,10 @@ func TestMessage(t *testing.T) {
 
 	r, err := cli.R().Get("/messages/0")
 	assert.Nil(err)
-	assert.Equal(r.StatusCode(), http.StatusNotFound)
+	assert.Equal(http.StatusNotFound, r.StatusCode())
 
 	r, err = cli.R().Get("/messages/" + message.ID)
 	assert.Nil(err)
-	assert.Equal(r.StatusCode(), http.StatusOK)
-	assert.Equal(string(r.Body()), messageJSON)
+	assert.Equal(http.StatusOK, r.StatusCode())
+	assert.Equal(messageJSON, string(r.Body()))
 }

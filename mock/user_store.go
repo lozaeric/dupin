@@ -36,19 +36,6 @@ func (s *UserStore) DeleteUser(ID string) error {
 	return nil
 }
 
-func (s *UserStore) Validate(user *domain.User) error {
-	if user.Name == "" {
-		return errors.New("name is empty")
-	}
-	if user.LastName == "" {
-		return errors.New("last name is empty")
-	}
-	if user.Email == "" {
-		return errors.New("email is empty")
-	}
-	return nil
-}
-
 func NewUserStore() (*UserStore, error) {
 	return &UserStore{
 		storage: make(map[string]*domain.User),

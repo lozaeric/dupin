@@ -37,6 +37,27 @@
   revision = "eeefdecb41b842af6dc652aaea4026e8403e62df"
 
 [[projects]]
+  name = "github.com/go-playground/locales"
+  packages = [
+    ".",
+    "currency"
+  ]
+  revision = "f63010822830b6fe52288ee52d5a1151088ce039"
+  version = "v0.12.1"
+
+[[projects]]
+  name = "github.com/go-playground/universal-translator"
+  packages = ["."]
+  revision = "b32fa301c9fe55953584134cb6853a13c87ec0a1"
+  version = "v0.16.0"
+
+[[projects]]
+  name = "github.com/go-playground/validator"
+  packages = ["."]
+  revision = "1fa3c8d6336562f0a3f95c73593ee2b57ff4da11"
+  version = "v9.23.0"
+
+[[projects]]
   name = "github.com/go-redis/redis"
   packages = [
     ".",
@@ -162,6 +183,6 @@
 [solve-meta]
   analyzer-name = "dep"
   analyzer-version = 1
-  inputs-digest = "19c7776451a638b81fb7b7f7c47498724f9552789c838cbf678c58998b985471"
+  inputs-digest = "4b8c8390fd774d67d52378fb70f9197e6d523005c2337b3443ac6639ca589fce"
   solver-name = "gps-cdcl"
   solver-version = 1

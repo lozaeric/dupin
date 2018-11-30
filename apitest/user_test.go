@@ -24,16 +24,16 @@ func TestCreateUser(t *testing.T) {
 	validUserDTO := &domain.User{
 		Name:     "eric",
 		LastName: "loza",
-		Email:    "eric@loza",
+		Email:    "eric@lz.com",
 	}
 
 	r, err := cli.R().SetBody(invalidUserDTO).Post("/users")
 	assert.Nil(err)
-	assert.Equal(r.StatusCode(), http.StatusBadRequest)
+	assert.Equal(http.StatusBadRequest, r.StatusCode())
 
 	r, err = cli.R().SetBody(validUserDTO).Post("/users")
 	assert.Nil(err)
-	assert.Equal(r.StatusCode(), http.StatusOK)
+	assert.Equal(http.StatusOK, r.StatusCode())
 
 	err = json.Unmarshal(r.Body(), user)
 	assert.Nil(err)
@@ -48,10 +48,10 @@ func TestUser(t *testing.T) {
 
 	r, err := cli.R().Get("/users/0")
 	assert.Nil(err)
-	assert.Equal(r.StatusCode(), http.StatusNotFound)
+	assert.Equal(http.StatusNotFound, r.StatusCode())
 
 	r, err = cli.R().Get("/users/" + user.ID)
 	assert.Nil(err)
-	assert.Equal(r.StatusCode(), http.StatusOK)
-	assert.Equal(string(r.Body()), userJSON)
+	assert.Equal(http.StatusOK, r.StatusCode())
+	assert.Equal(userJSON, string(r.Body()))
 }

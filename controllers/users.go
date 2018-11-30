@@ -25,7 +25,7 @@ func CreateUser(c *gin.Context) {
 		})
 		return
 	}
-	if err := userStore.Validate(user); err != nil {
+	if err := domain.Validate(user); err != nil {
 		c.JSON(http.StatusBadRequest, gin.H{
 			"message": err.Error(),
 		})

@@ -36,19 +36,6 @@ func (s *MessageStore) DeleteMessage(ID string) error {
 	return nil
 }
 
-func (s *MessageStore) Validate(message *domain.Message) error {
-	if message.Text == "" {
-		return errors.New("text is empty")
-	}
-	if message.SenderID == "" {
-		return errors.New("sender id is empty")
-	}
-	if message.ReceiverID == "" {
-		return errors.New("receiver id is empty")
-	}
-	return nil
-}
-
 func (s *MessageStore) SearchMessages(kv ...[2]string) ([]*domain.Message, error) {
 	return nil, nil
 }
