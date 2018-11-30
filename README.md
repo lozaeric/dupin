@@ -5,6 +5,7 @@
 ### Technologies
 * Golang 1.9.2
 * MongoDB 3.6.9
+* Redis 4.0.11
 
 ### Run
 ```bash
