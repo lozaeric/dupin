@@ -8,6 +8,8 @@ services:
      - "8080:8080"
     volumes:
      - .:/go/src/github.com/lozaeric/dupin
+    environment:
+     - ENV=production
     depends_on:
      - mongo
   #  - redis

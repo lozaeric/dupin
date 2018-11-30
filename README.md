@@ -6,10 +6,13 @@
 
 ## Run
 ```bash
-$ sudo docker-compose up 
+$ make run
 ```
 
 ## Test
+```bash
+$ make test
+```
 
 ## Endpoints
 TODO

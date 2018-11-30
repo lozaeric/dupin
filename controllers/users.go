@@ -2,9 +2,11 @@ package controllers
 
 import (
 	"net/http"
+	"os"
 
 	"github.com/gin-gonic/gin"
 	"github.com/lozaeric/dupin/domain"
+	"github.com/lozaeric/dupin/mock"
 	"github.com/lozaeric/dupin/mongo"
 )
 
@@ -42,9 +44,13 @@ func CreateUser(c *gin.Context) {
 }
 
 func init() {
-	var err error
-	userStore, err = mongo.NewUserStore()
-	if err != nil {
-		panic(err)
+	if os.Getenv("ENV") == "production" {
+		var err error
+		userStore, err = mongo.NewUserStore()
+		if err != nil {
+			panic(err)
+		}
+	} else {
+		userStore, _ = mock.NewUserStore()
 	}
 }
