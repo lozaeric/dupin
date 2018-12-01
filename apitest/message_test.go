@@ -36,11 +36,12 @@ func TestCreateMessage(t *testing.T) {
 	assert.Nil(err)
 	assert.Equal(http.StatusOK, r.StatusCode())
 
-	err = json.Unmarshal(r.Body(), &message)
+	err = json.Unmarshal(r.Body(), message)
 	assert.Nil(err)
 	assert.Equal(validMessageDTO.Text, message.Text)
 	assert.Equal(validMessageDTO.SenderID, message.SenderID)
 	assert.Equal(validMessageDTO.ReceiverID, message.ReceiverID)
+	assert.NotEmpty(message.DateCreated)
 	messageJSON = string(r.Body())
 }
 

@@ -4,6 +4,7 @@ import (
 	"errors"
 
 	"github.com/lozaeric/dupin/domain"
+	"github.com/lozaeric/dupin/utils"
 )
 
 type UserStore struct {
@@ -20,6 +21,7 @@ func (s *UserStore) User(ID string) (*domain.User, error) {
 
 func (s *UserStore) Create(user *domain.User) error {
 	user.ID = GenerateValidID()
+	user.DateCreated = utils.Now()
 	s.storage[user.ID] = user
 	return nil
 }

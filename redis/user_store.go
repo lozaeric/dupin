@@ -5,6 +5,7 @@ import (
 
 	"github.com/go-redis/redis"
 	"github.com/lozaeric/dupin/domain"
+	"github.com/lozaeric/dupin/utils"
 	"github.com/rs/xid"
 )
 
@@ -24,6 +25,8 @@ func (s *UserStore) User(ID string) (*domain.User, error) {
 
 func (s *UserStore) Create(user *domain.User) error {
 	user.ID = xid.New().String()
+	user.DateCreated = utils.Now()
+
 	key := usersPrefix + user.ID
 	b, err := json.Marshal(user)
 	if err != nil {

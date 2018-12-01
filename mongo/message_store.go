@@ -4,6 +4,7 @@ import (
 	"github.com/globalsign/mgo"
 	"github.com/globalsign/mgo/bson"
 	"github.com/lozaeric/dupin/domain"
+	"github.com/lozaeric/dupin/utils"
 	"github.com/rs/xid"
 )
 
@@ -25,6 +26,7 @@ func (s *MessageStore) Create(message *domain.Message) error {
 	defer conn.Close()
 
 	message.ID = xid.New().String()
+	message.DateCreated = utils.Now()
 	return conn.DB(database).C(messagesCollection).Insert(message)
 }
 

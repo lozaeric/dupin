@@ -41,6 +41,7 @@ func TestCreateUser(t *testing.T) {
 	assert.Equal(validUserDTO.Name, user.Name)
 	assert.Equal(validUserDTO.LastName, user.LastName)
 	assert.Equal(validUserDTO.Email, user.Email)
+	assert.NotEmpty(user.DateCreated)
 	userJSON = string(r.Body())
 }
 

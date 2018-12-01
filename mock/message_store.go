@@ -4,6 +4,7 @@ import (
 	"errors"
 
 	"github.com/lozaeric/dupin/domain"
+	"github.com/lozaeric/dupin/utils"
 )
 
 type MessageStore struct {
@@ -20,6 +21,7 @@ func (s *MessageStore) Message(ID string) (*domain.Message, error) {
 
 func (s *MessageStore) Create(message *domain.Message) error {
 	message.ID = GenerateValidID()
+	message.DateCreated = utils.Now()
 	s.storage[message.ID] = message
 	return nil
 }
