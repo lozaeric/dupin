@@ -17,7 +17,7 @@ func User(c *gin.Context) {
 		return
 	}
 	if user, err := userStore.User(ID); err != nil {
-		c.JSON(http.StatusNotFound, "id not found")
+		c.JSON(http.StatusNotFound, "user not found")
 	} else {
 		c.JSON(http.StatusOK, user)
 	}
@@ -27,7 +27,7 @@ func CreateUser(c *gin.Context) {
 	user := new(domain.User)
 	if err := c.BindJSON(user); err != nil {
 		c.JSON(http.StatusBadRequest, gin.H{
-			"message": "bad request",
+			"message": "invalid values",
 		})
 		return
 	}
@@ -38,7 +38,7 @@ func CreateUser(c *gin.Context) {
 		return
 	}
 	if err := userStore.Create(user); err != nil {
-		c.JSON(http.StatusNotFound, "id not found")
+		c.JSON(http.StatusInternalServerError, "db error")
 	} else {
 		c.JSON(http.StatusOK, user)
 	}
@@ -70,7 +70,7 @@ func UpdateUser(c *gin.Context) {
 		return
 	}
 	if err := userStore.Update(user); err != nil {
-		c.JSON(http.StatusInternalServerError, "db")
+		c.JSON(http.StatusInternalServerError, "db error")
 	} else {
 		c.JSON(http.StatusOK, user)
 	}

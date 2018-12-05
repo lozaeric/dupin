@@ -1,7 +1,6 @@
 package controllers
 
 import (
-	"fmt"
 	"net/http"
 
 	"github.com/gin-gonic/gin"
@@ -33,14 +32,13 @@ func CreateMessage(c *gin.Context) {
 		return
 	}
 	if err := validation.Validate(message); err != nil {
-		fmt.Println(err.Error())
 		c.JSON(http.StatusBadRequest, gin.H{
 			"message": err.Error(),
 		})
 		return
 	}
 	if err := messageStore.Create(message); err != nil {
-		c.JSON(http.StatusNotFound, "id not found")
+		c.JSON(http.StatusInternalServerError, "db error")
 	} else {
 		c.JSON(http.StatusOK, message)
 	}
@@ -51,7 +49,7 @@ func SearchMessages(c *gin.Context) {
 	err := domain.CheckMessageValues(map[string]interface{}{field: value})
 	if err != nil {
 		c.JSON(http.StatusBadRequest, gin.H{
-			"message": "empty field",
+			"message": "invalid values",
 		})
 		return
 	}
@@ -81,7 +79,7 @@ func UpdateMessage(c *gin.Context) {
 	}
 	message, err := messageStore.Message(ID)
 	if err != nil {
-		c.JSON(http.StatusNotFound, "user not found")
+		c.JSON(http.StatusNotFound, "message not found")
 		return
 	}
 	err = message.Update(values)
@@ -90,7 +88,7 @@ func UpdateMessage(c *gin.Context) {
 		return
 	}
 	if err := messageStore.Update(message); err != nil {
-		c.JSON(http.StatusInternalServerError, "db")
+		c.JSON(http.StatusInternalServerError, "db error")
 	} else {
 		c.JSON(http.StatusOK, message)
 	}
