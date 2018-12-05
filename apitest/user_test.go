@@ -11,49 +11,100 @@ import (
 )
 
 var (
-	user     = new(domain.User)
-	userJSON = ""
-)
-
-func TestCreateUser(t *testing.T) {
-	assert := assert.New(t)
-	invalidUserDTO := &domain.User{
-		Name:     "",
-		LastName: "a",
-		Email:    "b",
-	}
-	validUserDTO := &domain.User{
+	user = &domain.User{
 		Name:     "eric",
 		LastName: "loza",
 		Email:    "eric@lz.com",
 	}
+)
 
-	r, err := cli.R().SetBody(invalidUserDTO).Post("/users")
-	assert.Nil(err)
-	assert.Equal(http.StatusBadRequest, r.StatusCode())
+func TestCreateUser(t *testing.T) {
+	assert := assert.New(t)
+	cases := []*struct {
+		expectedStatus int
+		dto            *domain.User
+	}{
+		{
+			http.StatusBadRequest,
+			&domain.User{
+				Name:     "",
+				LastName: "loza",
+				Email:    "eric@lz.com",
+			},
+		},
+		{
+			http.StatusBadRequest,
+			&domain.User{
+				Name:     "eric",
+				LastName: "",
+				Email:    "eric@lz.com",
+			},
+		},
+		{
+			http.StatusBadRequest,
+			&domain.User{
+				Name:     "eric",
+				LastName: "loza",
+				Email:    "",
+			},
+		},
+		{
+			http.StatusOK,
+			user,
+		},
+	}
 
-	r, err = cli.R().SetBody(validUserDTO).Post("/users")
-	assert.Nil(err)
-	assert.Equal(http.StatusOK, r.StatusCode())
-
-	err = json.Unmarshal(r.Body(), user)
-	assert.Nil(err)
-	assert.Equal(validUserDTO.Name, user.Name)
-	assert.Equal(validUserDTO.LastName, user.LastName)
-	assert.Equal(validUserDTO.Email, user.Email)
-	assert.NotEmpty(user.DateCreated)
-	userJSON = string(r.Body())
+	for _, c := range cases {
+		r, err := cli.R().SetBody(c.dto).Post("/users")
+		assert.Nil(err)
+		assert.Equal(c.expectedStatus, r.StatusCode())
+		if c.expectedStatus == http.StatusOK {
+			u := new(domain.User)
+			err := json.Unmarshal(r.Body(), u)
+			assert.Nil(err)
+			assert.NotEmpty(u.ID)
+			assert.NotEmpty(u.DateCreated)
+			c.dto.ID = u.ID
+			c.dto.DateCreated = u.DateCreated
+			assert.Equal(c.dto, u)
+		}
+	}
 }
 
 func TestUser(t *testing.T) {
 	assert := assert.New(t)
 
-	r, err := cli.R().Get("/users/" + mock.GenerateValidID())
-	assert.Nil(err)
-	assert.Equal(http.StatusNotFound, r.StatusCode())
+	cases := []*struct {
+		expectedStatus int
+		ID             string
+		expectedUser   *domain.User
+	}{
+		{
+			http.StatusNotFound,
+			mock.GenerateValidID(),
+			nil,
+		},
+		{
+			http.StatusBadRequest,
+			"invalid",
+			nil,
+		},
+		{
+			http.StatusOK,
+			user.ID,
+			user,
+		},
+	}
 
-	r, err = cli.R().Get("/users/" + user.ID)
-	assert.Nil(err)
-	assert.Equal(http.StatusOK, r.StatusCode())
-	assert.Equal(userJSON, string(r.Body()))
+	for _, c := range cases {
+		r, err := cli.R().Get("/users/" + c.ID)
+		assert.Nil(err)
+		assert.Equal(c.expectedStatus, r.StatusCode())
+		if c.expectedStatus == http.StatusOK {
+			u := new(domain.User)
+			err := json.Unmarshal(r.Body(), u)
+			assert.Nil(err)
+			assert.Equal(c.expectedUser, u)
+		}
+	}
 }

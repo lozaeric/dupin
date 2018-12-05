@@ -1,6 +1,7 @@
 package controllers
 
 import (
+	"fmt"
 	"net/http"
 
 	"github.com/gin-gonic/gin"
@@ -32,6 +33,7 @@ func CreateMessage(c *gin.Context) {
 		return
 	}
 	if err := validation.Validate(message); err != nil {
+		fmt.Println(err.Error())
 		c.JSON(http.StatusBadRequest, gin.H{
 			"message": err.Error(),
 		})
@@ -53,9 +55,9 @@ func SearchMessages(c *gin.Context) {
 		})
 		return
 	}
-	if message, err := messageStore.Search(field, ID); err != nil {
+	if messages, err := messageStore.Search(field, ID); err != nil || len(messages) == 0 {
 		c.JSON(http.StatusNotFound, "id not found")
 	} else {
-		c.JSON(http.StatusOK, message)
+		c.JSON(http.StatusOK, messages)
 	}
 }

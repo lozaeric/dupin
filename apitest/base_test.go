@@ -12,7 +12,7 @@ import (
 )
 
 var cli = resty.New().
-	SetTimeout(30 * time.Millisecond).
+	SetTimeout(350 * time.Millisecond).
 	SetHostURL("http://localhost:8080")
 
 func TestMain(m *testing.M) {

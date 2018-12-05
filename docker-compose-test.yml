@@ -8,7 +8,6 @@ services:
      - "8080:8080"
     volumes:
      - .:/go/src/github.com/lozaeric/dupin
-    restart: always
     depends_on:
      - mongo
      - redis
@@ -16,13 +15,11 @@ services:
     image: "redis:4.0.11-alpine"
     ports:
      - "6379:6379"
-    restart: always
     logging:
      driver: none
   mongo:
     image: "mongo:3.6.9-stretch"
     ports:
      - "27017:27017"
-    restart: always
     logging:
      driver: none
