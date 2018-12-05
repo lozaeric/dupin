@@ -26,7 +26,17 @@ func (s *UserStore) User(ID string) (*domain.User, error) {
 func (s *UserStore) Create(user *domain.User) error {
 	user.ID = xid.New().String()
 	user.DateCreated = utils.Now()
+	user.DateUpdated = user.DateCreated
 
+	key := usersPrefix + user.ID
+	b, err := json.Marshal(user)
+	if err != nil {
+		return err
+	}
+	return s.client.Set(key, b, 0).Err()
+}
+
+func (s *UserStore) Update(user *domain.User) error {
 	key := usersPrefix + user.ID
 	b, err := json.Marshal(user)
 	if err != nil {

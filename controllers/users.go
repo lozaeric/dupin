@@ -43,3 +43,35 @@ func CreateUser(c *gin.Context) {
 		c.JSON(http.StatusOK, user)
 	}
 }
+
+func UpdateUser(c *gin.Context) {
+	ID := c.Param("id")
+	if !validation.IsValidID(ID) {
+		c.JSON(http.StatusBadRequest, gin.H{
+			"message": "invalid id",
+		})
+		return
+	}
+	values := make(map[string]interface{})
+	if err := c.BindJSON(&values); err != nil {
+		c.JSON(http.StatusBadRequest, gin.H{
+			"message": "invalid body",
+		})
+		return
+	}
+	user, err := userStore.User(ID)
+	if err != nil {
+		c.JSON(http.StatusNotFound, "user not found")
+		return
+	}
+	err = user.Update(values)
+	if err != nil {
+		c.JSON(http.StatusBadRequest, "invalid values")
+		return
+	}
+	if err := userStore.Update(user); err != nil {
+		c.JSON(http.StatusInternalServerError, "db")
+	} else {
+		c.JSON(http.StatusOK, user)
+	}
+}

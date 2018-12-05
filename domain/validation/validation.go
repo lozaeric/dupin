@@ -21,15 +21,38 @@ func Validate(o interface{}) error {
 	return nil
 }
 
-func IsValid(object reflect.Type, fieldName string, value interface{}) bool {
-	field, found := reflect.TypeOf(object).FieldByName(fieldName)
-	if !found {
-		return false
-	}
-	tag, found := field.Tag.Lookup("validate")
-	return found && validate.Var(value, tag) == nil
-}
-
 func IsValidID(ID string) bool {
 	return validate.Var(ID, "required,len=20,alphanum") == nil
+}
+
+func Update(o interface{}, values map[string]interface{}, updatable map[string]bool) error {
+	V, T := reflect.ValueOf(o).Elem(), reflect.TypeOf(o).Elem()
+	for k, v := range values {
+		if _, ok := updatable[k]; !ok {
+			return errors.New("invalid field")
+		}
+		for i := 0; i < T.NumField(); i++ {
+			f := T.Field(i)
+			if f.Tag.Get("json") == k {
+				actualT, valueT := f.Type.String(), reflect.TypeOf(v).String()
+				if actualT != valueT {
+					return errors.New("invalid value type")
+				}
+				if !isValid(f.Tag.Get("validate"), v) {
+					return errors.New("invalid value")
+				}
+				switch actualT {
+				case "string":
+					V.Field(i).SetString(v.(string))
+				case "bool":
+					V.Field(i).SetBool(v.(bool))
+				}
+			}
+		}
+	}
+	return nil
+}
+
+func isValid(validation string, value interface{}) bool {
+	return validation == "" || validate.Var(value, validation) == nil
 }

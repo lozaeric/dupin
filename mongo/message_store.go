@@ -29,6 +29,7 @@ func (s *MessageStore) Create(message *domain.Message) error {
 
 	message.ID = xid.New().String()
 	message.DateCreated = utils.Now()
+	message.DateUpdated = message.DateCreated
 	return conn.DB(database).C(messagesCollection).Insert(message)
 }
 
@@ -44,6 +45,13 @@ func (s *MessageStore) Search(field, value string) ([]*domain.Message, error) {
 	query[field] = value
 	err := conn.DB(database).C(messagesCollection).Find(query).All(&messages)
 	return messages, err
+}
+
+func (s *MessageStore) Update(message *domain.Message) error {
+	conn := s.session.Copy()
+	defer conn.Close()
+
+	return conn.DB(database).C(messagesCollection).Update(bson.M{"id": message.ID}, message)
 }
 
 func NewMessageStore() (*MessageStore, error) {

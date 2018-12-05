@@ -61,3 +61,35 @@ func SearchMessages(c *gin.Context) {
 		c.JSON(http.StatusOK, messages)
 	}
 }
+
+func UpdateMessage(c *gin.Context) {
+	ID := c.Param("id")
+	if !validation.IsValidID(ID) {
+		c.JSON(http.StatusBadRequest, gin.H{
+			"message": "invalid id",
+		})
+		return
+	}
+	values := make(map[string]interface{})
+	if err := c.BindJSON(&values); err != nil {
+		c.JSON(http.StatusBadRequest, gin.H{
+			"message": "invalid body",
+		})
+		return
+	}
+	message, err := messageStore.Message(ID)
+	if err != nil {
+		c.JSON(http.StatusNotFound, "user not found")
+		return
+	}
+	err = message.Update(values)
+	if err != nil {
+		c.JSON(http.StatusBadRequest, "invalid values")
+		return
+	}
+	if err := messageStore.Update(message); err != nil {
+		c.JSON(http.StatusInternalServerError, "db")
+	} else {
+		c.JSON(http.StatusOK, message)
+	}
+}

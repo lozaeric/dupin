@@ -74,8 +74,10 @@ func TestCreateMessage(t *testing.T) {
 			assert.Nil(err)
 			assert.NotEmpty(m.ID)
 			assert.NotEmpty(m.DateCreated)
+			assert.NotEmpty(m.DateUpdated)
 			c.dto.ID = m.ID
 			c.dto.DateCreated = m.DateCreated
+			c.dto.DateUpdated = m.DateUpdated
 			assert.Equal(c.dto, m)
 		}
 	}
@@ -158,6 +160,53 @@ func TestSearchMessage(t *testing.T) {
 			err := json.Unmarshal(r.Body(), &messages)
 			assert.Nil(err)
 			assert.Equal(c.expectedMessages, messages)
+		}
+	}
+}
+func TestUpdateMessage(t *testing.T) {
+	assert := assert.New(t)
+	message.Seen = true
+
+	cases := []*struct {
+		expectedStatus  int
+		ID              string
+		messageDTO      map[string]interface{}
+		expectedMessage *domain.Message
+	}{
+		{
+			http.StatusOK,
+			message.ID,
+			map[string]interface{}{
+				"seen": true,
+			},
+			message,
+		},
+		{
+			http.StatusBadRequest,
+			message.ID,
+			map[string]interface{}{
+				"id": "123",
+			},
+			nil,
+		},
+		{
+			http.StatusNotFound,
+			mock.GenerateValidID(),
+			map[string]interface{}{},
+			nil,
+		},
+	}
+
+	for _, c := range cases {
+		r, err := cli.R().SetBody(c.messageDTO).Put("/messages/" + c.ID)
+		assert.Nil(err)
+		assert.Equal(c.expectedStatus, r.StatusCode())
+		if c.expectedStatus == http.StatusOK {
+			m := new(domain.Message)
+			err := json.Unmarshal(r.Body(), m)
+			c.expectedMessage.DateUpdated = m.DateUpdated
+			assert.Nil(err)
+			assert.Equal(c.expectedMessage, m)
 		}
 	}
 }
