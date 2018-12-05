@@ -35,7 +35,7 @@ func (s *MessageStore) Delete(ID string) error {
 	return nil
 }
 
-func (s *MessageStore) Search(kv ...[2]string) ([]*domain.Message, error) {
+func (s *MessageStore) Search(field, value string) ([]*domain.Message, error) {
 	return nil, nil
 }
 

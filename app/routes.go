@@ -15,4 +15,5 @@ func setRoutes() {
 	router.POST("/users", controllers.CreateUser)
 	router.GET("/messages/:id", controllers.Message)
 	router.POST("/messages", controllers.CreateMessage)
+	router.GET("/search/messages", controllers.SearchMessages)
 }

@@ -24,7 +24,7 @@ func TestCreateMessage(t *testing.T) {
 	}
 	validMessageDTO := &domain.Message{
 		Text:       "holaaa",
-		SenderID:   "12345678901234567890",
+		SenderID:   "12345678901234567404",
 		ReceiverID: "12345678901234567890",
 	}
 
@@ -57,3 +57,25 @@ func TestMessage(t *testing.T) {
 	assert.Equal(http.StatusOK, r.StatusCode())
 	assert.Equal(messageJSON, string(r.Body()))
 }
+
+/*
+func TestSearchMessage(t *testing.T) {
+	assert := assert.New(t)
+	validMessageDTO := &domain.Message{
+		Text:       "chauu",
+		SenderID:   "12345678901234567404",
+		ReceiverID: "12345678901234567890",
+	}
+
+	r, err := cli.R().SetBody(validMessageDTO).Post("/messages")
+	assert.Nil(err)
+	assert.Equal(http.StatusOK, r.StatusCode())
+
+	r, err = cli.R().Get("/search/messages?receiver_id=12345678901234567890")
+	var messages []*domain.Message
+	err = json.Unmarshal(r.Body(), messages)
+	assert.Nil(err)
+	assert.Equal(http.StatusOK, r.StatusCode())
+	assert.Equal(2, len(messages))
+}
+*/

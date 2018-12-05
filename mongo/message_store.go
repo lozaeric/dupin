@@ -1,6 +1,8 @@
 package mongo
 
 import (
+	"errors"
+
 	"github.com/globalsign/mgo"
 	"github.com/globalsign/mgo/bson"
 	"github.com/lozaeric/dupin/domain"
@@ -37,8 +39,18 @@ func (s *MessageStore) Delete(ID string) error {
 	return conn.DB(database).C(messagesCollection).Remove(bson.M{"id": ID})
 }
 
-func (s *MessageStore) Search(kv ...[2]string) ([]*domain.Message, error) {
-	return nil, nil
+func (s *MessageStore) Search(field, value string) ([]*domain.Message, error) {
+	if field == "" || value == "" {
+		return nil, errors.New("invalid values")
+	}
+	conn := s.session.Copy()
+	defer conn.Close()
+
+	messages := []*domain.Message{}
+	query := bson.M{}
+	query[field] = value
+	err := conn.DB(database).C(messagesCollection).Find(query).All(&messages)
+	return messages, err
 }
 
 func NewMessageStore() (*MessageStore, error) {

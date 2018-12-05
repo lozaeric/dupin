@@ -5,12 +5,12 @@ import (
 
 	"github.com/gin-gonic/gin"
 	"github.com/lozaeric/dupin/domain"
-	"github.com/lozaeric/dupin/utils"
+	"github.com/lozaeric/dupin/domain/validation"
 )
 
 func User(c *gin.Context) {
 	ID := c.Param("id")
-	if !utils.IsValidID(ID) {
+	if !validation.IsValidID(ID) {
 		c.JSON(http.StatusBadRequest, gin.H{
 			"message": "invalid id",
 		})
@@ -31,7 +31,7 @@ func CreateUser(c *gin.Context) {
 		})
 		return
 	}
-	if err := utils.Validate(user); err != nil {
+	if err := validation.Validate(user); err != nil {
 		c.JSON(http.StatusBadRequest, gin.H{
 			"message": err.Error(),
 		})
