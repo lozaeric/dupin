@@ -1,7 +1,7 @@
 run: docker-compose.yml
 	docker-compose up
 
-test-integration:
+test-integration: docker-compose-test.yml
 	docker-compose -f docker-compose-test.yml up --abort-on-container-exit
 
 default: run
