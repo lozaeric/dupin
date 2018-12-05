@@ -136,17 +136,17 @@ func TestSearchMessage(t *testing.T) {
 	}{
 		{
 			http.StatusNotFound,
-			"field=receiver_id&id=00000000000000000000",
+			"field=receiver_id&value=00000000000000000000",
 			nil,
 		},
 		{
 			http.StatusOK,
-			"field=sender_id&id=11111111111111111111",
+			"field=sender_id&value=11111111111111111111",
 			[]*domain.Message{message, otherMessage},
 		},
 		{
 			http.StatusOK,
-			"field=receiver_id&id=99999999999999999999",
+			"field=receiver_id&value=99999999999999999999",
 			[]*domain.Message{message},
 		},
 	}

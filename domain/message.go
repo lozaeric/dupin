@@ -5,9 +5,17 @@ import (
 	"github.com/lozaeric/dupin/utils"
 )
 
-var messageUpdatable = map[string]bool{
-	"seen": true,
-}
+var (
+	messageInstance  = new(Message)
+	messageUpdatable = map[string]bool{
+		"seen": true,
+	}
+	messageSearchable = map[string]bool{
+		"receiver_id": true,
+		"sender_id":   true,
+		"seen":        true,
+	}
+)
 
 type Message struct {
 	ID          string `json:"id" bson:"id"`
@@ -33,4 +41,8 @@ func (m *Message) Update(values map[string]interface{}) (err error) {
 	}
 	m.DateUpdated = utils.Now()
 	return
+}
+
+func CheckMessageValues(values map[string]interface{}) error {
+	return validation.Check(messageInstance, values, messageSearchable)
 }

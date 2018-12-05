@@ -47,16 +47,18 @@ func CreateMessage(c *gin.Context) {
 }
 
 func SearchMessages(c *gin.Context) {
-	field, ID := c.Query("field"), c.Query("id")
-	// validate field and value
-	if field == "" || ID == "" {
+	field, value := c.Query("field"), c.Query("value")
+	err := domain.CheckMessageValues(map[string]interface{}{field: value})
+	if err != nil {
 		c.JSON(http.StatusBadRequest, gin.H{
 			"message": "empty field",
 		})
 		return
 	}
-	if messages, err := messageStore.Search(field, ID); err != nil || len(messages) == 0 {
-		c.JSON(http.StatusNotFound, "id not found")
+	if messages, err := messageStore.Search(field, value); err != nil {
+		c.JSON(http.StatusInternalServerError, "db error")
+	} else if len(messages) == 0 {
+		c.JSON(http.StatusNotFound, "messages not found")
 	} else {
 		c.JSON(http.StatusOK, messages)
 	}
