@@ -35,11 +35,6 @@ func (s *UserStore) Create(user *domain.User) error {
 	return s.client.Set(key, b, 0).Err()
 }
 
-func (s *UserStore) Delete(ID string) error {
-	key := usersPrefix + ID
-	return s.client.Del(key).Err()
-}
-
 func NewUserStore() (*UserStore, error) {
 	client := redis.NewClient(&redis.Options{
 		Addr: "redis:6379",

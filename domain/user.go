@@ -11,5 +11,4 @@ type User struct {
 type UserStore interface {
 	User(string) (*User, error)
 	Create(*User) error
-	Delete(string) error
 }

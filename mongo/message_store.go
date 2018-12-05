@@ -32,13 +32,6 @@ func (s *MessageStore) Create(message *domain.Message) error {
 	return conn.DB(database).C(messagesCollection).Insert(message)
 }
 
-func (s *MessageStore) Delete(ID string) error {
-	conn := s.session.Copy()
-	defer conn.Close()
-
-	return conn.DB(database).C(messagesCollection).Remove(bson.M{"id": ID})
-}
-
 func (s *MessageStore) Search(field, value string) ([]*domain.Message, error) {
 	if field == "" || value == "" {
 		return nil, errors.New("invalid values")

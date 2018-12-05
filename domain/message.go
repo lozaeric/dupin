@@ -11,6 +11,5 @@ type Message struct {
 type MessageStore interface {
 	Message(string) (*Message, error)
 	Create(*Message) error
-	Delete(string) error
 	Search(field, value string) ([]*Message, error)
 }
