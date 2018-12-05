@@ -12,11 +12,6 @@
 $ make run
 ```
 
-### Test
-```bash
-$ make test
-```
-
 ### Integration test
 ```bash
 $ make test-integration
