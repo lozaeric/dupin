@@ -4,8 +4,8 @@ import (
 	"net/http"
 
 	"github.com/gin-gonic/gin"
-	"github.com/lozaeric/dupin/domain"
-	"github.com/lozaeric/dupin/domain/validation"
+	"github.com/lozaeric/dupin/users-api/domain"
+	"github.com/lozaeric/dupin/users-api/domain/validation"
 )
 
 func User(c *gin.Context) {

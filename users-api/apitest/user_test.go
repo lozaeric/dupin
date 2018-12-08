@@ -5,8 +5,8 @@ import (
 	"net/http"
 	"testing"
 
-	"github.com/lozaeric/dupin/domain"
-	"github.com/lozaeric/dupin/mock"
+	"github.com/lozaeric/dupin/users-api/domain"
+	"github.com/lozaeric/dupin/users-api/mock"
 	"github.com/stretchr/testify/assert"
 )
 

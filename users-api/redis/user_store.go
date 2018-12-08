@@ -4,8 +4,8 @@ import (
 	"encoding/json"
 
 	"github.com/go-redis/redis"
-	"github.com/lozaeric/dupin/domain"
-	"github.com/lozaeric/dupin/utils"
+	"github.com/lozaeric/dupin/users-api/domain"
+	"github.com/lozaeric/dupin/users-api/utils"
 	"github.com/rs/xid"
 )
 
