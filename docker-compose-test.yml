@@ -1,15 +1,14 @@
 version: '3'
 services:
-  web:
+  users:
     image: golang:1.9.2
-    working_dir: /go/src/github.com/lozaeric/dupin/apitest
+    working_dir: /go/src/github.com/lozaeric/dupin/users-api/apitest
     command: go test -v
     ports:
-     - "8080:8080"
+     - "8081:8081"
     volumes:
-     - .:/go/src/github.com/lozaeric/dupin
+     - ./users-api:/go/src/github.com/lozaeric/dupin/users-api
     depends_on:
-     - mongo
      - redis
   redis:
     image: "redis:4.0.11-alpine"

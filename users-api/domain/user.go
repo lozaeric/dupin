@@ -1,8 +1,8 @@
 package domain
 
 import (
-	"github.com/lozaeric/dupin/toolit/utils"
-	"github.com/lozaeric/dupin/toolit/validation"
+	"github.com/lozaeric/dupin/toolkit/utils"
+	"github.com/lozaeric/dupin/toolkit/validation"
 )
 
 var userUpdatable = map[string]bool{
