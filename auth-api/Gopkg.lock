@@ -85,14 +85,13 @@
   version = "v1.1.0"
 
 [[projects]]
-  branch = "refactor"
+  branch = "master"
   name = "github.com/lozaeric/dupin"
   packages = [
     "toolkit/mock",
-    "toolkit/utils",
     "toolkit/validation"
   ]
-  revision = "e3463758a03a5f2576512667225c47e01f15ef3a"
+  revision = "640c13eefd6a5dd136f7365c7520c3283d60d8b1"
 
 [[projects]]
   branch = "master"
@@ -123,12 +122,6 @@
   packages = ["difflib"]
   revision = "792786c7400a136282c1664665ae0a8db921c6c2"
   version = "v1.0.0"
-
-[[projects]]
-  name = "github.com/rs/xid"
-  packages = ["."]
-  revision = "15d26544def341f036c5f8dca987a4cbe575032c"
-  version = "v1.2.1"
 
 [[projects]]
   name = "github.com/stretchr/testify"
@@ -193,6 +186,6 @@
 [solve-meta]
   analyzer-name = "dep"
   analyzer-version = 1
-  inputs-digest = "a9d802a62cade23a48e1efe1fd586e291746c58cf4531d14d298827ef800e24b"
+  inputs-digest = "9b4ac3f99fe75830e6c7d9b2417a895463f551504d526b1539d5cfccb0d78589"
   solver-name = "gps-cdcl"
   solver-version = 1

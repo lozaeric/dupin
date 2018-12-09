@@ -85,14 +85,14 @@
   version = "v1.1.0"
 
 [[projects]]
-  branch = "refactor"
+  branch = "master"
   name = "github.com/lozaeric/dupin"
   packages = [
     "toolkit/mock",
     "toolkit/utils",
     "toolkit/validation"
   ]
-  revision = "e3463758a03a5f2576512667225c47e01f15ef3a"
+  revision = "640c13eefd6a5dd136f7365c7520c3283d60d8b1"
 
 [[projects]]
   name = "github.com/mattn/go-isatty"
@@ -187,6 +187,6 @@
 [solve-meta]
   analyzer-name = "dep"
   analyzer-version = 1
-  inputs-digest = "41dfbd24b890bf447e33bb2ca5e8ed9c7cbd8a7a7893b2c3e2a2ab19c9c33f40"
+  inputs-digest = "6e454651c1a0e79641f93742ea405d1e372481db7b53b55bc7de7ef317d056eb"
   solver-name = "gps-cdcl"
   solver-version = 1
