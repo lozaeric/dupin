@@ -20,7 +20,7 @@ $ make test-integration
 ### APIs
 * messages-api
 * users-api
-* auth-api (TODO)
+* auth-api
 * storage-api (TODO)
 
 ### Endpoints
