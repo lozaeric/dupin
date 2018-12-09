@@ -6,7 +6,6 @@ import (
 	"github.com/go-redis/redis"
 	"github.com/lozaeric/dupin/toolkit/utils"
 	"github.com/lozaeric/dupin/users-api/domain"
-	"github.com/rs/xid"
 )
 
 type UserStore struct {
@@ -24,7 +23,7 @@ func (s *UserStore) User(ID string) (*domain.User, error) {
 }
 
 func (s *UserStore) Create(user *domain.User) error {
-	user.ID = xid.New().String()
+	user.ID = utils.GenerateID()
 	user.DateCreated = utils.Now()
 	user.DateUpdated = user.DateCreated
 

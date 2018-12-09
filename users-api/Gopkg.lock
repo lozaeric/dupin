@@ -92,7 +92,7 @@
     "toolkit/utils",
     "toolkit/validation"
   ]
-  revision = "5fba722deacaa4f1363fffd64ded743bf0e1cca2"
+  revision = "e3463758a03a5f2576512667225c47e01f15ef3a"
 
 [[projects]]
   name = "github.com/mattn/go-isatty"
@@ -187,6 +187,6 @@
 [solve-meta]
   analyzer-name = "dep"
   analyzer-version = 1
-  inputs-digest = "b3c173a4c11aa17fced9ea588591459d4d2232ff62bc373b9e37489483e88483"
+  inputs-digest = "41dfbd24b890bf447e33bb2ca5e8ed9c7cbd8a7a7893b2c3e2a2ab19c9c33f40"
   solver-name = "gps-cdcl"
   solver-version = 1

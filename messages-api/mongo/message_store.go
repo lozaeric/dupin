@@ -7,7 +7,6 @@ import (
 	"github.com/globalsign/mgo/bson"
 	"github.com/lozaeric/dupin/messages-api/domain"
 	"github.com/lozaeric/dupin/toolkit/utils"
-	"github.com/rs/xid"
 )
 
 type MessageStore struct {
@@ -27,7 +26,7 @@ func (s *MessageStore) Create(message *domain.Message) error {
 	conn := s.session.Copy()
 	defer conn.Close()
 
-	message.ID = xid.New().String()
+	message.ID = utils.GenerateID()
 	message.DateCreated = utils.Now()
 	message.DateUpdated = message.DateCreated
 	return conn.DB(database).C(messagesCollection).Insert(message)
