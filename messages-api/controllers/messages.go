@@ -4,8 +4,8 @@ import (
 	"net/http"
 
 	"github.com/gin-gonic/gin"
-	"github.com/lozaeric/dupin/domain"
-	"github.com/lozaeric/dupin/domain/validation"
+	"github.com/lozaeric/dupin/messages-api/domain"
+	"github.com/lozaeric/dupin/toolkit/validation"
 )
 
 func Message(c *gin.Context) {

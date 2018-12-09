@@ -4,8 +4,6 @@ services:
     image: golang:1.9.2
     working_dir: /go/src/github.com/lozaeric/dupin/users-api/apitest
     command: go test -v
-    ports:
-     - "8081:8081"
     volumes:
      - ./users-api:/go/src/github.com/lozaeric/dupin/users-api
     depends_on:
@@ -14,11 +12,5 @@ services:
     image: "redis:4.0.11-alpine"
     ports:
      - "6379:6379"
-    logging:
-     driver: none
-  mongo:
-    image: "mongo:3.6.9-stretch"
-    ports:
-     - "27017:27017"
     logging:
      driver: none

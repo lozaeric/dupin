@@ -1,5 +1,17 @@
 version: '3'
 services:
+  messages:
+    image: golang:1.9.2
+    working_dir: /go/src/github.com/lozaeric/dupin/messages-api
+    command: go run main.go
+    ports:
+     - "8080:8080"
+    volumes:
+     - ./messages-api:/go/src/github.com/lozaeric/dupin/messages-api
+    environment:
+     - ENV=production
+    depends_on:
+     - mongo
   users:
     image: golang:1.9.2
     working_dir: /go/src/github.com/lozaeric/dupin/users-api

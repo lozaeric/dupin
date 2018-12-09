@@ -7,7 +7,7 @@ import (
 	"time"
 
 	"github.com/go-resty/resty"
-	"github.com/lozaeric/dupin/app"
+	"github.com/lozaeric/dupin/messages-api/app"
 	"github.com/stretchr/testify/assert"
 )
 

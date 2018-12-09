@@ -54,29 +54,14 @@
 [[projects]]
   name = "github.com/go-playground/validator"
   packages = ["."]
-  revision = "1fa3c8d6336562f0a3f95c73593ee2b57ff4da11"
-  version = "v9.23.0"
-
-[[projects]]
-  name = "github.com/go-redis/redis"
-  packages = [
-    ".",
-    "internal",
-    "internal/consistenthash",
-    "internal/hashtag",
-    "internal/pool",
-    "internal/proto",
-    "internal/singleflight",
-    "internal/util"
-  ]
-  revision = "b3d9bf10f6666b2ee5100a6f3f84f4caf3b4e37d"
-  version = "v6.14.2"
+  revision = "0277b12d53df79c9dbf7311cb07fa9c81ed621bb"
+  version = "v9.24.0"
 
 [[projects]]
   name = "github.com/go-resty/resty"
   packages = ["."]
-  revision = "13ff84ebd5bdfa46a342d9edb869e21560a478f8"
-  version = "v1.10.2"
+  revision = "a59932b061db030cf7edc11d970c8b6013d04a32"
+  version = "v1.10.3"
 
 [[projects]]
   name = "github.com/golang/protobuf"
@@ -89,6 +74,22 @@
   packages = ["."]
   revision = "1624edc4454b8682399def8740d46db5e4362ba4"
   version = "v1.1.5"
+
+[[projects]]
+  name = "github.com/leodido/go-urn"
+  packages = ["."]
+  revision = "70078a794e8ea4b497ba7c19a78cd60f90ccf0f4"
+  version = "v1.1.0"
+
+[[projects]]
+  branch = "refactor"
+  name = "github.com/lozaeric/dupin"
+  packages = [
+    "toolkit/mock",
+    "toolkit/utils",
+    "toolkit/validation"
+  ]
+  revision = "7102393d730a8476dd0d8627f0d7ef8646d4dd35"
 
 [[projects]]
   name = "github.com/mattn/go-isatty"
@@ -139,13 +140,13 @@
     "idna",
     "publicsuffix"
   ]
-  revision = "fae4c4e3ad76c295c3d6d259f898136b4bf833a8"
+  revision = "610586996380ceef02dd726cc09df7e00a3f8e56"
 
 [[projects]]
   branch = "master"
   name = "golang.org/x/sys"
   packages = ["unix"]
-  revision = "4ed8d59d0b35e1e29334a206d1b3f38b1e5dfb31"
+  revision = "ad97f365e15054527b467150f898ec66d7f81e14"
 
 [[projects]]
   name = "golang.org/x/text"
@@ -183,6 +184,6 @@
 [solve-meta]
   analyzer-name = "dep"
   analyzer-version = 1
-  inputs-digest = "4b8c8390fd774d67d52378fb70f9197e6d523005c2337b3443ac6639ca589fce"
+  inputs-digest = "7c19d98b374e79aba35abc91457069aadf55e7df4739856e5176e5748191a609"
   solver-name = "gps-cdcl"
   solver-version = 1

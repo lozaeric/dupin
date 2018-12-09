@@ -1,8 +1,8 @@
 package controllers
 
 import (
-	"github.com/lozaeric/dupin/domain"
-	"github.com/lozaeric/dupin/mongo"
+	"github.com/lozaeric/dupin/messages-api/domain"
+	"github.com/lozaeric/dupin/messages-api/mongo"
 )
 
 var messageStore domain.MessageStore

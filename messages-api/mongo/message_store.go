@@ -5,8 +5,8 @@ import (
 
 	"github.com/globalsign/mgo"
 	"github.com/globalsign/mgo/bson"
-	"github.com/lozaeric/dupin/domain"
-	"github.com/lozaeric/dupin/utils"
+	"github.com/lozaeric/dupin/messages-api/domain"
+	"github.com/lozaeric/dupin/toolkit/utils"
 	"github.com/rs/xid"
 )
 

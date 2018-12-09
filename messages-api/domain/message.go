@@ -1,8 +1,8 @@
 package domain
 
 import (
-	"github.com/lozaeric/dupin/domain/validation"
-	"github.com/lozaeric/dupin/utils"
+	"github.com/lozaeric/dupin/toolkit/utils"
+	"github.com/lozaeric/dupin/toolkit/validation"
 )
 
 var (
