@@ -17,5 +17,11 @@ $ make run
 $ make test-integration
 ```
 
+### APIs
+* messages-api
+* users-api
+* auth-api (TODO)
+* storage-api (TODO)
+
 ### Endpoints
 TODO
