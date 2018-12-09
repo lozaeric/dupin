@@ -9,7 +9,7 @@ import (
 
 func setRoutes() {
 	router.GET("/ping", func(c *gin.Context) {
-		c.String(http.StatusOK, "pong ping")
+		c.String(http.StatusOK, "pong")
 	})
 	router.GET("/messages/:id", controllers.Message)
 	router.POST("/messages", controllers.CreateMessage)

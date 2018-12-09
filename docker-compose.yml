@@ -12,12 +12,24 @@ services:
      - ENV=production
     depends_on:
      - mongo
+  auth:
+    image: golang:1.9.2
+    working_dir: /go/src/github.com/lozaeric/dupin/auth-api
+    command: go run main.go
+    ports:
+     - "8081:8081"
+    volumes:
+     - ./auth-api:/go/src/github.com/lozaeric/dupin/auth-api
+    environment:
+     - ENV=production
+    depends_on:
+     - redis
   users:
     image: golang:1.9.2
     working_dir: /go/src/github.com/lozaeric/dupin/users-api
     command: go run main.go
     ports:
-     - "8081:8081"
+     - "8082:8082"
     volumes:
      - ./users-api:/go/src/github.com/lozaeric/dupin/users-api
     environment:
