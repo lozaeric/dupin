@@ -1,0 +1,16 @@
+version: '3'
+services:
+  users:
+    image: golang:1.9.2
+    working_dir: /go/src/github.com/lozaeric/dupin/users-api/apitest
+    command: go test -v
+    volumes:
+     - ./users-api:/go/src/github.com/lozaeric/dupin/users-api
+    depends_on:
+     - redis
+  redis:
+    image: "redis:4.0.11-alpine"
+    ports:
+     - "6379:6379"
+    logging:
+     driver: none

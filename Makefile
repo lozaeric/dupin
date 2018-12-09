@@ -1,9 +1,10 @@
 run: docker-compose.yml
 	docker-compose rm -f mongo redis
-	docker-compose up --abort-on-container-exit --exit-code-from web
+	docker-compose up --abort-on-container-exit
 
-test-integration: docker-compose-test.yml
+test-integration: docker-test-messages.yml docker-test-users.yml
 	docker-compose rm -f mongo redis
-	docker-compose -f docker-compose-test.yml up --abort-on-container-exit --exit-code-from web
+	docker-compose -f docker-test-messages.yml up --exit-code-from messages
+	docker-compose -f docker-test-users.yml up --exit-code-from users
 
 default: run

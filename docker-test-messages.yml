@@ -1,0 +1,16 @@
+version: '3'
+services:
+  messages:
+    image: golang:1.9.2
+    working_dir: /go/src/github.com/lozaeric/dupin/messages-api/apitest
+    command: go test -v
+    volumes:
+     - ./messages-api:/go/src/github.com/lozaeric/dupin/messages-api
+    depends_on:
+     - mongo
+  mongo:
+    image: "mongo:3.6.9-stretch"
+    ports:
+     - "27017:27017"
+    logging:
+     driver: none
