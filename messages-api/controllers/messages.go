@@ -4,6 +4,7 @@ import (
 	"net/http"
 
 	"github.com/gin-gonic/gin"
+	"github.com/lozaeric/dupin/messages-api/clients"
 	"github.com/lozaeric/dupin/messages-api/domain"
 	"github.com/lozaeric/dupin/toolkit/validation"
 )
@@ -37,6 +38,19 @@ func CreateMessage(c *gin.Context) {
 		})
 		return
 	}
+	if _, err := clients.User(message.ReceiverID); err != nil {
+		c.JSON(http.StatusBadRequest, gin.H{
+			"message": "receiver not found",
+		})
+		return
+	}
+	if _, err := clients.User(message.SenderID); err != nil {
+		c.JSON(http.StatusBadRequest, gin.H{
+			"message": "sender not found",
+		})
+		return
+	}
+
 	if err := messageStore.Create(message); err != nil {
 		c.JSON(http.StatusInternalServerError, "db error")
 	} else {
