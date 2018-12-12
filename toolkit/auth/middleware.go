@@ -31,7 +31,7 @@ func (t *Token) HasScope(scope string) bool {
 	return false
 }
 
-func AuthMiddleware(c *gin.Context) {
+func Middleware(c *gin.Context) {
 	tokenID := c.GetHeader("x-auth")
 	r, err := authCli.R().Get("/tokens/" + tokenID)
 	if err != nil || r.StatusCode() == http.StatusInternalServerError {
