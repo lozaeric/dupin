@@ -6,6 +6,7 @@ import (
 	"github.com/gin-gonic/gin"
 	"github.com/lozaeric/dupin/messages-api/clients"
 	"github.com/lozaeric/dupin/messages-api/domain"
+	"github.com/lozaeric/dupin/toolkit/auth"
 	"github.com/lozaeric/dupin/toolkit/validation"
 )
 
@@ -17,7 +18,10 @@ func Message(c *gin.Context) {
 		})
 		return
 	}
+	tk, _ := c.Get("token")
 	if message, err := messageStore.Message(ID); err != nil {
+		c.JSON(http.StatusNotFound, "id not found")
+	} else if token := tk.(auth.Token); message.SenderID != token.UserID && message.ReceiverID != token.UserID {
 		c.JSON(http.StatusNotFound, "id not found")
 	} else {
 		c.JSON(http.StatusOK, message)
