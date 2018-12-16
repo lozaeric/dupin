@@ -41,7 +41,7 @@ func setupMocks() {
 	for _, u := range validUsers {
 		validUser.ID = u
 		res, _ := httpmock.NewJsonResponder(http.StatusOK, validUser)
-		httpmock.RegisterResponder("GET", "http://user:8080/users/"+u, res)
+		httpmock.RegisterResponder("GET", "http://users:8080/users/"+u, res)
 		validToken := &auth.Token{
 			ID:     "TOKEN" + u,
 			UserID: u,

@@ -15,12 +15,10 @@ var (
 	validUserID = "11111111111111111111"
 	message     = &domain.Message{
 		Text:       "holaaa",
-		SenderID:   validUserID,
 		ReceiverID: "99999999999999999999",
 	}
 	otherMessage = &domain.Message{
 		Text:       "holaaa",
-		SenderID:   validUserID,
 		ReceiverID: "88888888888888888888",
 	}
 )

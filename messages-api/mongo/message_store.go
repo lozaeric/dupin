@@ -40,8 +40,12 @@ func (s *MessageStore) Search(userID, field, value string) ([]*domain.Message, e
 	defer conn.Close()
 
 	messages := []*domain.Message{}
-	query := bson.M{}
-	query["sender_id"] = userID
+	query := bson.M{
+		"$or": []bson.M{
+			{"sender_id": userID},
+			{"receiver_id": userID},
+		},
+	}
 	if field != "" && value != "" {
 		query[field] = value
 	}

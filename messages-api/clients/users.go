@@ -13,7 +13,7 @@ import (
 
 var usersCli = resty.New().
 	SetTimeout(50 * time.Millisecond).
-	SetHostURL("http://user:8080")
+	SetHostURL("http://users:8080")
 
 func User(ID string) (*domain.User, error) {
 	r, err := usersCli.R().Get("/users/" + ID)
