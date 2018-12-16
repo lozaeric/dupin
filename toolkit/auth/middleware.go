@@ -60,7 +60,7 @@ func Middleware(c *gin.Context) {
 	c.Next()
 }
 
-func Token(c *gin.Context) (*Token, error) {
+func ParseToken(c *gin.Context) (*Token, error) {
 	tk, found := c.Get("token")
 	if !found {
 		return nil, errors.New("token data doesnt exist")
