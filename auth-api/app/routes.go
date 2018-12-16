@@ -15,4 +15,6 @@ func setRoutes() {
 	//router.POST("/application", controllers.CreateApplication)
 	router.GET("/tokens/:id", controllers.Token)
 	router.POST("/tokens", controllers.CreateToken)
+	router.POST("/passwords", controllers.CreatePassword)
+	router.POST("/passwords/validate", controllers.ValidatePassword)
 }

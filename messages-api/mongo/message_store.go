@@ -40,7 +40,7 @@ func (s *MessageStore) Search(userID, field, value string) ([]*domain.Message, e
 	defer conn.Close()
 
 	messages := []*domain.Message{}
-	query := bson.M{
+	query := bson.M{ // it works ?
 		"$or": []bson.M{
 			{"sender_id": userID},
 			{"receiver_id": userID},

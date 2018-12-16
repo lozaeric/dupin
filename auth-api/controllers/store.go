@@ -2,13 +2,12 @@ package controllers
 
 import (
 	"github.com/lozaeric/dupin/auth-api/domain"
-	"github.com/lozaeric/dupin/auth-api/nanoid"
 	"github.com/lozaeric/dupin/auth-api/redis"
 )
 
 var (
-	tokenStore     domain.TokenStore
-	tokenGenerator domain.TokenGenerator
+	tokenStore      domain.TokenStore
+	secureInfoStore domain.SecureInfoStore
 )
 
 func init() {
@@ -17,5 +16,8 @@ func init() {
 	if err != nil {
 		panic(err)
 	}
-	tokenGenerator = new(nanoid.TokenGenerator)
+	secureInfoStore, err = redis.NewPasswordStore()
+	if err != nil {
+		panic(err)
+	}
 }

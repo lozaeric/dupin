@@ -14,6 +14,7 @@ const (
 	TokenLength     = 25
 	TokenAlphabet   = "0123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ"
 	TokenValidation = "required,len=25,alphanum" //TODO: utils and mock
+	BcryptCost      = 7
 )
 
 func IsValidID(ID string) bool {

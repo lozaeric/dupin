@@ -37,8 +37,8 @@ func CreateToken(c *gin.Context) {
 		})
 		return
 	}
-
-	secureToken, err := tokenGenerator.Generate(token.ApplicationID, token.UserID)
+	// check user id
+	secureToken, err := domain.NewToken(token.ApplicationID, token.UserID)
 	if err != nil {
 		c.JSON(http.StatusInternalServerError, "token generator error")
 		return

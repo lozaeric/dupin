@@ -1,6 +1,10 @@
 package domain
 
-import "time"
+import (
+	"time"
+
+	nanoid "github.com/matoous/go-nanoid"
+)
 
 type Token struct {
 	ID             string   `json:"id"`
@@ -11,17 +15,25 @@ type Token struct {
 	ExpirationDate string   `json:"expiration_date"`
 }
 
-func (t *Token) CalculateDates() {
+func NewToken(applicationID, userID string) (*Token, error) {
+	tokenID, err := nanoid.Generate(TokenAlphabet, TokenLength)
+	if err != nil {
+		return nil, err
+	}
+
 	now := time.Now()
-	t.DateCreated = now.Format(time.RFC3339)
-	t.ExpirationDate = now.Add(TokenTTL).Format(time.RFC3339)
+	token := &Token{
+		ID:             tokenID,
+		ApplicationID:  applicationID,
+		UserID:         userID,
+		Scopes:         []string{"read", "write"}, //TODO
+		DateCreated:    now.Format(time.RFC3339),
+		ExpirationDate: now.Add(TokenTTL).Format(time.RFC3339),
+	}
+	return token, nil
 }
 
 type TokenStore interface {
 	Token(string) (*Token, error)
 	Create(*Token) error
-}
-
-type TokenGenerator interface {
-	Generate(string, string) (*Token, error)
 }
