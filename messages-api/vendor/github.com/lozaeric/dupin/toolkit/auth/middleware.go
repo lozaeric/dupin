@@ -33,6 +33,13 @@ func (t *Token) HasScope(scope string) bool {
 
 func Middleware(c *gin.Context) {
 	tokenID := c.GetHeader("x-auth")
+	if tokenID == "" {
+		c.AbortWithStatusJSON(http.StatusForbidden, gin.H{
+			"message": "token is invalid",
+		})
+		return
+	}
+
 	r, err := authCli.R().Get("/tokens/" + tokenID)
 	if r.StatusCode() == http.StatusNotFound || r.StatusCode() == http.StatusBadRequest {
 		c.AbortWithStatusJSON(http.StatusForbidden, gin.H{

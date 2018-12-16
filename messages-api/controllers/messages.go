@@ -21,8 +21,8 @@ func Message(c *gin.Context) {
 	tk, _ := c.Get("token")
 	if message, err := messageStore.Message(ID); err != nil {
 		c.JSON(http.StatusNotFound, "id not found")
-	} else if token := tk.(auth.Token); message.SenderID != token.UserID && message.ReceiverID != token.UserID {
-		c.JSON(http.StatusNotFound, "id not found")
+	} else if token := tk.(*auth.Token); message.SenderID != token.UserID && message.ReceiverID != token.UserID {
+		c.JSON(http.StatusForbidden, "you must be the sender or receiver")
 	} else {
 		c.JSON(http.StatusOK, message)
 	}
@@ -42,6 +42,11 @@ func CreateMessage(c *gin.Context) {
 		})
 		return
 	}
+	tk, _ := c.Get("token")
+	if token := tk.(*auth.Token); message.SenderID != token.UserID && message.ReceiverID != token.UserID {
+		c.JSON(http.StatusForbidden, "you must be the sender or receiver")
+		return
+	}
 	if _, err := clients.User(message.ReceiverID); err != nil {
 		c.JSON(http.StatusBadRequest, gin.H{
 			"message": "receiver not found",
@@ -54,7 +59,6 @@ func CreateMessage(c *gin.Context) {
 		})
 		return
 	}
-
 	if err := messageStore.Create(message); err != nil {
 		c.JSON(http.StatusInternalServerError, "db error")
 	} else {
@@ -98,6 +102,11 @@ func UpdateMessage(c *gin.Context) {
 	message, err := messageStore.Message(ID)
 	if err != nil {
 		c.JSON(http.StatusNotFound, "message not found")
+		return
+	}
+	tk, _ := c.Get("token")
+	if token := tk.(*auth.Token); message.SenderID != token.UserID && message.ReceiverID != token.UserID {
+		c.JSON(http.StatusForbidden, "you must be the sender or receiver")
 		return
 	}
 	err = message.Update(values)

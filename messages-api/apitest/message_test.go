@@ -12,7 +12,8 @@ import (
 )
 
 var (
-	message = &domain.Message{
+	validToken = "TOKEN00000000000000000000"
+	message    = &domain.Message{
 		Text:       "holaaa",
 		SenderID:   "11111111111111111111",
 		ReceiverID: "99999999999999999999",
@@ -65,7 +66,13 @@ func TestCreateMessage(t *testing.T) {
 	}
 
 	for _, c := range cases {
-		r, err := cli.R().SetBody(c.dto).Post("/messages")
+		token := validToken
+		if c.dto.SenderID != "" {
+			token = "TOKEN" + c.dto.SenderID
+		}
+		r, err := cli.R().SetBody(c.dto).
+			SetHeader("x-auth", token).
+			Post("/messages")
 		assert.Nil(err)
 		assert.Equal(c.expectedStatus, r.StatusCode())
 		if c.expectedStatus == http.StatusOK {
@@ -114,7 +121,13 @@ func TestMessage(t *testing.T) {
 	}
 
 	for _, c := range cases {
-		r, err := cli.R().Get("/messages/" + c.ID)
+		token := validToken
+		if m := c.expectedMessage; m != nil && m.SenderID != "" {
+			token = "TOKEN" + c.expectedMessage.SenderID
+		}
+		r, err := cli.R().SetBody(c.expectedMessage).
+			SetHeader("x-auth", token).
+			Get("/messages/" + c.ID)
 		assert.Nil(err)
 		assert.Equal(c.expectedStatus, r.StatusCode())
 		if c.expectedStatus == http.StatusOK {
@@ -187,7 +200,7 @@ func TestUpdateMessage(t *testing.T) {
 			map[string]interface{}{
 				"id": "123",
 			},
-			nil,
+			message,
 		},
 		{
 			http.StatusNotFound,
@@ -198,7 +211,13 @@ func TestUpdateMessage(t *testing.T) {
 	}
 
 	for _, c := range cases {
-		r, err := cli.R().SetBody(c.messageDTO).Put("/messages/" + c.ID)
+		token := validToken
+		if m := c.expectedMessage; m != nil && m.SenderID != "" {
+			token = "TOKEN" + c.expectedMessage.SenderID
+		}
+		r, err := cli.R().SetBody(c.messageDTO).
+			SetHeader("x-auth", token).
+			Put("/messages/" + c.ID)
 		assert.Nil(err)
 		assert.Equal(c.expectedStatus, r.StatusCode())
 		if c.expectedStatus == http.StatusOK {
