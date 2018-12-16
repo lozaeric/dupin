@@ -31,7 +31,7 @@ type MessageStore interface {
 	Message(string) (*Message, error)
 	Create(*Message) error
 	Update(*Message) error
-	Search(field, value string) ([]*Message, error)
+	Search(string, string, string) ([]*Message, error)
 }
 
 func (m *Message) Update(values map[string]interface{}) (err error) {

@@ -17,5 +17,6 @@ func setRoutes() {
 		GET("/:id", controllers.Message).
 		POST("", controllers.CreateMessage).
 		PUT("/:id", controllers.UpdateMessage)
-	router.GET("/search/messages", controllers.SearchMessages)
+	router.Group("/search", auth.Middleware).
+		GET("/messages", controllers.SearchMessages)
 }

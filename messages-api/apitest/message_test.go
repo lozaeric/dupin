@@ -12,15 +12,15 @@ import (
 )
 
 var (
-	validToken = "TOKEN00000000000000000000"
-	message    = &domain.Message{
+	validUserID = "11111111111111111111"
+	message     = &domain.Message{
 		Text:       "holaaa",
-		SenderID:   "11111111111111111111",
+		SenderID:   validUserID,
 		ReceiverID: "99999999999999999999",
 	}
 	otherMessage = &domain.Message{
 		Text:       "holaaa",
-		SenderID:   "11111111111111111111",
+		SenderID:   validUserID,
 		ReceiverID: "88888888888888888888",
 	}
 )
@@ -29,47 +29,39 @@ func TestCreateMessage(t *testing.T) {
 	assert := assert.New(t)
 	cases := []*struct {
 		expectedStatus int
+		userID         string
 		dto            *domain.Message
 	}{
 		{
 			http.StatusBadRequest,
+			validUserID,
 			&domain.Message{
 				Text:       "chauuu",
-				SenderID:   "",
-				ReceiverID: "00000000000000000000",
-			},
-		},
-		{
-			http.StatusBadRequest,
-			&domain.Message{
-				Text:       "chauuu",
-				SenderID:   "00000000000000000000",
 				ReceiverID: "",
 			},
 		},
 		{
 			http.StatusBadRequest,
+			validUserID,
 			&domain.Message{
 				Text:       "",
-				SenderID:   "00000000000000000000",
 				ReceiverID: "00000000000000000001",
 			},
 		},
 		{
 			http.StatusOK,
+			validUserID,
 			message,
 		},
 		{
 			http.StatusOK,
+			validUserID,
 			otherMessage,
 		},
 	}
 
 	for _, c := range cases {
-		token := validToken
-		if c.dto.SenderID != "" {
-			token = "TOKEN" + c.dto.SenderID
-		}
+		token := "TOKEN" + c.userID
 		r, err := cli.R().SetBody(c.dto).
 			SetHeader("x-auth", token).
 			Post("/messages")
@@ -85,6 +77,7 @@ func TestCreateMessage(t *testing.T) {
 			c.dto.ID = m.ID
 			c.dto.DateCreated = m.DateCreated
 			c.dto.DateUpdated = m.DateUpdated
+			c.dto.SenderID = m.SenderID
 			assert.Equal(c.dto, m)
 		}
 	}
@@ -95,39 +88,36 @@ func TestMessage(t *testing.T) {
 
 	cases := []*struct {
 		expectedStatus  int
-		ID              string
+		userID          string
 		expectedMessage *domain.Message
 	}{
 		{
 			http.StatusNotFound,
-			mock.GenerateValidID(),
-			nil,
+			validUserID,
+			&domain.Message{ID: mock.GenerateValidID()},
 		},
 		{
 			http.StatusBadRequest,
-			"invalid",
-			nil,
+			validUserID,
+			&domain.Message{ID: "invalid"},
 		},
 		{
 			http.StatusOK,
-			message.ID,
+			validUserID,
 			message,
 		},
 		{
 			http.StatusOK,
-			otherMessage.ID,
+			validUserID,
 			otherMessage,
 		},
 	}
 
 	for _, c := range cases {
-		token := validToken
-		if m := c.expectedMessage; m != nil && m.SenderID != "" {
-			token = "TOKEN" + c.expectedMessage.SenderID
-		}
+		token := "TOKEN" + c.userID
 		r, err := cli.R().SetBody(c.expectedMessage).
 			SetHeader("x-auth", token).
-			Get("/messages/" + c.ID)
+			Get("/messages/" + c.expectedMessage.ID)
 		assert.Nil(err)
 		assert.Equal(c.expectedStatus, r.StatusCode())
 		if c.expectedStatus == http.StatusOK {
@@ -144,28 +134,33 @@ func TestSearchMessage(t *testing.T) {
 
 	cases := []*struct {
 		expectedStatus   int
-		params           string
+		userID, params   string
 		expectedMessages []*domain.Message
 	}{
 		{
 			http.StatusNotFound,
+			validUserID,
 			"field=receiver_id&value=00000000000000000000",
 			nil,
 		},
 		{
 			http.StatusOK,
-			"field=sender_id&value=11111111111111111111",
+			validUserID,
+			"",
 			[]*domain.Message{message, otherMessage},
 		},
 		{
 			http.StatusOK,
+			validUserID,
 			"field=receiver_id&value=99999999999999999999",
 			[]*domain.Message{message},
 		},
 	}
 
 	for _, c := range cases {
-		r, err := cli.R().Get("/search/messages?" + c.params)
+		token := "TOKEN" + c.userID
+		r, err := cli.R().SetHeader("x-auth", token).
+			Get("/search/messages?" + c.params)
 		assert.Nil(err)
 		assert.Equal(c.expectedStatus, r.StatusCode())
 		if c.expectedStatus == http.StatusOK {
@@ -182,42 +177,33 @@ func TestUpdateMessage(t *testing.T) {
 
 	cases := []*struct {
 		expectedStatus  int
-		ID              string
+		userID          string
 		messageDTO      map[string]interface{}
 		expectedMessage *domain.Message
 	}{
 		{
+			http.StatusBadRequest,
+			validUserID,
+			map[string]interface{}{
+				"receiver_id": "123",
+			},
+			message,
+		},
+		{
 			http.StatusOK,
-			message.ID,
+			validUserID,
 			map[string]interface{}{
 				"seen": true,
 			},
 			message,
 		},
-		{
-			http.StatusBadRequest,
-			message.ID,
-			map[string]interface{}{
-				"id": "123",
-			},
-			message,
-		},
-		{
-			http.StatusNotFound,
-			mock.GenerateValidID(),
-			map[string]interface{}{},
-			nil,
-		},
 	}
 
 	for _, c := range cases {
-		token := validToken
-		if m := c.expectedMessage; m != nil && m.SenderID != "" {
-			token = "TOKEN" + c.expectedMessage.SenderID
-		}
+		token := "TOKEN" + c.userID
 		r, err := cli.R().SetBody(c.messageDTO).
 			SetHeader("x-auth", token).
-			Put("/messages/" + c.ID)
+			Put("/messages/" + c.expectedMessage.ID)
 		assert.Nil(err)
 		assert.Equal(c.expectedStatus, r.StatusCode())
 		if c.expectedStatus == http.StatusOK {

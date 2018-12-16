@@ -88,7 +88,7 @@
   version = "v1.1.0"
 
 [[projects]]
-  branch = "master"
+  branch = "auth"
   name = "github.com/lozaeric/dupin"
   packages = [
     "toolkit/auth",
@@ -96,7 +96,7 @@
     "toolkit/utils",
     "toolkit/validation"
   ]
-  revision = "7b96ce7ab2c64fd72f74e2306c6e6aee24e0bde1"
+  revision = "c0af940bfb08afd0ecb044f3e8bfc01644e9ba4d"
 
 [[projects]]
   name = "github.com/mattn/go-isatty"
@@ -191,6 +191,6 @@
 [solve-meta]
   analyzer-name = "dep"
   analyzer-version = 1
-  inputs-digest = "65fc55202d932c5cae2af9b181622590287c082e1b2c9c15f9e04bdcb756f210"
+  inputs-digest = "991963b55388929a1edcdd855abec47fc62ed663d1c1c428feb03827b33c8949"
   solver-name = "gps-cdcl"
   solver-version = 1
