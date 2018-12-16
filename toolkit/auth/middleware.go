@@ -2,6 +2,7 @@ package auth
 
 import (
 	"encoding/json"
+	"errors"
 	"net/http"
 	"time"
 
@@ -57,4 +58,16 @@ func Middleware(c *gin.Context) {
 	json.Unmarshal(r.Body(), token)
 	c.Set("token", token)
 	c.Next()
+}
+
+func Token(c *gin.Context) (*Token, error) {
+	tk, found := c.Get("token")
+	if !found {
+		return nil, errors.New("token data doesnt exist")
+	}
+	token, ok := tk.(*Token)
+	if !ok {
+		return nil, errors.New("token is invalid")
+	}
+	return token, nil
 }
