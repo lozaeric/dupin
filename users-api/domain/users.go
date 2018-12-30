@@ -11,17 +11,17 @@ var userUpdatable = map[string]bool{
 }
 
 type User struct {
-	ID          string `json:"id"`
+	ID          string `json:"id" validate:"required"`
 	Name        string `json:"name" validate:"required"`
 	LastName    string `json:"last_name" validate:"required"`
 	Email       string `json:"email" validate:"required,email"`
-	DateCreated string `json:"date_created"`
-	DateUpdated string `json:"date_updated"`
+	DateCreated string `json:"date_created" validate:"required"`
+	DateUpdated string `json:"date_updated" validate:"required"`
 }
 
 type UserStore interface {
 	User(string) (*User, error)
-	Create(*User) error
+	Save(*User) error
 	Update(*User) error
 }
 

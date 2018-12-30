@@ -4,7 +4,6 @@ import (
 	"encoding/json"
 
 	"github.com/go-redis/redis"
-	"github.com/lozaeric/dupin/toolkit/utils"
 	"github.com/lozaeric/dupin/users-api/domain"
 )
 
@@ -14,30 +13,26 @@ type UserStore struct {
 
 func (s *UserStore) User(ID string) (*domain.User, error) {
 	key := usersPrefix + ID
-	user := new(domain.User)
+	u := new(domain.User)
 	b, err := s.client.Get(key).Bytes()
 	if err != nil {
 		return nil, err
 	}
-	return user, json.Unmarshal(b, user)
+	return u, json.Unmarshal(b, u)
 }
 
-func (s *UserStore) Create(user *domain.User) error {
-	user.ID = utils.GenerateID()
-	user.DateCreated = utils.Now()
-	user.DateUpdated = user.DateCreated
-
-	key := usersPrefix + user.ID
-	b, err := json.Marshal(user)
+func (s *UserStore) Save(u *domain.User) error {
+	key := usersPrefix + u.ID
+	b, err := json.Marshal(u)
 	if err != nil {
 		return err
 	}
 	return s.client.Set(key, b, 0).Err()
 }
 
-func (s *UserStore) Update(user *domain.User) error {
-	key := usersPrefix + user.ID
-	b, err := json.Marshal(user)
+func (s *UserStore) Update(u *domain.User) error {
+	key := usersPrefix + u.ID
+	b, err := json.Marshal(u)
 	if err != nil {
 		return err
 	}
@@ -46,7 +41,7 @@ func (s *UserStore) Update(user *domain.User) error {
 
 func NewUserStore() (*UserStore, error) {
 	client := redis.NewClient(&redis.Options{
-		Addr: "redis:6379",
+		Addr: redisURL,
 		// client config
 	})
 

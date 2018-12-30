@@ -1,4 +1,4 @@
-package controllers
+package users
 
 import (
 	"github.com/lozaeric/dupin/users-api/domain"
