@@ -4,10 +4,10 @@ import (
 	"net/http"
 
 	"github.com/gin-gonic/gin"
-	"github.com/lozaeric/dupin/messages-api/clients"
 	"github.com/lozaeric/dupin/messages-api/domain"
 	"github.com/lozaeric/dupin/toolkit/auth"
 	"github.com/lozaeric/dupin/toolkit/validation"
+	"github.com/lozaeric/duping/messages-api/services"
 )
 
 func Message(c *gin.Context) {
@@ -52,15 +52,9 @@ func CreateMessage(c *gin.Context) {
 		return
 	}
 	message.SenderID = token.UserID
-	if _, err := clients.User(message.ReceiverID); err != nil {
+	if _, err := services.User(message.ReceiverID); err != nil {
 		c.JSON(http.StatusBadRequest, gin.H{
 			"message": "receiver not found",
-		})
-		return
-	}
-	if _, err := clients.User(message.SenderID); err != nil {
-		c.JSON(http.StatusBadRequest, gin.H{
-			"message": "sender not found",
 		})
 		return
 	}

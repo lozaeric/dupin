@@ -8,6 +8,12 @@
   version = "v1.1.1"
 
 [[projects]]
+  name = "github.com/dgrijalva/jwt-go"
+  packages = ["."]
+  revision = "06ea1031745cb8b3dab3f6a236daf2b0aa468b7e"
+  version = "v3.2.0"
+
+[[projects]]
   branch = "master"
   name = "github.com/gin-contrib/sse"
   packages = ["."]
@@ -85,19 +91,14 @@
   version = "v1.1.0"
 
 [[projects]]
-  branch = "master"
+  branch = "auth"
   name = "github.com/lozaeric/dupin"
   packages = [
+    "toolkit/apierr",
     "toolkit/mock",
     "toolkit/validation"
   ]
-  revision = "640c13eefd6a5dd136f7365c7520c3283d60d8b1"
-
-[[projects]]
-  branch = "master"
-  name = "github.com/matoous/go-nanoid"
-  packages = ["."]
-  revision = "eab626deece6c9806cfbe2290859eb31a934edb0"
+  revision = "62574415624d75f605d9d4905bc58781709ba800"
 
 [[projects]]
   name = "github.com/mattn/go-isatty"
@@ -128,6 +129,51 @@
   packages = ["assert"]
   revision = "f35b8ab0b5a2cef36673838d662e249dd9c94686"
   version = "v1.2.2"
+
+[[projects]]
+  branch = "master"
+  name = "github.com/tidwall/btree"
+  packages = ["."]
+  revision = "9876f1454cf0993a53d74c27196993e345f50dd1"
+
+[[projects]]
+  name = "github.com/tidwall/buntdb"
+  packages = ["."]
+  revision = "2da7c106683f522198cdf55ed8db42b374de50d7"
+  version = "v1.0.0"
+
+[[projects]]
+  name = "github.com/tidwall/gjson"
+  packages = ["."]
+  revision = "1e3f6aeaa5bad08d777ea7807b279a07885dd8b2"
+  version = "v1.1.3"
+
+[[projects]]
+  branch = "master"
+  name = "github.com/tidwall/grect"
+  packages = ["."]
+  revision = "ba9a043346eba55344e40d66a5e74cfda3a9d293"
+
+[[projects]]
+  name = "github.com/tidwall/match"
+  packages = ["."]
+  revision = "33827db735fff6510490d69a8622612558a557ed"
+  version = "v1.0.1"
+
+[[projects]]
+  branch = "master"
+  name = "github.com/tidwall/rtree"
+  packages = [
+    ".",
+    "base"
+  ]
+  revision = "6cd427091e0e662cb4f8e2c9eb1a41e1c46ff0d3"
+
+[[projects]]
+  branch = "master"
+  name = "github.com/tidwall/tinyqueue"
+  packages = ["."]
+  revision = "1e39f55115634cad2c504631c8bfcc292f2c9c55"
 
 [[projects]]
   name = "github.com/ugorji/go"
@@ -181,10 +227,31 @@
   version = "v0.3.0"
 
 [[projects]]
+  name = "gopkg.in/go-oauth2/redis.v3"
+  packages = ["."]
+  revision = "d446af213bae4148ef8c8b933770aa48f2447f69"
+  version = "v3.0.2"
+
+[[projects]]
   name = "gopkg.in/go-playground/validator.v8"
   packages = ["."]
   revision = "5f1438d3fca68893a817e4a66806cea46a9e4ebf"
   version = "v8.18.2"
+
+[[projects]]
+  name = "gopkg.in/oauth2.v3"
+  packages = [
+    ".",
+    "errors",
+    "generates",
+    "manage",
+    "models",
+    "server",
+    "store",
+    "utils/uuid"
+  ]
+  revision = "c189294430e3d66f61941ec37b8b9a3a666ea903"
+  version = "v3.9.3"
 
 [[projects]]
   name = "gopkg.in/yaml.v2"
@@ -195,6 +262,6 @@
 [solve-meta]
   analyzer-name = "dep"
   analyzer-version = 1
-  inputs-digest = "c7ba9418dfdfe1faf432e5ec9daf522bb133f35e33359139441782daf3bc291a"
+  inputs-digest = "fc05cf0853b12b828e5a6cbbbbfde80960e32ffb16cd85cb050f83bd9f2520ca"
   solver-name = "gps-cdcl"
   solver-version = 1

@@ -11,32 +11,31 @@ type PasswordStore struct {
 	client *redis.Client
 }
 
-func (s *PasswordStore) SecureInfo(UserID string) (*domain.SecureInfo, error) {
-	key := passwordsPrefix + UserID
-	info := new(domain.SecureInfo)
-	b, err := s.client.Get(key).Bytes()
+func (s *PasswordStore) Password(Username string) (*domain.Password, error) {
+	info := new(domain.Password)
+	b, err := s.client.Get(Username).Bytes()
 	if err != nil {
 		return nil, err
 	}
 	return info, json.Unmarshal(b, info)
 }
 
-func (s *PasswordStore) Create(info *domain.SecureInfo) error {
-	key := passwordsPrefix + info.UserID
-	b, err := json.Marshal(info)
+func (s *PasswordStore) Save(pwd *domain.Password) error {
+	b, err := json.Marshal(pwd)
 	if err != nil {
 		return err
 	}
-	return s.client.Set(key, b, 0).Err()
+	return s.client.Set(pwd.Username, b, 0).Err()
 }
 
 func NewPasswordStore() (*PasswordStore, error) {
 	client := redis.NewClient(&redis.Options{
-		Addr: "redis:6379",
+		Addr: RedisURL,
+		DB:   passwordsDatabase,
 		// client config
 	})
 
 	return &PasswordStore{
 		client: client,
-	}, nil
+	}, client.Ping().Err()
 }
