@@ -19,7 +19,13 @@ var (
 )
 
 func init() {
+	setupManager()
+	setupServer()
+}
+
+func setupManager() {
 	manager = manage.NewDefaultManager()
+	manager.MapAccessGenerate(newTokenGenerate())
 	manager.MapTokenStorage(oredis.NewRedisStore(&oredis.Options{
 		Addr: redis.RedisURL,
 		DB:   redis.TokensDatabase,
@@ -28,13 +34,16 @@ func init() {
 	if err != nil {
 		panic(err)
 	}
-	manager.MapClientStorage(clientStore)
 	// api gateway cli
 	clientStore.Save(&models.Client{
 		ID:     "123123123", // todo: must be safe, nanoid?
 		Secret: "111222333", // todo: must be safe, nanoid?
 	})
+	//
+	manager.MapClientStorage(clientStore)
+}
 
+func setupServer() {
 	srv = server.NewDefaultServer(manager)
 	srv.SetClientInfoHandler(server.ClientFormHandler)
 	srv.SetPasswordAuthorizationHandler(passwords.ValidatePWD)

@@ -1,63 +1,59 @@
 package auth
 
 import (
-	"encoding/json"
 	"errors"
+	"fmt"
 	"net/http"
-	"time"
+	"os"
 
+	jwt "github.com/dgrijalva/jwt-go"
 	"github.com/gin-gonic/gin"
-	"github.com/go-resty/resty"
 )
 
-var authCli = resty.New().
-	SetTimeout(50 * time.Millisecond).
-	SetHostURL("http://auth:8080")
+var secret = os.Getenv("SECRET_JWT")
 
 type Token struct {
-	ID             string   `json:"id"`
-	ApplicationID  string   `json:"application_id"`
-	UserID         string   `json:"user_id"`
-	Scopes         []string `json:"scopes"`
-	DateCreated    string   `json:"date_created"`
-	ExpirationDate string   `json:"expiration_date"`
+	ClientID    string `json:"client_id"`
+	UserID      string `json:"user_id"`
+	Scope       string `json:"scope"`
+	ExpiratedAt int64  `json:"expiration_date"`
 }
 
-func (t *Token) HasScope(scope string) bool {
-	for _, s := range t.Scopes {
-		if s == scope {
-			return true
+func Mw(c *gin.Context) {
+	tokenStr := c.GetHeader("x-auth")
+	if tokenStr == "" {
+		c.AbortWithStatusJSON(http.StatusForbidden, gin.H{
+			"message": "token is invalid",
+		})
+		return
+	}
+
+	token, err := jwt.Parse(tokenStr, func(token *jwt.Token) (interface{}, error) {
+		if _, ok := token.Method.(*jwt.SigningMethodHMAC); !ok {
+			return nil, fmt.Errorf("Unexpected signing method: %v", token.Header["alg"])
 		}
-	}
-	return false
-}
-
-func Middleware(c *gin.Context) {
-	tokenID := c.GetHeader("x-auth")
-	if tokenID == "" {
+		return secret, nil
+	})
+	if err != nil {
 		c.AbortWithStatusJSON(http.StatusForbidden, gin.H{
 			"message": "token is invalid",
 		})
 		return
 	}
-
-	r, err := authCli.R().Get("/tokens/" + tokenID)
-	if r.StatusCode() == http.StatusNotFound || r.StatusCode() == http.StatusBadRequest {
-		c.AbortWithStatusJSON(http.StatusForbidden, gin.H{
-			"message": "token is invalid",
-		})
+	if claims, ok := token.Claims.(jwt.MapClaims); ok && token.Valid {
+		tk := &Token{
+			ClientID:    claims["client_id"].(string),
+			UserID:      claims["application_id"].(string),
+			ExpiratedAt: claims["expired_at"].(int64),
+			Scope:       claims["scope"].(string),
+		}
+		c.Set("token", tk)
+		c.Next()
 		return
 	}
-	if err != nil || r.StatusCode() != http.StatusOK {
-		c.AbortWithStatusJSON(http.StatusInternalServerError, gin.H{
-			"message": "auth-api error",
-		})
-		return
-	}
-	token := new(Token)
-	json.Unmarshal(r.Body(), token)
-	c.Set("token", token)
-	c.Next()
+	c.AbortWithStatusJSON(http.StatusForbidden, gin.H{
+		"message": "token is invalid",
+	})
 }
 
 func ParseToken(c *gin.Context) (*Token, error) {
@@ -65,9 +61,5 @@ func ParseToken(c *gin.Context) (*Token, error) {
 	if !found {
 		return nil, errors.New("token data doesnt exist")
 	}
-	token, ok := tk.(*Token)
-	if !ok {
-		return nil, errors.New("token is invalid")
-	}
-	return token, nil
+	return tk.(*Token), nil
 }

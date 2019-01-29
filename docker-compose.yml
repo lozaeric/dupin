@@ -22,6 +22,7 @@ services:
      - ./auth-api:/go/src/github.com/lozaeric/dupin/auth-api
     environment:
      - ENV=production
+     - SECRET_JWT='in the hall of the mountain king'
     depends_on:
      - redis
   users:

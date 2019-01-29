@@ -31,27 +31,6 @@
   version = "v1.3.0"
 
 [[projects]]
-  name = "github.com/go-playground/locales"
-  packages = [
-    ".",
-    "currency"
-  ]
-  revision = "f63010822830b6fe52288ee52d5a1151088ce039"
-  version = "v0.12.1"
-
-[[projects]]
-  name = "github.com/go-playground/universal-translator"
-  packages = ["."]
-  revision = "b32fa301c9fe55953584134cb6853a13c87ec0a1"
-  version = "v0.16.0"
-
-[[projects]]
-  name = "github.com/go-playground/validator"
-  packages = ["."]
-  revision = "0277b12d53df79c9dbf7311cb07fa9c81ed621bb"
-  version = "v9.24.0"
-
-[[projects]]
   name = "github.com/go-redis/redis"
   packages = [
     ".",
@@ -85,19 +64,9 @@
   version = "v1.1.5"
 
 [[projects]]
-  name = "github.com/leodido/go-urn"
-  packages = ["."]
-  revision = "70078a794e8ea4b497ba7c19a78cd60f90ccf0f4"
-  version = "v1.1.0"
-
-[[projects]]
   branch = "auth"
   name = "github.com/lozaeric/dupin"
-  packages = [
-    "toolkit/apierr",
-    "toolkit/mock",
-    "toolkit/validation"
-  ]
+  packages = ["toolkit/apierr"]
   revision = "62574415624d75f605d9d4905bc58781709ba800"
 
 [[projects]]
@@ -129,51 +98,6 @@
   packages = ["assert"]
   revision = "f35b8ab0b5a2cef36673838d662e249dd9c94686"
   version = "v1.2.2"
-
-[[projects]]
-  branch = "master"
-  name = "github.com/tidwall/btree"
-  packages = ["."]
-  revision = "9876f1454cf0993a53d74c27196993e345f50dd1"
-
-[[projects]]
-  name = "github.com/tidwall/buntdb"
-  packages = ["."]
-  revision = "2da7c106683f522198cdf55ed8db42b374de50d7"
-  version = "v1.0.0"
-
-[[projects]]
-  name = "github.com/tidwall/gjson"
-  packages = ["."]
-  revision = "1e3f6aeaa5bad08d777ea7807b279a07885dd8b2"
-  version = "v1.1.3"
-
-[[projects]]
-  branch = "master"
-  name = "github.com/tidwall/grect"
-  packages = ["."]
-  revision = "ba9a043346eba55344e40d66a5e74cfda3a9d293"
-
-[[projects]]
-  name = "github.com/tidwall/match"
-  packages = ["."]
-  revision = "33827db735fff6510490d69a8622612558a557ed"
-  version = "v1.0.1"
-
-[[projects]]
-  branch = "master"
-  name = "github.com/tidwall/rtree"
-  packages = [
-    ".",
-    "base"
-  ]
-  revision = "6cd427091e0e662cb4f8e2c9eb1a41e1c46ff0d3"
-
-[[projects]]
-  branch = "master"
-  name = "github.com/tidwall/tinyqueue"
-  packages = ["."]
-  revision = "1e39f55115634cad2c504631c8bfcc292f2c9c55"
 
 [[projects]]
   name = "github.com/ugorji/go"
@@ -247,7 +171,6 @@
     "manage",
     "models",
     "server",
-    "store",
     "utils/uuid"
   ]
   revision = "c189294430e3d66f61941ec37b8b9a3a666ea903"
@@ -262,6 +185,6 @@
 [solve-meta]
   analyzer-name = "dep"
   analyzer-version = 1
-  inputs-digest = "fc05cf0853b12b828e5a6cbbbbfde80960e32ffb16cd85cb050f83bd9f2520ca"
+  inputs-digest = "4a153d8af4cf339d981cc9cbcba8ee4d574d83c1887406d7e88ea18b57b71c62"
   solver-name = "gps-cdcl"
   solver-version = 1
