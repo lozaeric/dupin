@@ -54,6 +54,6 @@ func (t *TokenGenerate) Token(data *oauth2.GenerateBasic, isGenRefresh bool) (ac
 
 func newTokenGenerate() *TokenGenerate {
 	return &TokenGenerate{
-		jwtgen: generates.NewJWTAccessGenerate([]byte(Secret), SigningMethod),
+		jwtgen: generates.NewJWTAccessGenerate([]byte(secret), SigningMethod),
 	}
 }
