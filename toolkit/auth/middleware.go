@@ -19,7 +19,7 @@ type Token struct {
 	ExpiratedAt int64  `json:"expiration_date"`
 }
 
-func Mw(c *gin.Context) {
+func Middleware(c *gin.Context) {
 	tokenStr := c.GetHeader("x-auth")
 	if tokenStr == "" {
 		c.AbortWithStatusJSON(http.StatusForbidden, gin.H{
