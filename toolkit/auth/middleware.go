@@ -63,3 +63,9 @@ func ParseToken(c *gin.Context) (*Token, error) {
 	}
 	return tk.(*Token), nil
 }
+
+func init() {
+	if os.Getenv("ENV") != "production" {
+		secret = "TEST"
+	}
+}
