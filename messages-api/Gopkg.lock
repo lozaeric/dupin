@@ -8,6 +8,12 @@
   version = "v1.1.1"
 
 [[projects]]
+  name = "github.com/dgrijalva/jwt-go"
+  packages = ["."]
+  revision = "06ea1031745cb8b3dab3f6a236daf2b0aa468b7e"
+  version = "v3.2.0"
+
+[[projects]]
   branch = "master"
   name = "github.com/gin-contrib/sse"
   packages = ["."]
@@ -96,7 +102,7 @@
     "toolkit/utils",
     "toolkit/validation"
   ]
-  revision = "c0af940bfb08afd0ecb044f3e8bfc01644e9ba4d"
+  revision = "15a33c4e5e6dfc72429025c063650a30c2561928"
 
 [[projects]]
   name = "github.com/mattn/go-isatty"

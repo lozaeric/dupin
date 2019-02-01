@@ -59,7 +59,7 @@ func TestCreateMessage(t *testing.T) {
 	}
 
 	for _, c := range cases {
-		token := "TOKEN" + c.userID
+		token := validTokens[c.userID]
 		r, err := cli.R().SetBody(c.dto).
 			SetHeader("x-auth", token).
 			Post("/messages")
@@ -112,7 +112,7 @@ func TestMessage(t *testing.T) {
 	}
 
 	for _, c := range cases {
-		token := "TOKEN" + c.userID
+		token := validTokens[c.userID]
 		r, err := cli.R().SetBody(c.expectedMessage).
 			SetHeader("x-auth", token).
 			Get("/messages/" + c.expectedMessage.ID)
@@ -156,7 +156,7 @@ func TestSearchMessage(t *testing.T) {
 	}
 
 	for _, c := range cases {
-		token := "TOKEN" + c.userID
+		token := validTokens[c.userID]
 		r, err := cli.R().SetHeader("x-auth", token).
 			Get("/search/messages?" + c.params)
 		assert.Nil(err)
@@ -198,7 +198,7 @@ func TestUpdateMessage(t *testing.T) {
 	}
 
 	for _, c := range cases {
-		token := "TOKEN" + c.userID
+		token := validTokens[c.userID]
 		r, err := cli.R().SetBody(c.messageDTO).
 			SetHeader("x-auth", token).
 			Put("/messages/" + c.expectedMessage.ID)

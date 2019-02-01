@@ -5,9 +5,9 @@ import (
 
 	"github.com/gin-gonic/gin"
 	"github.com/lozaeric/dupin/messages-api/domain"
+	"github.com/lozaeric/dupin/messages-api/services"
 	"github.com/lozaeric/dupin/toolkit/auth"
 	"github.com/lozaeric/dupin/toolkit/validation"
-	"github.com/lozaeric/duping/messages-api/services"
 )
 
 func Message(c *gin.Context) {
