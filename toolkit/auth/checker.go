@@ -49,7 +49,7 @@ func (t *JWTTokenChecker) Token(claims jwt.Claims) (*Token, error) {
 	if claims, ok := claims.(jwt.MapClaims); ok {
 		return &Token{
 			ClientID: claims["client_id"].(string),
-			UserID:   claims["application_id"].(string),
+			UserID:   claims["user_id"].(string),
 			//ExpiratedAt: claims["expired_at"].(int64),
 			Scope: claims["scope"].(string),
 		}, nil
@@ -69,7 +69,7 @@ func (t *MockTokenChecker) Token(claims jwt.Claims) (*Token, error) {
 	if claims, ok := claims.(jwt.MapClaims); ok {
 		return &Token{
 			ClientID: claims["client_id"].(string),
-			UserID:   claims["application_id"].(string),
+			UserID:   claims["user_id"].(string),
 			//ExpiratedAt: claims["expired_at"].(int64),
 			Scope: claims["scope"].(string),
 		}, nil
