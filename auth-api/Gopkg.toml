@@ -42,7 +42,7 @@
   version = "1.10.3"
 
 [[constraint]]
-  branch = "master"
+  branch = "auth"
   name = "github.com/lozaeric/dupin"
 
 [[constraint]]

@@ -8,6 +8,12 @@
   version = "v1.1.1"
 
 [[projects]]
+  name = "github.com/dgrijalva/jwt-go"
+  packages = ["."]
+  revision = "06ea1031745cb8b3dab3f6a236daf2b0aa468b7e"
+  version = "v3.2.0"
+
+[[projects]]
   branch = "master"
   name = "github.com/gin-contrib/sse"
   packages = ["."]
@@ -23,27 +29,6 @@
   ]
   revision = "b869fe1415e4b9eb52f247441830d502aece2d4d"
   version = "v1.3.0"
-
-[[projects]]
-  name = "github.com/go-playground/locales"
-  packages = [
-    ".",
-    "currency"
-  ]
-  revision = "f63010822830b6fe52288ee52d5a1151088ce039"
-  version = "v0.12.1"
-
-[[projects]]
-  name = "github.com/go-playground/universal-translator"
-  packages = ["."]
-  revision = "b32fa301c9fe55953584134cb6853a13c87ec0a1"
-  version = "v0.16.0"
-
-[[projects]]
-  name = "github.com/go-playground/validator"
-  packages = ["."]
-  revision = "0277b12d53df79c9dbf7311cb07fa9c81ed621bb"
-  version = "v9.24.0"
 
 [[projects]]
   name = "github.com/go-redis/redis"
@@ -79,25 +64,10 @@
   version = "v1.1.5"
 
 [[projects]]
-  name = "github.com/leodido/go-urn"
-  packages = ["."]
-  revision = "70078a794e8ea4b497ba7c19a78cd60f90ccf0f4"
-  version = "v1.1.0"
-
-[[projects]]
-  branch = "master"
+  branch = "auth"
   name = "github.com/lozaeric/dupin"
-  packages = [
-    "toolkit/mock",
-    "toolkit/validation"
-  ]
-  revision = "640c13eefd6a5dd136f7365c7520c3283d60d8b1"
-
-[[projects]]
-  branch = "master"
-  name = "github.com/matoous/go-nanoid"
-  packages = ["."]
-  revision = "eab626deece6c9806cfbe2290859eb31a934edb0"
+  packages = ["toolkit/apierr"]
+  revision = "62574415624d75f605d9d4905bc58781709ba800"
 
 [[projects]]
   name = "github.com/mattn/go-isatty"
@@ -137,6 +107,15 @@
 
 [[projects]]
   branch = "master"
+  name = "golang.org/x/crypto"
+  packages = [
+    "bcrypt",
+    "blowfish"
+  ]
+  revision = "505ab145d0a99da450461ae2c1a9f6cd10d1f447"
+
+[[projects]]
+  branch = "master"
   name = "golang.org/x/net"
   packages = [
     "idna",
@@ -172,10 +151,30 @@
   version = "v0.3.0"
 
 [[projects]]
+  name = "gopkg.in/go-oauth2/redis.v3"
+  packages = ["."]
+  revision = "d446af213bae4148ef8c8b933770aa48f2447f69"
+  version = "v3.0.2"
+
+[[projects]]
   name = "gopkg.in/go-playground/validator.v8"
   packages = ["."]
   revision = "5f1438d3fca68893a817e4a66806cea46a9e4ebf"
   version = "v8.18.2"
+
+[[projects]]
+  name = "gopkg.in/oauth2.v3"
+  packages = [
+    ".",
+    "errors",
+    "generates",
+    "manage",
+    "models",
+    "server",
+    "utils/uuid"
+  ]
+  revision = "c189294430e3d66f61941ec37b8b9a3a666ea903"
+  version = "v3.9.3"
 
 [[projects]]
   name = "gopkg.in/yaml.v2"
@@ -186,6 +185,6 @@
 [solve-meta]
   analyzer-name = "dep"
   analyzer-version = 1
-  inputs-digest = "9b4ac3f99fe75830e6c7d9b2417a895463f551504d526b1539d5cfccb0d78589"
+  inputs-digest = "4a153d8af4cf339d981cc9cbcba8ee4d574d83c1887406d7e88ea18b57b71c62"
   solver-name = "gps-cdcl"
   solver-version = 1

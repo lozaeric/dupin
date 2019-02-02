@@ -7,6 +7,7 @@ import (
 	"time"
 
 	"github.com/go-resty/resty"
+	"github.com/jarcoal/httpmock"
 	"github.com/lozaeric/dupin/users-api/app"
 	"github.com/stretchr/testify/assert"
 )
@@ -18,6 +19,11 @@ var cli = resty.New().
 func TestMain(m *testing.M) {
 	go app.Run()
 	time.Sleep(3 * time.Second)
+
+	httpmock.Activate()
+	defer httpmock.DeactivateAndReset()
+	setupMocks()
+
 	os.Exit(m.Run())
 }
 
@@ -26,4 +32,10 @@ func TestPing(t *testing.T) {
 	r, err := cli.R().Get("/ping")
 	assert.Nil(err)
 	assert.Equal(http.StatusOK, r.StatusCode())
+}
+
+func setupMocks() {
+	httpmock.RegisterResponder("POST", "http://auth:8080/passwords",
+		httpmock.NewStringResponder(http.StatusOK, "ok"))
+	httpmock.RegisterNoResponder(httpmock.InitialTransport.RoundTrip)
 }

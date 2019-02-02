@@ -8,6 +8,12 @@
   version = "v1.1.1"
 
 [[projects]]
+  name = "github.com/dgrijalva/jwt-go"
+  packages = ["."]
+  revision = "06ea1031745cb8b3dab3f6a236daf2b0aa468b7e"
+  version = "v3.2.0"
+
+[[projects]]
   branch = "master"
   name = "github.com/gin-contrib/sse"
   packages = ["."]
@@ -88,7 +94,7 @@
   version = "v1.1.0"
 
 [[projects]]
-  branch = "master"
+  branch = "auth"
   name = "github.com/lozaeric/dupin"
   packages = [
     "toolkit/auth",
@@ -96,7 +102,7 @@
     "toolkit/utils",
     "toolkit/validation"
   ]
-  revision = "f2ad0924114823f5a9cdf298988f76b297e9dcf0"
+  revision = "15a33c4e5e6dfc72429025c063650a30c2561928"
 
 [[projects]]
   name = "github.com/mattn/go-isatty"
@@ -191,6 +197,6 @@
 [solve-meta]
   analyzer-name = "dep"
   analyzer-version = 1
-  inputs-digest = "65fc55202d932c5cae2af9b181622590287c082e1b2c9c15f9e04bdcb756f210"
+  inputs-digest = "991963b55388929a1edcdd855abec47fc62ed663d1c1c428feb03827b33c8949"
   solver-name = "gps-cdcl"
   solver-version = 1

@@ -1,16 +1,6 @@
 package apitest
 
-import (
-	"encoding/json"
-	"net/http"
-	"testing"
-	"time"
-
-	"github.com/lozaeric/dupin/auth-api/domain"
-	"github.com/lozaeric/dupin/toolkit/mock"
-	"github.com/stretchr/testify/assert"
-)
-
+/*
 var (
 	token = &domain.Token{
 		ApplicationID: mock.GenerateValidID(),
@@ -110,3 +100,4 @@ func TestExpiratedToken(t *testing.T) {
 	assert.Nil(err)
 	assert.Equal(http.StatusNotFound, r.StatusCode())
 }
+*/

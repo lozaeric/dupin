@@ -73,6 +73,12 @@
   version = "v1.2.0"
 
 [[projects]]
+  branch = "master"
+  name = "github.com/jarcoal/httpmock"
+  packages = ["."]
+  revision = "53def6cd0f87425f5425d4f0f27f66f048759b94"
+
+[[projects]]
   name = "github.com/json-iterator/go"
   packages = ["."]
   revision = "1624edc4454b8682399def8740d46db5e4362ba4"
@@ -85,14 +91,15 @@
   version = "v1.1.0"
 
 [[projects]]
-  branch = "master"
+  branch = "auth"
   name = "github.com/lozaeric/dupin"
   packages = [
+    "toolkit/apierr",
     "toolkit/mock",
     "toolkit/utils",
     "toolkit/validation"
   ]
-  revision = "640c13eefd6a5dd136f7365c7520c3283d60d8b1"
+  revision = "5cce1c2574da16fbdfedd8b6217467f6a9afbc89"
 
 [[projects]]
   name = "github.com/mattn/go-isatty"
@@ -187,6 +194,6 @@
 [solve-meta]
   analyzer-name = "dep"
   analyzer-version = 1
-  inputs-digest = "6e454651c1a0e79641f93742ea405d1e372481db7b53b55bc7de7ef317d056eb"
+  inputs-digest = "47fc78a2e42d7b47d6fe3d773a0f813611a4d308dc1a567beb58ee2658a23491"
   solver-name = "gps-cdcl"
   solver-version = 1

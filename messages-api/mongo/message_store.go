@@ -32,16 +32,23 @@ func (s *MessageStore) Create(message *domain.Message) error {
 	return conn.DB(database).C(messagesCollection).Insert(message)
 }
 
-func (s *MessageStore) Search(field, value string) ([]*domain.Message, error) {
-	if field == "" || value == "" {
-		return nil, errors.New("invalid values")
+func (s *MessageStore) Search(userID, field, value string) ([]*domain.Message, error) {
+	if userID == "" {
+		return nil, errors.New("invalid user id")
 	}
 	conn := s.session.Copy()
 	defer conn.Close()
 
 	messages := []*domain.Message{}
-	query := bson.M{}
-	query[field] = value
+	query := bson.M{ // it works ?
+		"$or": []bson.M{
+			{"sender_id": userID},
+			{"receiver_id": userID},
+		},
+	}
+	if field != "" && value != "" {
+		query[field] = value
+	}
 	err := conn.DB(database).C(messagesCollection).Find(query).All(&messages)
 	return messages, err
 }

@@ -8,6 +8,8 @@ services:
      - ./auth-api:/go/src/github.com/lozaeric/dupin/auth-api
     depends_on:
      - redis
+    environment:
+     - SECRET_JWT='test'
   redis:
     image: "redis:4.0.11-alpine"
     ports:

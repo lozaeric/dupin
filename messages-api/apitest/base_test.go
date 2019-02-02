@@ -1,6 +1,7 @@
 package apitest
 
 import (
+	"fmt"
 	"net/http"
 	"os"
 	"testing"
@@ -13,6 +14,15 @@ import (
 	"github.com/stretchr/testify/assert"
 )
 
+var (
+	validUsers  = []string{"00000000000000000000", "11111111111111111111", "88888888888888888888", "99999999999999999999"}
+	validTokens = map[string]string{
+		validUsers[0]: fmt.Sprintf(`{"client_id":"1","user_id":"%s","scope":"read"}`, validUsers[0]),
+		validUsers[1]: fmt.Sprintf(`{"client_id":"1","user_id":"%s","scope":"read"}`, validUsers[1]),
+		validUsers[2]: fmt.Sprintf(`{"client_id":"1","user_id":"%s","scope":"read"}`, validUsers[2]),
+		validUsers[3]: fmt.Sprintf(`{"client_id":"1","user_id":"%s","scope":"read"}`, validUsers[3]),
+	}
+)
 var cli = resty.New().
 	SetTimeout(350 * time.Millisecond).
 	SetHostURL("http://localhost:8080")
@@ -24,11 +34,11 @@ func TestMain(m *testing.M) {
 	httpmock.Activate()
 	defer httpmock.DeactivateAndReset()
 	setupMocks()
+
 	os.Exit(m.Run())
 }
 
 func setupMocks() {
-	validUsers := []string{"11111111111111111111", "88888888888888888888", "99999999999999999999"}
 	validUser := &domain.User{
 		Name:     "eric",
 		LastName: "loza",
@@ -38,7 +48,7 @@ func setupMocks() {
 	for _, u := range validUsers {
 		validUser.ID = u
 		res, _ := httpmock.NewJsonResponder(http.StatusOK, validUser)
-		httpmock.RegisterResponder("GET", "http://user:8080/users/"+u, res)
+		httpmock.RegisterResponder("GET", "http://users:8080/users/"+u, res)
 	}
 	httpmock.RegisterNoResponder(httpmock.InitialTransport.RoundTrip)
 }
