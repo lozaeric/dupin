@@ -42,7 +42,7 @@
   name = "github.com/jarcoal/httpmock"
 
 [[constraint]]
-  branch = "auth"
+  branch = "master"
   name = "github.com/lozaeric/dupin"
 
 [[constraint]]
