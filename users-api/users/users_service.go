@@ -8,6 +8,7 @@ import (
 	"github.com/lozaeric/dupin/toolkit/utils"
 	"github.com/lozaeric/dupin/toolkit/validation"
 	"github.com/lozaeric/dupin/users-api/domain"
+	"github.com/lozaeric/dupin/users-api/services"
 )
 
 func Create(data []byte) (*domain.User, *apierr.ApiError) {
@@ -24,13 +25,9 @@ func Create(data []byte) (*domain.User, *apierr.ApiError) {
 	if err := userStore.Save(user); err != nil {
 		return nil, apierr.New(http.StatusInternalServerError, "database error") // 500
 	}
-	/*
-		if err := services.CreatePassword(user.ID, user.Password); err != nil {
-			c.JSON(http.StatusInternalServerError, "auth-api error")
-		} else {
-			c.JSON(http.StatusOK, user)
-		}
-	*/
+	if err := savePassword(user.ID, data); err != nil {
+		return nil, err
+	}
 	return user, nil
 }
 
@@ -65,4 +62,19 @@ func Update(ID string, data []byte) (*domain.User, *apierr.ApiError) {
 		return nil, apierr.New(http.StatusInternalServerError, "database error")
 	}
 	return user, nil
+}
+
+func savePassword(ID string, data []byte) *apierr.ApiError {
+	info := make(map[string]interface{})
+	if err := json.Unmarshal(data, &info); err != nil {
+		return apierr.New(http.StatusBadRequest, "invalid password")
+	}
+	password, ok := info["password"].(string)
+	if !ok || password == "" {
+		return apierr.New(http.StatusBadRequest, "invalid password")
+	}
+	if err := services.CreatePassword(ID, password); err != nil {
+		return apierr.New(http.StatusInternalServerError, "error creating password") // 500
+	}
+	return nil
 }
