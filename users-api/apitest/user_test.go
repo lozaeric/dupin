@@ -2,10 +2,10 @@ package apitest
 
 import (
 	"encoding/json"
+	"fmt"
 	"net/http"
 	"testing"
 
-	"github.com/lozaeric/dupin/toolkit/mock"
 	"github.com/stretchr/testify/assert"
 )
 
@@ -107,7 +107,7 @@ func TestUser(t *testing.T) {
 	}{
 		{
 			http.StatusNotFound,
-			mock.GenerateValidID(),
+			"00000000000000000001",
 			nil,
 		},
 		{
@@ -142,6 +142,7 @@ func TestUpdateUser(t *testing.T) {
 		expectedStatus int
 		ID             string
 		userDTO        map[string]string
+		token          string
 		expectedUser   *UserDTO
 	}{
 		{
@@ -150,6 +151,7 @@ func TestUpdateUser(t *testing.T) {
 			map[string]string{
 				"last_name": "LZ",
 			},
+			fmt.Sprintf(`{"client_id":"1","user_id":"%s","scope":"read"}`, user.ID),
 			user,
 		},
 		{
@@ -158,6 +160,7 @@ func TestUpdateUser(t *testing.T) {
 			map[string]string{
 				"id": "123",
 			},
+			fmt.Sprintf(`{"client_id":"1","user_id":"%s","scope":"read"}`, user.ID),
 			nil,
 		},
 		{
@@ -166,17 +169,26 @@ func TestUpdateUser(t *testing.T) {
 			map[string]string{
 				"name": "",
 			},
+			fmt.Sprintf(`{"client_id":"1","user_id":"%s","scope":"read"}`, user.ID),
 			nil,
 		},
 		{
 			http.StatusNotFound,
-			mock.GenerateValidID(),
+			"00000000000000000002",
 			map[string]string{},
+			fmt.Sprintf(`{"client_id":"1","user_id":"%s","scope":"read"}`, "00000000000000000002"),
+			nil,
+		},
+		{
+			http.StatusForbidden,
+			"00000000000000000003",
+			map[string]string{},
+			fmt.Sprintf(`{"client_id":"1","user_id":"%s","scope":"read"}`, "00000000000000000002"),
 			nil,
 		},
 	}
 	for _, c := range cases {
-		r, err := cli.R().SetBody(c.userDTO).Put("/users/" + c.ID)
+		r, err := cli.R().SetHeader("x-auth", c.token).SetBody(c.userDTO).Put("/users/" + c.ID)
 		assert.Nil(err)
 		assert.Equal(c.expectedStatus, r.StatusCode())
 		if c.expectedStatus == http.StatusOK {

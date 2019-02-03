@@ -4,6 +4,7 @@ import (
 	"net/http"
 
 	"github.com/gin-gonic/gin"
+	"github.com/lozaeric/dupin/toolkit/auth"
 	"github.com/lozaeric/dupin/users-api/users"
 )
 
@@ -33,6 +34,14 @@ func CreateUser(c *gin.Context) {
 
 func UpdateUser(c *gin.Context) {
 	ID := c.Param("id")
+	token, er := auth.ParseToken(c)
+	if er != nil {
+		c.JSON(http.StatusForbidden, "invalid token")
+		return
+	} else if token.UserID != ID {
+		c.JSON(http.StatusForbidden, "you must be the user owner")
+		return
+	}
 	data, _ := c.GetRawData()
 	user, err := users.Update(ID, data)
 	if err != nil {

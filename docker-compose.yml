@@ -10,6 +10,7 @@ services:
      - ./messages-api:/go/src/github.com/lozaeric/dupin/messages-api
     environment:
      - ENV=production
+     - SECRET_JWT='in the hall of the mountain king'
     depends_on:
      - mongo
   auth:
@@ -35,6 +36,7 @@ services:
      - ./users-api:/go/src/github.com/lozaeric/dupin/users-api
     environment:
      - ENV=production
+     - SECRET_JWT='in the hall of the mountain king'
     depends_on:
      - redis
   redis:
