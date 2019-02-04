@@ -21,8 +21,10 @@ type TokenGenerate struct {
 }
 
 type CustomClaims struct {
-	AccessClaims *generates.JWTAccessClaims
-	Scope        string `json:"scope"`
+	AccessClaims *generates.JWTAccessClaims `json:"-"`
+	ClientID     string                     `json:"client_id"`
+	UserID       string                     `json:"user_id"`
+	Scope        string                     `json:"scope"`
 }
 
 func (c *CustomClaims) Valid() error {
@@ -37,6 +39,8 @@ func (t *TokenGenerate) Token(data *oauth2.GenerateBasic, isGenRefresh bool) (ac
 	}
 	claims := &CustomClaims{
 		AccessClaims: jwtClaims,
+		ClientID:     jwtClaims.ClientID,
+		UserID:       jwtClaims.UserID,
 		Scope:        data.TokenInfo.GetScope(),
 	}
 

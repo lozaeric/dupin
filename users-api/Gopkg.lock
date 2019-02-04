@@ -102,11 +102,10 @@
   packages = [
     "toolkit/apierr",
     "toolkit/auth",
-    "toolkit/mock",
     "toolkit/utils",
     "toolkit/validation"
   ]
-  revision = "6201c576279f37e5d2d0f5047455413b19ed8bcb"
+  revision = "f0e4fc1ac204574cd1b5b12e1c02c9200a130bd4"
 
 [[projects]]
   name = "github.com/mattn/go-isatty"
@@ -201,6 +200,6 @@
 [solve-meta]
   analyzer-name = "dep"
   analyzer-version = 1
-  inputs-digest = "845e74ebbed9c626cfebf1e72ffc9c9839c06713ce5787c5af7e1e8e4d6dfa29"
+  inputs-digest = "dae7916acf6e4c7bb6f869a1caafa916cee740beece50972617ad2f6a0c741dd"
   solver-name = "gps-cdcl"
   solver-version = 1
