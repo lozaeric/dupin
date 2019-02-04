@@ -14,7 +14,7 @@ var authCli = resty.New().
 
 func CreatePassword(userID, password string) error {
 	dto := map[string]string{
-		"user_id":  userID,
+		"username": userID,
 		"password": password,
 	}
 	r, err := authCli.R().SetBody(dto).Post("/passwords")

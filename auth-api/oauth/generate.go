@@ -57,9 +57,3 @@ func newTokenGenerate() *TokenGenerate {
 		jwtgen: generates.NewJWTAccessGenerate([]byte(secret), SigningMethod),
 	}
 }
-
-func init() {
-	if os.Getenv("ENV") != "production" {
-		secret = "TEST"
-	}
-}
