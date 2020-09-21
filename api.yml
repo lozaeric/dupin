@@ -1,0 +1,73 @@
+openapi: 3.0.0
+info:
+  title: "Dupin"
+  version: "1.0.0"
+
+components:
+  parameters:
+    userID:
+      name: userID
+      in: path
+      required: true
+      description: user ID
+      schema:
+        type: number
+  securitySchemes:
+    auth:
+      type: apiKey
+      name: x-auth
+      in: header
+
+paths:
+  /users:
+    description: Users
+    post:
+      summary: creates a new user
+      tags: [user]
+      responses:
+        "201":
+          description:
+            Returns information about the created user
+        "400":
+          description:
+            User was not created because some values are invalid
+        "500":
+          description:
+            User was not created because an unexpected error ocurred
+  /users/{userID}:
+    parameters:
+      - $ref: "#/components/parameters/userID"
+    get:
+      summary: get an specific user
+      tags: [user]
+      responses:
+        "200":
+          description: 
+            Return information about the indicated user
+        "404":
+          description: 
+            User with that ID doesn't exist
+        "500":
+          description: 
+            It failed because an unexpected error ocurred
+    put:
+      summary: update an existent user
+      tags: [user]
+      security:
+        - auth: []
+      responses:
+        "200":
+          description:
+            Returns information about the updated user
+        "400":
+          description: 
+            User was not updated because some values are invalid
+        "403":
+          description: 
+            Access token is invalid
+        "404":
+          description: 
+            User with that ID doesn't exist
+        "500":
+          description: 
+            It failed because an unexpected error ocurred
