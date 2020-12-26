@@ -1,0 +1,74 @@
+POST /libros
+
+Request
+{
+	"titulo": "La narración de Arthur Gordon Pym",
+	"autor": "Edgar Allan Poe",
+	"fecha_impresion": "2000-02-12"
+}
+
+Response
+{
+    "id": 10,
+	"titulo": "La narración de Arthur Gordon Pym",
+	"autor": "Edgar Allan Poe",
+	"fecha_impresion": "2000-02-12",
+    "fecha_alta": "2020-08-01"
+}
+
+
+POST /usuarios
+
+Request
+{
+	"nombre": "Miguel",
+	"apellido": "Gonzalez",
+	"email": "miguelg@mail.com"
+}
+
+Response
+{
+    "id": 201,
+	"nombre": "Miguel",
+	"apellido": "Gonzalez",
+    "email": "miguelg@mail.com",
+    "fecha_alta": "2020-09-01"
+}
+
+
+POST /prestamos
+
+Request
+{
+	"id_libro": 10,
+	"id_usuario": 201,
+    "fecha_devolucion": "2020-11-01"
+}
+
+Response
+{
+    "id": 504,
+	"id_libro": 10,
+	"id_usuario": 201,
+    "fecha_devolucion": "2020-11-01",
+    "fecha_creacion": "2020-09-01"
+}
+
+POST /libros
+
+Request
+{
+	"titulo": "La narración de Arthur Gordon Pym",
+	"autor": "Edgar Allan Poe",
+	"fecha_impresion": "2000-02-12"
+}
+
+Response
+{
+    "id": 10,
+	"titulo": "La narración de Arthur Gordon Pym",
+	"autor": "Edgar Allan Poe",
+	"fecha_impresion": "2000-02-12",
+    "fecha_alta": "2020-08-01",
+    "estado": "vigente"
+}
