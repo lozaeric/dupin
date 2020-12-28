@@ -17,6 +17,7 @@ type UserDTO struct {
 	Password    string `json:"password,omitempty"`
 	DateCreated string `json:"date_created"`
 	DateUpdated string `json:"date_updated"`
+	Deleted     bool   `json:"deleted"`
 }
 
 var (
@@ -197,6 +198,49 @@ func TestUpdateUser(t *testing.T) {
 			c.expectedUser.DateUpdated = u.DateUpdated
 			assert.Nil(err)
 			assert.Equal(c.expectedUser, u)
+		}
+	}
+}
+
+func TestDeleteUser(t *testing.T) {
+	assert := assert.New(t)
+
+	cases := []*struct {
+		expectedStatus int
+		ID             string
+		token          string
+		expectedUser   *UserDTO
+	}{
+		{
+			http.StatusOK,
+			user.ID,
+			fmt.Sprintf(`{"client_id":"1","user_id":"%s","scope":"read"}`, user.ID),
+			user,
+		},
+		{
+			http.StatusNotFound,
+			"00000000000000000002",
+			fmt.Sprintf(`{"client_id":"1","user_id":"%s","scope":"read"}`, "00000000000000000002"),
+			nil,
+		},
+		{
+			http.StatusNotFound,
+			user.ID,
+			fmt.Sprintf(`{"client_id":"1","user_id":"%s","scope":"read"}`, user.ID),
+			nil,
+		},
+	}
+	for _, c := range cases {
+		r, err := cli.R().SetHeader("x-auth", c.token).Post("/users/" + c.ID + "/delete")
+		assert.Nil(err)
+		assert.Equal(c.expectedStatus, r.StatusCode())
+		if c.expectedStatus == http.StatusOK {
+			u := new(UserDTO)
+			err := json.Unmarshal(r.Body(), u)
+			c.expectedUser.DateUpdated = u.DateUpdated
+			assert.Nil(err)
+			assert.Equal(c.expectedUser, u)
+			assert.True(c.expectedUser.Deleted)
 		}
 	}
 }
