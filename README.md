@@ -14,7 +14,7 @@ $ make test-integration
 $ make run
 ```
 
-### How to send and search message
+### How to send and search a message
 ```bash
 # creates user
 curl -XPOST localhost:8082/users -d '{"name":"eric","last_name":"loza","email":"lz@pymtech.com","password":"1234"}'
