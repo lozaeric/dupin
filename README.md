@@ -23,7 +23,7 @@ curl -XPOST localhost:8082/users -d '{"name":"arthur","last_name":"pym","email":
 # gets an access token
 curl -XPOST localhost:8081/token -d "client_id=123123123&client_secret=111222333&username=$USERID&password=$PASS&grant_type=password"
 # sends a message
-curl -XPOST localhost:8080/messages -d '{"receiver":"$USERID","text":"hola mundo!"}' -H "x-auth:$TOKEN"
+curl -XPOST localhost:8080/messages -d '{"receiver_id":"$USERID","text":"hola mundo!"}' -H "x-auth:$TOKEN"
 # searches messages
 curl -XGET localhost:8080/search/messages -H "x-auth:$TOKEN"
 ```
