@@ -4,17 +4,17 @@
 * MongoDB 3.6.9
 * Redis 4.0.11
 
-### Run
-```bash
-$ make run
-```
-
 ### Integration test
 ```bash
 $ make test-integration
 ```
 
-## Manual integration test
+### Run
+```bash
+$ make run
+```
+
+### How to send and search message
 ```bash
 # creates user
 curl -XPOST localhost:8082/users -d '{"name":"eric","last_name":"loza","email":"lz@pymtech.com","password":"1234"}'
