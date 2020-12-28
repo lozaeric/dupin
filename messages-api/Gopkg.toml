@@ -43,6 +43,10 @@
 
 [[constraint]]
   branch = "master"
+  name = "github.com/hashicorp/golang-lru"
+
+[[constraint]]
+  branch = "master"
   name = "github.com/lozaeric/dupin"
 
 [[constraint]]
