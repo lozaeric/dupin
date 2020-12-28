@@ -16,5 +16,6 @@ func setRoutes() {
 	router.POST("/users", controllers.CreateUser)
 
 	router.Group("/users", auth.Middleware).
-		PUT("/:id", controllers.UpdateUser)
+		PUT("/:id", controllers.UpdateUser).
+		POST("/:id/delete", controllers.DeleteUser)
 }
