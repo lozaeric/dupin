@@ -17,13 +17,13 @@ $ make run
 ### How to send and search a message
 ```bash
 # creates user
-curl -XPOST localhost:8082/users -d '{"name":"eric","last_name":"loza","email":"lz@pymtech.com","password":"1234"}'
+curl -XPOST localhost:8082/users -d '{"name":"eric","last_name":"loza","email":"lz@dupin.com","password":"1234"}'
 # creates another user
-curl -XPOST localhost:8082/users -d '{"name":"arthur","last_name":"pym","email":"admin@pymtech.com","password":"12345"}'
+curl -XPOST localhost:8082/users -d '{"name":"arthur","last_name":"pym","email":"admin@dupin.com","password":"12345"}'
 # gets an access token
 curl -XPOST localhost:8081/token -d "client_id=123123123&client_secret=111222333&username=$USERID&password=$PASS&grant_type=password"
 # sends a message
-curl -XPOST localhost:8080/messages -d '{"receiver_id":"$USERID","text":"hola mundo!"}' -H "x-auth:$TOKEN"
+curl -XPOST localhost:8080/messages -d '{"receiver_id":"$USERID","text":"hello world!"}' -H "x-auth:$TOKEN"
 # searches messages
 curl -XGET localhost:8080/search/messages -H "x-auth:$TOKEN"
 ```
