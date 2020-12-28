@@ -13,6 +13,10 @@ import (
 
 var usersCli = resty.New().
 	SetTimeout(50 * time.Millisecond).
+	SetRetryCount(1).
+	AddRetryCondition(func(r *resty.Response) (bool, error) {
+		return r == nil || r.Error() != nil || r.StatusCode() >= 500, nil
+	}).
 	SetHostURL("http://users:8080")
 
 func User(ID string) (*domain.User, error) {
