@@ -62,19 +62,11 @@ func (s *MessageStore) Update(message *domain.Message) error {
 }
 
 func (s *MessageStore) createIndexes() {
-	indexes := []mgo.Index{
-		mgo.Index{
-			Key: []string{"receiver_id"},
-		},
-		mgo.Index{
-			Key: []string{"sender_id"},
-		},
-		mgo.Index{
-			Key: []string{"seen"},
-		},
-	}
-	for _, idx := range indexes {
-		s.session.DB(database).C(messagesCollection).EnsureIndex(idx)
+	for field := range domain.MessageSearchable {
+		s.session.DB(database).C(messagesCollection).
+			EnsureIndex(mgo.Index{
+				Key: []string{field},
+			})
 	}
 }
 
