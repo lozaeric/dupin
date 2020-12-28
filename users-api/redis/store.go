@@ -50,8 +50,8 @@ func (s *UserStore) Update(u *domain.User) error {
 func NewUserStore() *UserStore {
 	client := redis.NewClient(&redis.Options{
 		Addr:        redisURL,
-		DialTimeout: 50 * time.Millisecond,
-		ReadTimeout: 100 * time.Millisecond,
+		DialTimeout: 200 * time.Millisecond,
+		ReadTimeout: 200 * time.Millisecond,
 	})
 	if err := client.Ping().Err(); err != nil {
 		panic(err)

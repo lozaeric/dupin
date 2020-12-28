@@ -24,8 +24,8 @@ func (s *eventSubscriber) EventChannel() <-chan *redis.Message {
 func init() {
 	client := redis.NewClient(&redis.Options{
 		Addr:        redisURL,
-		DialTimeout: 50 * time.Millisecond,
-		ReadTimeout: 100 * time.Millisecond,
+		DialTimeout: 200 * time.Millisecond,
+		ReadTimeout: 200 * time.Millisecond,
 	})
 	if err := client.Ping().Err(); err != nil {
 		panic(err)
@@ -37,8 +37,12 @@ func init() {
 	go func() {
 		for m := range subscriber.EventChannel() {
 			userID := m.Payload
-			removefromCache(userID)
-			fmt.Println("USER " + userID + " has changed and will be removed from cache")
+			present := removefromCache(userID)
+			if present {
+				fmt.Println("USER " + userID + " has changed and will be removed from cache")
+			} else {
+				fmt.Println("USER " + userID + " has changed but it didn't exist in cache")
+			}
 		}
 	}()
 }

@@ -23,6 +23,6 @@ func saveToCache(user *domain.User) {
 	localCache.Add(user.ID, user)
 }
 
-func removefromCache(ID string) {
-	localCache.Remove(ID)
+func removefromCache(ID string) bool {
+	return localCache.Remove(ID)
 }
