@@ -46,8 +46,7 @@ func NewUserStore() *UserStore {
 		DialTimeout: 50 * time.Millisecond,
 		ReadTimeout: 100 * time.Millisecond,
 	})
-	err := client.Ping().Err()
-	if err != nil {
+	if err := client.Ping().Err(); err != nil {
 		panic(err)
 	}
 	return &UserStore{
