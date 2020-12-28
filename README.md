@@ -4,7 +4,7 @@
 * MongoDB 3.6.9
 * Redis 4.0.11
 
-### Integration test
+### Run integration tests
 ```bash
 $ make test-integration
 ```
