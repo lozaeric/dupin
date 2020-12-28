@@ -52,23 +52,3 @@ func UpdateUser(c *gin.Context) {
 	}
 	c.JSON(http.StatusOK, user)
 }
-
-func DeleteUser(c *gin.Context) {
-	ID := c.Param("id")
-	token, er := auth.ParseToken(c)
-	if er != nil {
-		c.JSON(http.StatusForbidden, "invalid token")
-		return
-	} else if token.UserID != ID {
-		c.JSON(http.StatusForbidden, "you must be owner of the user")
-		return
-	}
-	user, err := users.Delete(ID)
-	if err != nil {
-		c.JSON(err.StatusCode, gin.H{
-			"messsage": err.Message,
-		})
-		return
-	}
-	c.JSON(http.StatusOK, user)
-}

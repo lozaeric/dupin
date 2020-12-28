@@ -17,7 +17,6 @@ type User struct {
 	Email       string `json:"email" validate:"required,email"`
 	DateCreated string `json:"date_created" validate:"required"`
 	DateUpdated string `json:"date_updated" validate:"required"`
-	Deleted     bool   `json:"deleted"`
 }
 
 type UserStore interface {

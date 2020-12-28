@@ -67,24 +67,6 @@ func Update(ID string, data []byte) (*domain.User, *apierr.ApiError) {
 	return user, nil
 }
 
-func Delete(ID string) (*domain.User, *apierr.ApiError) {
-	if !validation.IsValidID(ID) {
-		return nil, apierr.New(http.StatusBadRequest, "invalid ID")
-	}
-	user, err := userStore.User(ID)
-	if err != nil {
-		return nil, apierr.New(http.StatusNotFound, "user not found")
-	}
-	if user.Deleted {
-		return user, apierr.New(http.StatusBadRequest, "user is already deleted")
-	}
-	user.Deleted = true
-	if err := userStore.Update(user); err != nil {
-		return nil, apierr.New(http.StatusInternalServerError, "database error")
-	}
-	return user, nil
-}
-
 func savePassword(ID string, data []byte) *apierr.ApiError {
 	info := make(map[string]interface{})
 	if err := json.Unmarshal(data, &info); err != nil {
