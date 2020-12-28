@@ -20,7 +20,7 @@ var usersCli = resty.New().
 	SetHostURL("http://users:8080")
 
 func User(ID string) (*domain.User, error) {
-	if user, err := getFromCache(ID); err == nil {
+	if user, err := usersCache.Get(ID); err == nil {
 		return user, nil
 	}
 
@@ -35,7 +35,7 @@ func User(ID string) (*domain.User, error) {
 	user := new(domain.User)
 	err = json.Unmarshal(r.Body(), user)
 	if err == nil {
-		saveToCache(user)
+		usersCache.Save(user)
 	}
 	return user, err
 }

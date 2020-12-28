@@ -8,7 +8,6 @@ import (
 )
 
 const eventChannel = "users_events"
-const redisURL = "redis:6379"
 
 var subscriber *eventSubscriber
 
@@ -37,11 +36,12 @@ func init() {
 	go func() {
 		for m := range subscriber.EventChannel() {
 			userID := m.Payload
-			present := removefromCache(userID)
-			if present {
-				fmt.Println("USER " + userID + " has changed and will be removed from cache")
+			err := usersCache.Remove(userID)
+
+			if err != nil {
+				fmt.Println("USER " + userID + " has changed and will be removed from cache. Err: " + err.Error())
 			} else {
-				fmt.Println("USER " + userID + " has changed but it didn't exist in cache")
+				fmt.Println("USER " + userID + " has changed and will be removed from cache.")
 			}
 		}
 	}()

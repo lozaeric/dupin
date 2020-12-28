@@ -113,17 +113,6 @@
 
 [[projects]]
   branch = "master"
-  digest = "1:1a780ab71207c95fbef287ca400ed8cf601313be10eca27836e5ebc4f7164f89"
-  name = "github.com/hashicorp/golang-lru"
-  packages = [
-    ".",
-    "simplelru",
-  ]
-  pruneopts = "UT"
-  revision = "eb529947af531eb529020ba979a7a887338904d1"
-
-[[projects]]
-  branch = "master"
   digest = "1:867a400cf7d2eb7db0735058ab9c89a061bb8f44b9b68b148a8503d0bc5529f3"
   name = "github.com/jarcoal/httpmock"
   packages = ["."]
@@ -282,7 +271,6 @@
     "github.com/globalsign/mgo/bson",
     "github.com/go-redis/redis",
     "github.com/go-resty/resty",
-    "github.com/hashicorp/golang-lru",
     "github.com/jarcoal/httpmock",
     "github.com/lozaeric/dupin/toolkit/auth",
     "github.com/lozaeric/dupin/toolkit/mock",
