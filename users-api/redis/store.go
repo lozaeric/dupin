@@ -2,6 +2,7 @@ package redis
 
 import (
 	"encoding/json"
+	"time"
 
 	"github.com/go-redis/redis"
 	"github.com/lozaeric/dupin/users-api/domain"
@@ -39,13 +40,16 @@ func (s *UserStore) Update(u *domain.User) error {
 	return s.client.Set(key, b, 0).Err()
 }
 
-func NewUserStore() (*UserStore, error) {
+func NewUserStore() *UserStore {
 	client := redis.NewClient(&redis.Options{
-		Addr: redisURL,
-		// client config
+		Addr:        redisURL,
+		DialTimeout: 50 * time.Millisecond,
+		ReadTimeout: 100 * time.Millisecond,
 	})
-
+	if err := client.Ping().Err(); err != nil {
+		panic(err)
+	}
 	return &UserStore{
 		client: client,
-	}, nil
+	}
 }

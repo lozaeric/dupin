@@ -30,10 +30,7 @@ func setupManager() {
 		Addr: redis.RedisURL,
 		DB:   redis.TokensDatabase,
 	}))
-	clientStore, err := redis.NewClientStore()
-	if err != nil {
-		panic(err)
-	}
+	clientStore := redis.NewClientStore()
 	// api gateway cli
 	clientStore.Save(&models.Client{
 		ID:     "123123123", // todo: must be safe, nanoid?
