@@ -1,5 +1,5 @@
 package redis
 
 const usersPrefix = "users_"
-const userEventsPrefix = "users_events_"
+const eventChannel = "users_events"
 const redisURL = "redis:6379"
