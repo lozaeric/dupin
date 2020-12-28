@@ -7,6 +7,7 @@ import (
 	"os"
 
 	jwt "github.com/dgrijalva/jwt-go"
+	"github.com/lozaeric/dupin/toolkit/utils"
 )
 
 var secret = os.Getenv("SECRET_JWT")
@@ -78,7 +79,7 @@ func (t *MockTokenChecker) Token(claims jwt.Claims) (*Token, error) {
 }
 
 func init() {
-	if os.Getenv("ENV") == "production" {
+	if utils.IsProduction() {
 		tokenChecker = &JWTTokenChecker{
 			secret: secret,
 		}

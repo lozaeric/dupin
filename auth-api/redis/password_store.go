@@ -2,6 +2,7 @@ package redis
 
 import (
 	"encoding/json"
+	"time"
 
 	"github.com/go-redis/redis"
 	"github.com/lozaeric/dupin/auth-api/domain"
@@ -28,14 +29,16 @@ func (s *PasswordStore) Save(pwd *domain.Password) error {
 	return s.client.Set(pwd.Username, b, 0).Err()
 }
 
-func NewPasswordStore() (*PasswordStore, error) {
+func NewPasswordStore() *PasswordStore {
 	client := redis.NewClient(&redis.Options{
-		Addr: RedisURL,
-		DB:   passwordsDatabase,
-		// client config
+		Addr:        RedisURL,
+		DialTimeout: 50 * time.Millisecond,
+		ReadTimeout: 100 * time.Millisecond,
 	})
-
+	if err := client.Ping().Err(); err != nil {
+		panic(err)
+	}
 	return &PasswordStore{
 		client: client,
-	}, client.Ping().Err()
+	}
 }
