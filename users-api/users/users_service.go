@@ -75,6 +75,9 @@ func Delete(ID string) (*domain.User, *apierr.ApiError) {
 	if err != nil {
 		return nil, apierr.New(http.StatusNotFound, "user not found")
 	}
+	if user.Deleted {
+		return user, apierr.New(http.StatusBadRequest, "user is already deleted")
+	}
 	user.Deleted = true
 	if err := userStore.Update(user); err != nil {
 		return nil, apierr.New(http.StatusInternalServerError, "database error")

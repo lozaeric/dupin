@@ -224,7 +224,7 @@ func TestDeleteUser(t *testing.T) {
 			nil,
 		},
 		{
-			http.StatusNotFound,
+			http.StatusBadRequest,
 			user.ID,
 			fmt.Sprintf(`{"client_id":"1","user_id":"%s","scope":"read"}`, user.ID),
 			nil,
