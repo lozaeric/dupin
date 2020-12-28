@@ -8,8 +8,11 @@ import (
 	"github.com/lozaeric/dupin/toolkit/utils"
 	"github.com/lozaeric/dupin/toolkit/validation"
 	"github.com/lozaeric/dupin/users-api/domain"
+	"github.com/lozaeric/dupin/users-api/redis"
 	"github.com/lozaeric/dupin/users-api/services"
 )
+
+var userStore = redis.NewUserStore()
 
 func Create(data []byte) (*domain.User, *apierr.ApiError) {
 	user := new(domain.User)
@@ -23,7 +26,7 @@ func Create(data []byte) (*domain.User, *apierr.ApiError) {
 		return nil, apierr.New(http.StatusBadRequest, err.Error())
 	}
 	if err := userStore.Save(user); err != nil {
-		return nil, apierr.New(http.StatusInternalServerError, "database error") // 500
+		return nil, apierr.New(http.StatusInternalServerError, "database error")
 	}
 	if err := savePassword(user.ID, data); err != nil {
 		return nil, err

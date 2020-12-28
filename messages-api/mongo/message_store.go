@@ -2,6 +2,7 @@ package mongo
 
 import (
 	"errors"
+	"time"
 
 	"github.com/globalsign/mgo"
 	"github.com/globalsign/mgo/bson"
@@ -60,13 +61,12 @@ func (s *MessageStore) Update(message *domain.Message) error {
 	return conn.DB(database).C(messagesCollection).Update(bson.M{"id": message.ID}, message)
 }
 
-func NewMessageStore() (*MessageStore, error) {
-	session, err := mgo.Dial(connectionString)
+func NewMessageStore() *MessageStore {
+	session, err := mgo.DialWithTimeout(connectionString, 100*time.Millisecond)
 	if err != nil {
-		return nil, err
+		panic(err)
 	}
-	// session config
 	return &MessageStore{
 		session: session,
-	}, nil
+	}
 }
