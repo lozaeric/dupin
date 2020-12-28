@@ -1,7 +1,6 @@
 package utils
 
 import (
-	"os"
 	"time"
 
 	"github.com/rs/xid"
@@ -13,8 +12,4 @@ func Now() string {
 
 func GenerateID() string {
 	return xid.New().String()
-}
-
-func IsProduction() bool {
-	return os.Getenv("ENV") == "production"
 }

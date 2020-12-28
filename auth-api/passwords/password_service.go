@@ -9,10 +9,7 @@ import (
 	"golang.org/x/crypto/bcrypt"
 
 	"github.com/lozaeric/dupin/auth-api/domain"
-	"github.com/lozaeric/dupin/auth-api/redis"
 )
-
-var passwordStore = redis.NewPasswordStore()
 
 const BcryptCost = 7
 
