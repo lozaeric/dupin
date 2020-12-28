@@ -238,9 +238,9 @@ func TestDeleteUser(t *testing.T) {
 			u := new(UserDTO)
 			err := json.Unmarshal(r.Body(), u)
 			c.expectedUser.DateUpdated = u.DateUpdated
+			c.expectedUser.Deleted = true
 			assert.Nil(err)
 			assert.Equal(c.expectedUser, u)
-			assert.True(c.expectedUser.Deleted)
 		}
 	}
 }
