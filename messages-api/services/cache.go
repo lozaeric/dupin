@@ -22,3 +22,7 @@ func getFromCache(ID string) (*domain.User, error) {
 func saveToCache(user *domain.User) {
 	localCache.Add(user.ID, user)
 }
+
+func removefromCache(ID string) {
+	localCache.Remove(ID)
+}

@@ -80,6 +80,22 @@
   version = "v9.24.0"
 
 [[projects]]
+  digest = "1:456f515a80bcc5c5d99beaee2dcb0d0598b6d4d02df804ac958f0e6e51d8e8d5"
+  name = "github.com/go-redis/redis"
+  packages = [
+    ".",
+    "internal",
+    "internal/consistenthash",
+    "internal/hashtag",
+    "internal/pool",
+    "internal/proto",
+    "internal/util",
+  ]
+  pruneopts = "UT"
+  revision = "16ab0f2ac309166bfef5cde51742f84c61c1e73c"
+  version = "v6.15.9"
+
+[[projects]]
   digest = "1:6921c024df19499cfcdaf33e0df635da67b959a4541b8b68d00d159791b70d07"
   name = "github.com/go-resty/resty"
   packages = ["."]
@@ -264,6 +280,7 @@
     "github.com/gin-gonic/gin",
     "github.com/globalsign/mgo",
     "github.com/globalsign/mgo/bson",
+    "github.com/go-redis/redis",
     "github.com/go-resty/resty",
     "github.com/hashicorp/golang-lru",
     "github.com/jarcoal/httpmock",
