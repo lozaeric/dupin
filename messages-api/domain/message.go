@@ -10,7 +10,7 @@ var (
 	messageUpdatable = map[string]bool{
 		"seen": true,
 	}
-	messageSearchable = map[string]bool{
+	MessageSearchable = map[string]bool{
 		"receiver_id": true,
 		"sender_id":   true,
 		"seen":        true,
@@ -44,5 +44,5 @@ func (m *Message) Update(values map[string]interface{}) (err error) {
 }
 
 func CheckMessageValues(values map[string]interface{}) error {
-	return validation.Check(messageInstance, values, messageSearchable)
+	return validation.Check(messageInstance, values, MessageSearchable)
 }

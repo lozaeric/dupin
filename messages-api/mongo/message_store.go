@@ -61,12 +61,23 @@ func (s *MessageStore) Update(message *domain.Message) error {
 	return conn.DB(database).C(messagesCollection).Update(bson.M{"id": message.ID}, message)
 }
 
+func (s *MessageStore) createIndexes() {
+	for field := range domain.MessageSearchable {
+		s.session.DB(database).C(messagesCollection).
+			EnsureIndex(mgo.Index{
+				Key: []string{field},
+			})
+	}
+}
+
 func NewMessageStore() *MessageStore {
 	session, err := mgo.DialWithTimeout(connectionString, 2*time.Second)
 	if err != nil {
 		panic(err)
 	}
-	return &MessageStore{
+	s := &MessageStore{
 		session: session,
 	}
+	s.createIndexes()
+	return s
 }

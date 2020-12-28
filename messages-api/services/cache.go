@@ -18,8 +18,9 @@ type cache struct {
 }
 
 func (c *cache) Get(ID string) (*domain.User, error) {
+	key := usersPrefix + ID
 	u := new(domain.User)
-	b, err := c.client.Get(ID).Bytes()
+	b, err := c.client.Get(key).Bytes()
 	if err != nil {
 		return nil, err
 	}
@@ -27,15 +28,17 @@ func (c *cache) Get(ID string) (*domain.User, error) {
 }
 
 func (c *cache) Save(u *domain.User) error {
+	key := usersPrefix + u.ID
 	b, err := json.Marshal(u)
 	if err != nil {
 		return err
 	}
-	return c.client.Set(u.ID, b, 0).Err()
+	return c.client.Set(key, b, 0).Err()
 }
 
 func (c *cache) Remove(ID string) error {
-	return c.client.Del(ID).Err()
+	key := usersPrefix + ID
+	return c.client.Del(key).Err()
 }
 
 func newCache() *cache {
