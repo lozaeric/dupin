@@ -32,8 +32,8 @@ func (s *PasswordStore) Save(pwd *domain.Password) error {
 func NewPasswordStore() *PasswordStore {
 	client := redis.NewClient(&redis.Options{
 		Addr:        RedisURL,
-		DialTimeout: 50 * time.Millisecond,
-		ReadTimeout: 100 * time.Millisecond,
+		DialTimeout: 200 * time.Millisecond,
+		ReadTimeout: 200 * time.Millisecond,
 	})
 	if err := client.Ping().Err(); err != nil {
 		panic(err)

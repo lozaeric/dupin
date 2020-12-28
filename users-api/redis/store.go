@@ -9,7 +9,8 @@ import (
 )
 
 type UserStore struct {
-	client *redis.Client
+	client         *redis.Client
+	eventPublisher *eventPublisher
 }
 
 func (s *UserStore) User(ID string) (*domain.User, error) {
@@ -28,7 +29,10 @@ func (s *UserStore) Save(u *domain.User) error {
 	if err != nil {
 		return err
 	}
-	return s.client.Set(key, b, 0).Err()
+	return s.eventPublisher.SendEventIfNeeded(
+		u.ID,
+		s.client.Set(key, b, 0).Err,
+	)
 }
 
 func (s *UserStore) Update(u *domain.User) error {
@@ -37,19 +41,23 @@ func (s *UserStore) Update(u *domain.User) error {
 	if err != nil {
 		return err
 	}
-	return s.client.Set(key, b, 0).Err()
+	return s.eventPublisher.SendEventIfNeeded(
+		u.ID,
+		s.client.Set(key, b, 0).Err,
+	)
 }
 
 func NewUserStore() *UserStore {
 	client := redis.NewClient(&redis.Options{
 		Addr:        redisURL,
-		DialTimeout: 50 * time.Millisecond,
-		ReadTimeout: 100 * time.Millisecond,
+		DialTimeout: 200 * time.Millisecond,
+		ReadTimeout: 200 * time.Millisecond,
 	})
 	if err := client.Ping().Err(); err != nil {
 		panic(err)
 	}
 	return &UserStore{
-		client: client,
+		client:         client,
+		eventPublisher: newEventPublisher(),
 	}
 }

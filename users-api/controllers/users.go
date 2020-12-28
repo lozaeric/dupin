@@ -39,7 +39,7 @@ func UpdateUser(c *gin.Context) {
 		c.JSON(http.StatusForbidden, "invalid token")
 		return
 	} else if token.UserID != ID {
-		c.JSON(http.StatusForbidden, "you must be the user owner")
+		c.JSON(http.StatusForbidden, "you must be owner of the user")
 		return
 	}
 	data, _ := c.GetRawData()

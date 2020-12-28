@@ -62,7 +62,7 @@ func (s *MessageStore) Update(message *domain.Message) error {
 }
 
 func NewMessageStore() *MessageStore {
-	session, err := mgo.DialWithTimeout(connectionString, 100*time.Millisecond)
+	session, err := mgo.DialWithTimeout(connectionString, 2*time.Second)
 	if err != nil {
 		panic(err)
 	}

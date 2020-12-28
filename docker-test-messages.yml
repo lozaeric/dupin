@@ -8,9 +8,16 @@ services:
      - ./messages-api:/go/src/github.com/lozaeric/dupin/messages-api
     depends_on:
      - mongo
+     - redis
   mongo:
     image: "mongo:3.6.9-stretch"
     ports:
      - "27017:27017"
+    logging:
+     driver: none
+  redis:
+    image: "redis:4.0.11-alpine"
+    ports:
+     - "6379:6379"
     logging:
      driver: none
