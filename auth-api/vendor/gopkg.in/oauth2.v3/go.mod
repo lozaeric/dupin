@@ -1,5 +1,7 @@
 module gopkg.in/oauth2.v3
 
+go 1.14
+
 require (
 	github.com/ajg/form v0.0.0-20160822230020-523a5da1a92f // indirect
 	github.com/davecgh/go-spew v1.1.1 // indirect

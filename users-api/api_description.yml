@@ -1,0 +1,274 @@
+openapi: 3.0.0
+info:
+  title: "Dupin"
+  version: "1.0.0"
+  
+components:
+  parameters:
+    userID:
+      name: userID
+      in: path
+      required: true
+      description: user identifier
+      schema:
+        type: string
+  schemas:
+    userCustomFields:
+      type: object
+      required:
+        - first_name
+        - last_name
+        - nickname
+        - email
+        - birth_date
+      properties:
+        first_name:
+          type: string
+        last_name:
+          type: string
+        nickname:
+          type: string
+        email:
+          format: email
+          type: string
+        birth_date:
+          format: date
+          type: string
+    user:
+      allOf: [$ref: "#/components/schemas/userCustomFields"]
+      type: object
+      properties:
+        id:
+          type: string
+        profile_image:
+          type: string
+        date_created:
+          format: dateTime
+          type: string
+        last_updated:
+          format: dateTime
+          type: string
+        deleted:
+          type: boolean
+    info:
+      type: object
+      required:
+        - message
+      properties:
+        message:
+          type: string
+        details:
+          type: string
+    error:
+      allOf: [$ref: "#/components/schemas/info"]
+      type: object
+      required:
+        - code
+      properties:
+        code:
+          type: integer
+
+paths:
+  /users/search:
+    get:
+      summary: finds an user by nickname or email
+      tags: [UserAPI]
+      parameters:
+        - name: nickname
+          in: query
+          required: false
+          description: user nickname
+          schema:
+            type: string
+        - name: email
+          in: query
+          required: false
+          description: user email
+          schema:
+            type: string
+      responses:
+        "200":
+          description: created user
+          content:
+            application/json:
+              schema:
+                items:
+                  $ref: "#/components/schemas/user"
+        "400":
+          description: invalid values
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/error"
+        "404":
+          description: user not found
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/error"
+        "500":
+          description: internal server error
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/error"
+  /users/{userID}:
+    parameters:
+      - $ref: "#/components/parameters/userID"
+    put:
+      summary: updates an user
+      tags: [UserAPI]
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/userCustomFields"
+      responses:
+        "200":
+          description: updated user
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/user"
+        "400":
+          description: invalid values
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/error"
+        "404":
+          description: user not found
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/error"
+        "500":
+          description: internal server error
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/error"
+    get:
+      summary: gets an user
+      tags: [UserAPI]
+      responses:
+        "200":
+          description: created user
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/user"
+        "400":
+          description: invalid values
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/error"
+        "404":
+          description: user not found
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/error"
+        "500":
+          description: internal server error
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/error"
+    post:
+      summary: creates an user
+      tags: [UserAPI]
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/userCustomFields"
+      responses:
+        "201":
+          description: created user
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/user"
+        "400":
+          description: invalid values
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/error"
+        "404":
+          description: user not found
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/error"
+        "500":
+          description: internal server error
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/error"
+    delete:
+      summary: deletes an user
+      tags: [UserAPI]
+      responses:
+        "200":
+          description: deleted user
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/user"
+        "404":
+          description: user not found
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/error"
+        "500":
+          description: internal server error
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/error"
+                
+  /users/{userID}/image:
+    parameters:
+      - $ref: "#/components/parameters/userID"
+    put:
+      summary: updates profile image
+      tags: [UserAPI]
+      requestBody:
+        required: true
+        content:
+          application/octet-stream:
+            schema:
+              type: string
+              format: binary
+      responses:
+        "200":
+          description: image was sucesfully changed
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/info"
+        "400":
+          description: invalid content type
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/error"
+        "404":
+          description: user not found
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/error"
+        "500":
+          description: internal server error
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/error"
