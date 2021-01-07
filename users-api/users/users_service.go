@@ -25,11 +25,11 @@ func Create(data []byte) (*domain.User, *apierr.ApiError) {
 	if err := validation.Validate(user); err != nil {
 		return nil, apierr.New(http.StatusBadRequest, err.Error())
 	}
-	if err := userStore.Save(user); err != nil {
-		return nil, apierr.New(http.StatusInternalServerError, "database error")
-	}
 	if err := savePassword(user.ID, data); err != nil {
 		return nil, err
+	}
+	if err := userStore.Save(user); err != nil {
+		return nil, apierr.New(http.StatusInternalServerError, "database error")
 	}
 	return user, nil
 }

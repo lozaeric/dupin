@@ -12,7 +12,7 @@ import (
 )
 
 var usersCli = resty.New().
-	SetTimeout(50 * time.Millisecond).
+	SetTimeout(100 * time.Millisecond).
 	SetRetryCount(1).
 	AddRetryCondition(func(r *resty.Response) (bool, error) {
 		return r == nil || r.Error() != nil || r.StatusCode() >= 500, nil
