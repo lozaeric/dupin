@@ -12,10 +12,34 @@ func WebHandler(c *gin.Context) {
 }
 
 func JSONHandler(c *gin.Context) {
-	body, err := toJSON()
-	if err != nil {
-		c.String(http.StatusInternalServerError, "error while creating json")
+	name := c.Param("name")
+	var value interface{}
+
+	if name == "" {
+		value = metrics
 	} else {
-		c.Data(http.StatusOK, "application/json", body)
+		value = metrics[name]
+	}
+
+	if value == nil {
+		c.JSON(http.StatusBadRequest, gin.H{
+			"message": "metric name is invalid.",
+		})
+	} else {
+		c.JSON(http.StatusOK, value)
+	}
+}
+
+func MetricIncrementHandler(c *gin.Context) {
+	name := c.Param("name")
+	metric := metrics[name]
+
+	if metric == nil {
+		c.JSON(http.StatusBadRequest, gin.H{
+			"message": "metric name is invalid.",
+		})
+	} else {
+		metric.Add(INCREMENT)
+		c.JSON(http.StatusOK, metrics[SENT_MESSAGES])
 	}
 }

@@ -6,22 +6,21 @@ import (
 	"github.com/zserge/metric"
 )
 
-type NAME string
-
 const (
-	SENT_MESSAGES NAME = "sent_messages"
-	CREATED_USERS NAME = "created_users"
+	SENT_MESSAGES = "sent_messages"
+	CREATED_USERS = "created_users"
+	INCREMENT     = 1
 )
 
-var metrics = map[NAME]metric.Metric{
+var metrics = map[string]metric.Metric{
 	SENT_MESSAGES: metric.NewCounter("10m1m"),
 	CREATED_USERS: metric.NewCounter("10m1m"),
 }
 
 func init() {
-	Increment(CREATED_USERS)
-	Increment(SENT_MESSAGES)
-	Increment(SENT_MESSAGES)
+	metrics[CREATED_USERS].Add(INCREMENT)
+	metrics[SENT_MESSAGES].Add(INCREMENT)
+	metrics[SENT_MESSAGES].Add(INCREMENT)
 	for name, metric := range metrics {
 		expvar.Publish(string(name), metric)
 	}
