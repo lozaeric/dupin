@@ -40,6 +40,6 @@ func MetricIncrementHandler(c *gin.Context) {
 		})
 	} else {
 		metric.Add(INCREMENT)
-		c.JSON(http.StatusOK, metrics[SENT_MESSAGES])
+		c.JSON(http.StatusOK, metric)
 	}
 }

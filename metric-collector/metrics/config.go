@@ -22,6 +22,6 @@ func init() {
 	metrics[SENT_MESSAGES].Add(INCREMENT)
 	metrics[SENT_MESSAGES].Add(INCREMENT)
 	for name, metric := range metrics {
-		expvar.Publish(string(name), metric)
+		expvar.Publish(name, metric)
 	}
 }
