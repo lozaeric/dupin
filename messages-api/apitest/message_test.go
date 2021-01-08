@@ -14,11 +14,11 @@ import (
 var (
 	validUserID = "11111111111111111111"
 	message     = &domain.Message{
-		Text:       "holaaa",
+		Text:       "hello!!",
 		ReceiverID: "99999999999999999999",
 	}
 	otherMessage = &domain.Message{
-		Text:       "holaaa",
+		Text:       "good bye!",
 		ReceiverID: "88888888888888888888",
 	}
 )
