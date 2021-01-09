@@ -29,17 +29,3 @@ func JSONHandler(c *gin.Context) {
 		c.JSON(http.StatusOK, value)
 	}
 }
-
-func MetricIncrementHandler(c *gin.Context) {
-	name := c.Param("name")
-	metric := metrics[name]
-
-	if metric == nil {
-		c.JSON(http.StatusBadRequest, gin.H{
-			"message": "metric name is invalid.",
-		})
-	} else {
-		metric.Add(INCREMENT)
-		c.JSON(http.StatusOK, metric)
-	}
-}

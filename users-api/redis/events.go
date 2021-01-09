@@ -22,8 +22,8 @@ func (p *eventPublisher) SendEventIfNeeded(ID string, save func() error) error {
 func newEventPublisher() *eventPublisher {
 	client := redis.NewClient(&redis.Options{
 		Addr:        redisURL,
-		DialTimeout: 50 * time.Millisecond,
-		ReadTimeout: 100 * time.Millisecond,
+		DialTimeout: 200 * time.Millisecond,
+		ReadTimeout: 200 * time.Millisecond,
 	})
 	if err := client.Ping().Err(); err != nil {
 		panic(err)
