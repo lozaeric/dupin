@@ -14,6 +14,7 @@ services:
     depends_on:
      - mongo
      - redis
+     - users
   auth:
     image: golang:1.9.2
     working_dir: /go/src/github.com/lozaeric/dupin/auth-api
@@ -40,6 +41,7 @@ services:
      - SECRET_JWT='in the hall of the mountain king'
     depends_on:
      - redis
+     - auth
   metric-collector:
     image: golang:1.9.2
     working_dir: /go/src/github.com/lozaeric/dupin/metric-collector

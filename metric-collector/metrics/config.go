@@ -25,14 +25,7 @@ const (
 	counterSuffix  = "_count"
 )
 
-var metrics = map[string]metric.Metric{
-	SENT_MESSAGES:             metric.NewCounter("10m1m"),
-	SEEN_MESSAGES:             metric.NewCounter("10m1m"),
-	CREATED_USERS:             metric.NewCounter("10m1m"),
-	SENT_MESSAGES + errSuffix: metric.NewCounter("10m1m"),
-	SEEN_MESSAGES + errSuffix: metric.NewCounter("10m1m"),
-	CREATED_USERS + errSuffix: metric.NewCounter("10m1m"),
-}
+var metrics = make(map[string]metric.Metric)
 
 type metricDTO struct {
 	Name         string  `json:"name"`

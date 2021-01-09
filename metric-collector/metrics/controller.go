@@ -30,7 +30,7 @@ func JSONHandler(c *gin.Context) {
 	}
 }
 
-func MetricValue(c *gin.Context) {
+func MetricValueHandler(c *gin.Context) {
 	dto := new(metricDTO)
 	dto.Name = c.Param("name")
 

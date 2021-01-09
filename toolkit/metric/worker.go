@@ -2,6 +2,7 @@ package metric
 
 import (
 	"errors"
+	"fmt"
 	"net/http"
 	"time"
 
@@ -25,6 +26,9 @@ var metricsCli = resty.New().
 func doRecordMetric(dto metricDTO) error {
 	r, err := metricsCli.R().SetBody(dto).Put("/api/metric/" + dto.Name)
 	if err != nil || r.StatusCode() != http.StatusOK {
+		if r.StatusCode() != http.StatusOK {
+			fmt.Println("[METRIC] " + dto.Name + " wasnt recorded. Err:" + r.String())
+		}
 		return errors.New("metric-collector error")
 	}
 	return nil
