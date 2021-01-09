@@ -40,5 +40,10 @@ curl -XGET localhost:8080/search/messages -H "x-auth:$TOKEN"
 * metric-collector
 * groups (TODO)
 
+### Metrics
+* Sent messages
+* Created users
+You can see the metrics here: http://localhost:8090/metrics
+
 ### Endpoints
 TODO
