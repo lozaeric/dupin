@@ -23,8 +23,7 @@ func User(c *gin.Context) {
 }
 
 func CreateUser(c *gin.Context) {
-	start := time.Now()
-	defer metric.RecordMetric(metric.CREATED_USERS, start, c.Writer.Status())
+	defer metric.RecordMetric(metric.CREATED_USERS, time.Now(), c.Writer.Status)
 
 	data, _ := c.GetRawData()
 	user, err := users.Create(data)
