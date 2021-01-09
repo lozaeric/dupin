@@ -20,7 +20,7 @@ const (
 	CREATED_USERS  = "created_users"
 	INCREMENT      = 1
 	errSuffix      = "_err"
-	durationSuffix = "_time_ms"
+	durationSuffix = "_time"
 	counterSuffix  = "_count"
 )
 
@@ -62,9 +62,9 @@ func init() {
 		for _, k := range []Kind{COUNTER, DURATION} {
 			for _, e := range []bool{false, true} {
 				if k == COUNTER {
-					metrics[metricName(n, k, e)] = metric.NewCounter("10m1m")
+					metrics[metricName(n, k, e)] = metric.NewCounter("20m2m")
 				} else if k == DURATION {
-					metrics[metricName(n, k, e)] = metric.NewHistogram("10m1m")
+					metrics[metricName(n, k, e)] = metric.NewHistogram("20m2m")
 				}
 			}
 		}
