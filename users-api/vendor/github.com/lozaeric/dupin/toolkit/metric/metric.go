@@ -15,7 +15,7 @@ const (
 
 var pending = make(chan metricDTO, 1000)
 
-func RecordMetric(metric Name, start time.Time, statusCode int) {
+func RecordMetric(metric Name, start time.Time, statusCode func() int) {
 	duration := int64(time.Now().Sub(start) / time.Millisecond)
 	if duration == 0 {
 		duration = 1
@@ -23,7 +23,7 @@ func RecordMetric(metric Name, start time.Time, statusCode int) {
 	pending <- metricDTO{
 		Name:         string(metric),
 		DurationInMs: duration,
-		Successful:   statusCode >= 200 && statusCode < 300,
+		Successful:   statusCode() >= 200 && statusCode() < 300,
 	}
 }
 
