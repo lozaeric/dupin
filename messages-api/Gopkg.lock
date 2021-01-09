@@ -137,7 +137,7 @@
 
 [[projects]]
   branch = "metrics"
-  digest = "1:bb12b91dfeb698c5264afe20aa61797028a7f712ccaad508c3680cc19af58221"
+  digest = "1:8b57c2e152c71c863f25ad0f40ea6aed9c3207a1514e9db8e03c711aa192b0e6"
   name = "github.com/lozaeric/dupin"
   packages = [
     "toolkit/auth",
@@ -147,7 +147,7 @@
     "toolkit/validation",
   ]
   pruneopts = "UT"
-  revision = "b3d97aa1d83102235513a254543ae0dd43e3bdf7"
+  revision = "84915141da3fa57cc77fdbf38b9dc9087c1683c4"
 
 [[projects]]
   digest = "1:0981502f9816113c9c8c4ac301583841855c8cf4da8c72f696b3ebedf6d0e4e5"
