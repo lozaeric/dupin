@@ -1,5 +1,7 @@
 # Dupin
 
+![Arquitecture](https://github.com/lozaeric/dupin/blob/master/arquitecture.png?raw=true)
+
 ### Requirements
 * Docker 1.13.0+
 * Docker-compose
