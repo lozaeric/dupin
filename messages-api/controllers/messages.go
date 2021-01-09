@@ -2,12 +2,14 @@ package controllers
 
 import (
 	"net/http"
+	"time"
 
 	"github.com/gin-gonic/gin"
 	"github.com/lozaeric/dupin/messages-api/domain"
 	"github.com/lozaeric/dupin/messages-api/mongo"
 	"github.com/lozaeric/dupin/messages-api/services"
 	"github.com/lozaeric/dupin/toolkit/auth"
+	"github.com/lozaeric/dupin/toolkit/metric"
 	"github.com/lozaeric/dupin/toolkit/validation"
 )
 
@@ -37,6 +39,8 @@ func Message(c *gin.Context) {
 
 func CreateMessage(c *gin.Context) {
 	message := new(domain.Message)
+	defer metric.RecordMetric(metric.SENT_MESSAGES, time.Now(), c.Writer.Status)
+
 	if err := c.BindJSON(message); err != nil {
 		c.JSON(http.StatusBadRequest, gin.H{
 			"message": "invalid message",

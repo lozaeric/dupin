@@ -2,9 +2,11 @@ package controllers
 
 import (
 	"net/http"
+	"time"
 
 	"github.com/gin-gonic/gin"
 	"github.com/lozaeric/dupin/toolkit/auth"
+	"github.com/lozaeric/dupin/toolkit/metric"
 	"github.com/lozaeric/dupin/users-api/users"
 )
 
@@ -21,6 +23,8 @@ func User(c *gin.Context) {
 }
 
 func CreateUser(c *gin.Context) {
+	defer metric.RecordMetric(metric.CREATED_USERS, time.Now(), c.Writer.Status)
+
 	data, _ := c.GetRawData()
 	user, err := users.Create(data)
 	if err != nil {

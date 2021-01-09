@@ -1,20 +1,13 @@
 package app
 
 import (
-	"os"
-
 	"github.com/gin-gonic/gin"
 )
 
 var router *gin.Engine
 
 func Run() {
-	if os.Getenv("ENV") == "production" {
-		gin.SetMode(gin.ReleaseMode)
-	} else {
-		gin.SetMode(gin.DebugMode)
-	}
-
+	gin.SetMode(gin.ReleaseMode)
 	router = gin.Default()
 	setRoutes()
 	router.Run()

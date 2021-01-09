@@ -39,9 +39,9 @@ func init() {
 			err := usersCache.Remove(userID)
 
 			if err != nil {
-				fmt.Println("USER " + userID + " has changed and will be removed from cache. Err: " + err.Error())
+				fmt.Println("[USER-CACHE] " + userID + " has changed and will be removed from cache. Err: " + err.Error())
 			} else {
-				fmt.Println("USER " + userID + " has changed and will be removed from cache.")
+				fmt.Println("[USER-CACHE] " + userID + " has changed and will be removed from cache.")
 			}
 		}
 	}()

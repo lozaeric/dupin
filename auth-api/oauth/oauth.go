@@ -2,6 +2,7 @@ package oauth
 
 import (
 	"log"
+	"time"
 
 	"github.com/lozaeric/dupin/auth-api/passwords"
 	"github.com/lozaeric/dupin/auth-api/redis"
@@ -27,16 +28,16 @@ func setupManager() {
 	manager = manage.NewDefaultManager()
 	manager.MapAccessGenerate(newTokenGenerate())
 	manager.MapTokenStorage(oredis.NewRedisStore(&oredis.Options{
-		Addr: redis.RedisURL,
-		DB:   redis.TokensDatabase,
+		Addr:        redis.RedisURL,
+		DialTimeout: 200 * time.Millisecond,
+		ReadTimeout: 200 * time.Millisecond,
+		DB:          redis.TokensDatabase,
 	}))
 	clientStore := redis.NewClientStore()
-	// api gateway cli
 	clientStore.Save(&models.Client{
-		ID:     "123123123", // todo: must be safe, nanoid?
-		Secret: "111222333", // todo: must be safe, nanoid?
+		ID:     "123123123",
+		Secret: "111222333",
 	})
-	//
 	manager.MapClientStorage(clientStore)
 }
 

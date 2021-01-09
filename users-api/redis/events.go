@@ -15,15 +15,15 @@ func (p *eventPublisher) SendEventIfNeeded(ID string, save func() error) error {
 	if err := save(); err != nil {
 		return err
 	}
-	fmt.Println("USER " + ID + " has changed and an event will be published")
+	fmt.Println("[USER-CACHE] " + ID + " has changed and an event will be published")
 	return p.client.Publish(eventChannel, ID).Err()
 }
 
 func newEventPublisher() *eventPublisher {
 	client := redis.NewClient(&redis.Options{
 		Addr:        redisURL,
-		DialTimeout: 50 * time.Millisecond,
-		ReadTimeout: 100 * time.Millisecond,
+		DialTimeout: 200 * time.Millisecond,
+		ReadTimeout: 200 * time.Millisecond,
 	})
 	if err := client.Ping().Err(); err != nil {
 		panic(err)
