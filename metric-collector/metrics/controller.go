@@ -29,3 +29,32 @@ func JSONHandler(c *gin.Context) {
 		c.JSON(http.StatusOK, value)
 	}
 }
+
+func MetricValue(c *gin.Context) {
+	dto := new(metricDTO)
+	dto.Name = c.Param("name")
+
+	if err := c.BindJSON(dto); err != nil {
+		c.JSON(http.StatusBadRequest, gin.H{
+			"message": "dto is invalid.",
+		})
+		return
+	}
+	if dto.DurationInMs <= 0 {
+		c.JSON(http.StatusBadRequest, gin.H{
+			"message": "dto has invalid values.",
+		})
+		return
+	}
+
+	err := recordMetric(dto)
+	if err != nil {
+		c.JSON(http.StatusBadRequest, gin.H{
+			"message": "metric name is invalid.",
+		})
+	} else {
+		c.JSON(http.StatusOK, gin.H{
+			"message": "metric value was saved.",
+		})
+	}
+}

@@ -10,7 +10,7 @@ const (
 	CREATED_USERS Name = "created_users"
 )
 
-var pending = make(chan metricDTO)
+var pending = make(chan metricDTO, 1000)
 
 func RecordMetric(metric Name, f func() error) {
 	start := time.Now()
