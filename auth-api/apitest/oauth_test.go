@@ -16,7 +16,7 @@ func TestPassword(t *testing.T) {
 	}
 	r, err := cli.R().SetBody(dto).Post("/passwords")
 	assert.Nil(err)
-	assert.Equal(http.StatusOK, r.StatusCode())
+	assert.Equal(http.StatusCreated, r.StatusCode())
 }
 
 func TestToken(t *testing.T) {

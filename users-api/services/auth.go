@@ -22,7 +22,7 @@ func CreatePassword(userID, password string) error {
 		"password": password,
 	}
 	r, err := authCli.R().SetBody(dto).Post("/passwords")
-	if err != nil || r.StatusCode() != http.StatusOK {
+	if err != nil || r.StatusCode() != http.StatusCreated {
 		return errors.New("auth-api error")
 	}
 	return nil

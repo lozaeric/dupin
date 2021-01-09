@@ -36,6 +36,6 @@ func TestPing(t *testing.T) {
 
 func setupMocks() {
 	httpmock.RegisterResponder("POST", "http://auth:8080/passwords",
-		httpmock.NewStringResponder(http.StatusOK, "ok"))
+		httpmock.NewStringResponder(http.StatusCreated, "ok"))
 	httpmock.RegisterNoResponder(httpmock.InitialTransport.RoundTrip)
 }
