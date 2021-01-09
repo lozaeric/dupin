@@ -1,5 +1,10 @@
 # Dupin
 
+### Requirements
+* Docker 1.13.0+
+* Docker-compose
+
+### Tech stack
 * Golang 1.9.2
 * MongoDB 3.6.9
 * Redis 4.0.11
@@ -29,10 +34,11 @@ curl -XGET localhost:8080/search/messages -H "x-auth:$TOKEN"
 ```
 
 ### APIs
-* auth-api
-* messages-api
-* users-api
-* groups-api (TODO)
+* messages
+* users
+* auth
+* metric-collector
+* groups (TODO)
 
 ### Endpoints
 TODO

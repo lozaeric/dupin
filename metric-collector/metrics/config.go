@@ -15,13 +15,12 @@ const (
 )
 
 const (
-	SENT_MESSAGES = "sent_messages"
-	SEEN_MESSAGES = "seen_messages"
-	CREATED_USERS = "created_users"
-	INCREMENT     = 1
-	///////////////////////////////
+	SENT_MESSAGES  = "sent_messages"
+	SEEN_MESSAGES  = "seen_messages"
+	CREATED_USERS  = "created_users"
+	INCREMENT      = 1
 	errSuffix      = "_err"
-	durationSuffix = "_time"
+	durationSuffix = "_time_ms"
 	counterSuffix  = "_count"
 )
 
@@ -58,11 +57,15 @@ func recordMetric(dto *metricDTO) error {
 }
 
 func init() {
-	names := []string{SENT_MESSAGES, SEEN_MESSAGES, CREATED_USERS}
+	names := []string{SENT_MESSAGES, CREATED_USERS}
 	for _, n := range names {
 		for _, k := range []Kind{COUNTER, DURATION} {
 			for _, e := range []bool{false, true} {
-				metrics[metricName(n, k, e)] = metric.NewCounter("10m1m")
+				if k == COUNTER {
+					metrics[metricName(n, k, e)] = metric.NewCounter("10m1m")
+				} else if k == DURATION {
+					metrics[metricName(n, k, e)] = metric.NewHistogram("10m1m")
+				}
 			}
 		}
 	}
