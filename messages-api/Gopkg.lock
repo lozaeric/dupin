@@ -136,17 +136,18 @@
   version = "v1.1.0"
 
 [[projects]]
-  branch = "master"
-  digest = "1:5518308fbf0955bafff110f8bd9b393888284c63890221d44aa974696fe55cb9"
+  branch = "metrics"
+  digest = "1:7cbe64eacda7052997530687cdfc504959aa6583fbb0be3ab0ce16d27ad9b456"
   name = "github.com/lozaeric/dupin"
   packages = [
     "toolkit/auth",
+    "toolkit/metric",
     "toolkit/mock",
     "toolkit/utils",
     "toolkit/validation",
   ]
   pruneopts = "UT"
-  revision = "f0e4fc1ac204574cd1b5b12e1c02c9200a130bd4"
+  revision = "dc4ae3868f044e26535c5fbf194044007847996e"
 
 [[projects]]
   digest = "1:0981502f9816113c9c8c4ac301583841855c8cf4da8c72f696b3ebedf6d0e4e5"
@@ -273,6 +274,7 @@
     "github.com/go-resty/resty",
     "github.com/jarcoal/httpmock",
     "github.com/lozaeric/dupin/toolkit/auth",
+    "github.com/lozaeric/dupin/toolkit/metric",
     "github.com/lozaeric/dupin/toolkit/mock",
     "github.com/lozaeric/dupin/toolkit/utils",
     "github.com/lozaeric/dupin/toolkit/validation",
