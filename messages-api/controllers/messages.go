@@ -40,7 +40,7 @@ func Message(c *gin.Context) {
 func CreateMessage(c *gin.Context) {
 	message := new(domain.Message)
 	start := time.Now()
-	defer metric.RecordMetric(metric.CREATED_MESSAGE, start, c.Writer.Status())
+	defer metric.RecordMetric(metric.SENT_MESSAGES, start, c.Writer.Status())
 
 	if err := c.BindJSON(message); err != nil {
 		c.JSON(http.StatusBadRequest, gin.H{
