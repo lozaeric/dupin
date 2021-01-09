@@ -40,6 +40,16 @@ services:
      - SECRET_JWT='in the hall of the mountain king'
     depends_on:
      - redis
+  metric-collector:
+    image: golang:1.9.2
+    working_dir: /go/src/github.com/lozaeric/dupin/metric-collector
+    command: go run main.go
+    ports:
+     - "8082:8080"
+    volumes:
+     - ./metric-collector:/go/src/github.com/lozaeric/dupin/metric-collector
+    environment:
+     - ENV=production
   redis:
     image: "redis:4.0.11-alpine"
     command: redis-server --appendonly yes
