@@ -40,7 +40,7 @@ func MetricValueHandler(c *gin.Context) {
 		})
 		return
 	}
-	if dto.DurationInMs <= 0 {
+	if dto.DurationInUs <= 0 {
 		c.JSON(http.StatusBadRequest, gin.H{
 			"message": "dto has invalid values.",
 		})

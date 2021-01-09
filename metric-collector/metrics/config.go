@@ -28,7 +28,7 @@ var metrics = make(map[string]metric.Metric)
 
 type metricDTO struct {
 	Name         string  `json:"name"`
-	DurationInMs float64 `json:"duration_in_ms"`
+	DurationInUs float64 `json:"duration_in_us"`
 	Successful   bool    `json:"successful"`
 }
 
@@ -52,7 +52,7 @@ func recordMetric(dto *metricDTO) error {
 		return errors.New("invalid metric name")
 	}
 	metrics[counter].Add(INCREMENT)
-	metrics[duration].Add(dto.DurationInMs)
+	metrics[duration].Add(dto.DurationInUs / 1000) // to milliseconds
 	return nil
 }
 

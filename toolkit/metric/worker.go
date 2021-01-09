@@ -11,7 +11,7 @@ import (
 
 type metricDTO struct {
 	Name         string `json:"name"`
-	DurationInMs int64  `json:"duration_in_ms"`
+	DurationInUs int64  `json:"duration_in_us"`
 	Successful   bool   `json:"successful"`
 }
 
