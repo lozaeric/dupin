@@ -124,7 +124,7 @@
 
 [[projects]]
   branch = "metrics"
-  digest = "1:44607a9d080acf1094fa3e786347c7ab8b02c0a3424aa3993007efeece43889b"
+  digest = "1:a7b39714a0e20e0c9d7b7117b889c874314835e332a6094470d487ec14e25f69"
   name = "github.com/lozaeric/dupin"
   packages = [
     "toolkit/apierr",
@@ -134,7 +134,7 @@
     "toolkit/validation",
   ]
   pruneopts = "UT"
-  revision = "a4b698057da47a158bec20a21c58d442694eb2cf"
+  revision = "e34c9d40bc15a0ea206ac0f95eb759862f082271"
 
 [[projects]]
   digest = "1:0981502f9816113c9c8c4ac301583841855c8cf4da8c72f696b3ebedf6d0e4e5"
