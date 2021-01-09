@@ -1,6 +1,9 @@
 package metric
 
-import "time"
+import (
+	"os"
+	"time"
+)
 
 type Name string
 
@@ -12,17 +15,16 @@ const (
 
 var pending = make(chan metricDTO, 1000)
 
-func RecordMetric(metric Name, f func() error) {
-	start := time.Now()
-	err := f()
-
+func RecordMetric(metric Name, start time.Time, statusCode int) {
 	pending <- metricDTO{
 		Name:         string(metric),
 		DurationInMs: time.Now().Sub(start).Milliseconds(),
-		Successful:   err == nil,
+		Successful:   statusCode >= 200 && statusCode < 300,
 	}
 }
 
 func init() {
-	go worker()
+	if os.Getenv("ENV") == "production" {
+		go worker()
+	}
 }
