@@ -1,6 +1,6 @@
 # Dupin
 
-![alt text](https://github.com/lozaeric/dupin/blob/readme-arq/arquitecture.png?raw=true
+![Arquitecture](https://github.com/lozaeric/dupin/blob/readme-arq/arquitecture.png?raw=true)
 
 ### Requirements
 * Docker 1.13.0+
