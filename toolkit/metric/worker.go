@@ -24,10 +24,10 @@ var metricsCli = resty.New().
 	SetHostURL("http://metric-collector:8080")
 
 func doRecordMetric(dto metricDTO) error {
-	r, err := metricsCli.R().SetBody(dto).Put("/api/metric/" + dto.Name)
+	r, err := metricsCli.R().SetBody(dto).Put("/api/metrics/" + dto.Name)
 	if err != nil || r.StatusCode() != http.StatusOK {
 		if r.StatusCode() != http.StatusOK {
-			fmt.Println("[METRIC] " + dto.Name + " wasnt recorded. Err:" + r.String())
+			fmt.Println("[METRIC] " + dto.Name + " wasn't recorded. Err: " + r.String())
 		}
 		return errors.New("metric-collector error")
 	}
