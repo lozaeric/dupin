@@ -46,7 +46,7 @@ func ValidatePWD(username, password string) (string, error) {
 	}
 	pwd, err := passwordStore.Password(username)
 	if err != nil {
-		return "", errors.New("db error") // not found?
+		return "", errors.New("db error, " + err.Error()) // not found?
 	} else if !IsCorrect(pwd.HashedPassword, password) {
 		return "", errors.New("incorrect values")
 	}
