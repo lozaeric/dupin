@@ -15,7 +15,7 @@ func (p *eventPublisher) SendEventIfNeeded(ID string, save func() error) error {
 	if err := save(); err != nil {
 		return err
 	}
-	fmt.Println("USER " + ID + " has changed and an event will be published")
+	fmt.Println("[USER-CACHE] " + ID + " has changed and an event will be published")
 	return p.client.Publish(eventChannel, ID).Err()
 }
 
